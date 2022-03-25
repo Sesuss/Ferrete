@@ -11,7 +11,7 @@ const log = console.log
 
 //Principal
 router.get("/", isLoggedIn,  (req, res) => { 
-    res.redirect("/serviflash/servicios_pendientes")  
+    res.redirect("/ferreteria/servicios_pendientes")  
 })
 
 
@@ -268,7 +268,7 @@ router.get("/serviflash/clientes", isLoggedIn, async (req, res) => {
 })
 
 
-router.get("/serviflash/servicios_pendientes", isLoggedIn, async (req, res) => {
+router.get("/ferreteria/servicios_pendientes", isLoggedIn, async (req, res) => {
 /*
     let cliente = []
     let clientep = []
@@ -576,8 +576,9 @@ router.get("/serviflash/ver_cliente:id/", isLoggedIn, async (req, res) => {
 
 
 router.get("/serviflash/reportes", isLoggedIn, isAdmin, async (req, res) => {
-    let cuenta = await pool.query("SELECT Email, Nombre, IdUsuario, Activa FROM tblusuarios WHERE IdUsuario = 16 OR IdUsuario = 17")
-        res.render("layouts/reporte",{cuenta})
+    /*let cuenta = await pool.query("SELECT Email, Nombre, IdUsuario, Activa FROM tblusuarios WHERE IdUsuario = 16 OR IdUsuario = 17")
+        res.render("layouts/reporte",{cuenta})*/
+        res.redirect("/ferreteria/agregar_producto")
     
 })
 router.get("/serviflash/eliminar_nota:id/", isLoggedIn, async (req, res) => {
