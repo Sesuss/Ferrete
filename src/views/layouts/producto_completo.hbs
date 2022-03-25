@@ -1,0 +1,152 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item">
+            <a  class=" nav-link" id="h1" href="/serviflash/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
+        </li>
+        <li class="nav-item" style="display: none;">
+          <a class="nav-link" id="h2"  href="/serviflash/clientes"><center><i class="fas fa-address-book fa-2x"></i><br>Clientes</a></center>
+        </li>
+        <li class="nav-item dropdown" style="margin-top: 15px;">
+        <a class="nav-link dropdown-toggle " style="color: blue;" href="#" id="h3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <center><i class="fas fa-file-alt fa-2x"></i><br>Catalogo</center>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/ferreteria/agregar_producto">Productos</a>
+          <a class="dropdown-item" href="/ferreteria/agregar_proveedor">Proveedores</a>
+        </div>
+      </li>
+        <li class="nav-item" id="admin" style="display: block;">
+          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+        </li>
+
+        <li class="nav-item">
+          <a  class="nav-link " ><center><i style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p style="color: #f8f9fa;">...</p></a></center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link"><center><i class="fas fa-user fa-2x"></i></i><br>Hola {{user.Nombre}}</a></center>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Modificar Producto <button onclick=ocu() class="btn btn-info" ><i style="color: white;" class="fas fa-arrows-alt-v"></i></button></h1>
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                              <section style="display: block;" id="aa">
+                                <h1 class="text-dark mb-3 h4">Datos</h1>
+                                <form action="/editar_producto" method="POST">
+                                {{#each producto}}
+                                <div class="forn">
+                                     <div class="row">
+                                      <div class="col-md-2">
+                                        <label>Id Producto</label>
+                                        <input type="number" id="a1"  class="form-control text-dark m-1"
+                                            name="IdProducto" value="{{IdProducto}}" readonly>
+                                    </div>
+                                   <div class="col-md-5">
+                                        <label>Proveedor</label>
+                                              <select name="IdProveedor" id="a2" class="form-select text-dark m-1 " required>
+                                          <option value="{{IdProveedor}}">{{Nombre}}</option>
+                                          <option disabled >-----------------------------</option>
+                                          {{/each}}
+                                          {{#each proveedor}}
+                                          <option value="{{IdProveedor}}">{{Nombre}}</option>
+                                         
+                                          {{/each}}
+                                          {{#each producto}}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label>Categoria</label>
+                                              <select name="Categoria" id="a3" class="form-select text-dark m-1 " required>
+                                          <option value="{{Categoria}}">{{Categoria}}</option>
+                                          <option value="1">Categoria 1</option>
+                                          <option value="2">Categoria 2</option>
+                                          <option value="3">Categoria 3</option>
+                                          <option value="4">Categoria 4</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Descripcion</label>
+                                             <textarea name="Descripcion" id="a4" class="form-control text-dark m-1" rows="2" required>{{Descripcion}}</textarea>
+                                    </div>
+                                   <div class="row">
+                                      <div class="col-md-6">
+                                        <label>Precio de Venta</label>
+                                        <input type="number" id="a5" class="form-control text-dark m-1"
+                                             name="PrecioVenta" value="{{PrecioVenta}}" required>
+                                    </div>
+                                      <div class="col-md-6">
+                                        <label>Precio de Compra</label>
+                                        <input type="number" id="a6" class="form-control text-dark m-1"
+                                             name="PrecioCompra"  value="{{PrecioCompra}}">
+                                    </div>
+                                    </div>
+                                     <div class="row">
+                                      <div class="col-md-4">
+                                        <label>Codigo de Barras</label>
+                                        <input type="number" id="a7" class="form-control text-dark m-1"
+                                             name="CodeBar" value="{{CodeBar}}">
+                                    </div>
+                                      <div class="col-md-4">
+                                        <label>Codigo de Truper</label>
+                                        <input type="number" id="a8"  class="form-control text-dark m-1"
+                                             name="CodeTruper" value="{{CodeTruper}}" >
+                                    </div>
+                                      <div class="col-md-4">
+                                        <label>Codigo de Producto</label>
+                                        <input type="number" id="a9" class="form-control text-dark m-1"
+                                             name="CodeProducto" value="{{CodeProducto}}">
+                                    </div>
+                                    </div>
+                                   <div class="row">
+                                      <div class="col-md-6">
+                                        <label>Existencias</label>
+                                        <input type="number" id="a10" class="form-control text-dark m-1"
+                                             name="Existencias" value="{{Existencias}}" required>
+                                    </div>
+                                      <div class="col-md-6">
+                                        <label>Stock Minimo</label>
+                                        <input type="number" id="a11" class="form-control text-dark m-1"
+                                             name="StockMinimo" value="{{StockMinimo}}" required>
+                                    </div>
+                                    </div>
+                                     <div class="form-group" title="ENVIAR">
+                                        <button class="btn btn-info btn-block mx-1 ">
+                                            <i style="color: white;" class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                    </div>
+                                    {{/each}}
+                                </form>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+   document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('div.forn  input').forEach( node => node.addEventListener('keypress', e => {
+        if(e.keyCode == 13) {
+          e.preventDefault();
+        }
+      }))
+    });
+</script>

@@ -1,0 +1,396 @@
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Cliente</h1>
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Datos</h1>
+                                <form action="/agregar_registro" method="POST">
+                                    
+                                    <div class="form-group">
+                                        <label>Id Cliente</label>
+                                        <input type="number"  class="form-control text-dark m-1"
+                                            placeholder="{{IdCliente}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nombre</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{Nombre}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Calle</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{DirCalle}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Numero</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{DirNum}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Colonia</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{DirColonia}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Datos de ubicacion</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{RFC}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Municipio</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{Municipio}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Telefono</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{Telefono}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>RFC</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{RFC}}" disabled>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label>CP</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{CP}}" disabled>
+                                    </div>
+                                  
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Equipo</h1>
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Selecciona un equipo</h1>
+                                <form >
+                                    <div class="form-group">
+                                        <label>Tipo</label>
+                                         <select  class="form-select text-dark m-1 " >
+                                            <option>Equipo</option>
+                                            <option>LAVADORA</option>
+                                            <option>LAVADORA CARGA FRONTAL</option>
+                                            <option>SECADORA</option>
+                                            <option>SECADORA CARGA FRONTAL</option>
+                                            <option>REFRIGERADORES</option>
+                                            <option>CONGELADORES</option>
+                                            <option>HORNO SMEG</option>
+                                            <option>LAVADORA MAYTAG</option>
+                                            <option>REFRIGERADOR MABE</option>
+                                            <option>REFRIGERADOR WHIRLPOOL</option>
+                                            <option>LAVADORA LG</option>
+                                            <option>LAVADORA SAMSUNG</option>
+                                            <option>LAVADORA MABE</option>
+                                            <option>VAPORERA SMEG</option>
+                                            <option>SECADORA FRIGIDAIRE</option>
+                                            <option>FRIGOBAR</option>
+                                            <option>LAVADORA WESTING HOUSE</option>
+                                            <option>LAVADORA WHIRLPOOL</option>
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class=" mx-auto" id="Agregar">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Registro</h1>
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Agregar</h1>
+                                <form >
+                                    <div class="form-group">
+                                        <label>Folio</label>
+                                        <input type="number" value="999" class="form-control text-dark m-1" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Folio Por Sucursal</label>
+                                        <input type="number" value="" class="form-control text-dark m-1" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha de Solicitud</label>
+                                        <input type="date"  class="form-control text-dark m-1"
+                                             required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Hora de llamda</label>
+                                        <input type="time"   class="form-control text-dark m-1"
+                                             required>
+                                    </div> 
+                                    <div class="form-group">
+                                        <label>Medio de contacto</label>
+                                        <select  id="" class="form-select text-dark m-1 " required>
+                                            <option >Publicidad</option>
+                                            <option >Seccion Amarilla</option>
+                                            <option >Red social</option>
+                                             <option >Recomendacion</option>
+                                             <option >Cliente</option>
+                                          </select>
+                                    </div>  
+                                    <div class="form-group">
+                                        <label>Cliente</label>
+                                              <input type="text" value="Nombre del Cliente" class="form-control text-dark m-1"disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Equipo</label>
+                                        <input type="text"   value="LAVADORA" class="form-control text-dark m-1" disabled>
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Falla Reportada</label>
+                                        <input type="text"   class="form-control text-dark m-1"
+                                            required>
+                                    </div>
+                                     <div class="form-group">
+                                        <label>Horario de Visita</label>
+                                        <input type="time"  class="form-control text-dark m-1" >
+                                    </div>  
+                                    <div class="form-group">
+                                        <label>Se realizo la visita</label>
+                                        <select  class="form-select text-dark m-1 " >
+                                            <option >Si</option>
+                                            <option selected>No</option>
+                                            <option >Pendiente</option>
+                                        </select>
+                                    </div> 
+                                     <div class="form-group">
+                                        <label>Horario Real de Visita</label>
+                                        <input type="time"   class="form-control text-dark m-1" >
+                                    </div> 
+                                    <div class="form-group">
+                                        <label>Tipo de Trabajo</label>
+                                        <select  class="form-select text-dark m-1 " >
+                                            <option >Cotizacion</option>
+                                            <option >Preventivo</option>
+                                            <option selected>Correctivo</option>
+                                            <option >Garantia</option>
+                                            <option >Nueva Instalacion</option>
+                                            <option >Conexion Demostracion</option>
+                                        </select>
+                                    </div>  
+                                    <div class="form-group" style="">
+                                        <label>Reparaciones </label>
+                                        <select class="form-select text-dark m-1 ">
+                                            <option >MANTENIMIENTO PREVENTIVO</option>
+                                            <option >INSTALACION</option>
+                                            <option >CAMBIO ENGRANES DE AGITADOR</option>
+                                            <option >CAMBIO JUNTA HOMOSINETICA</option>
+                                            <option >CAMBIO SWITCH CENTRIFUGADO</option>
+                                            <option >CAMBIO CONTROL NIVELES</option>
+                                            <option >CAMBIO AGITADOR</option>
+                                            <option >CAMBIO BANDA DE TRANSMISION</option>
+                                            <option >CAMBIO CLUTCH DE VELOCIDAD</option>
+                                            <option >CAMBIO VARILLAS DE SUSPENSION</option>
+                                            <option >CAMBIO ARO DE SUSPENSION</option>
+                                            <option >CAMBIO DE TINA RECUPERADORA</option>
+                                            <option >CAMBIO DE TRANSMISION</option>
+                                            <option >REP. DE TRANSMISION, BOMBA Y MANTENIMIENTO A LAVADORA</option>
+                                            <option >CAMBIO DE JGO. DE BOBINAS, ESPREAS, TERMOFUSIBLE Y MANTO</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>REFACCIONES</label>
+                                        <select class="form-select text-dark m-1 ">
+                                            <option  >Accesorios para refrigeración Alco</option>
+                                            <option value="4">Válvulas de expansión</option>
+                                            <option value="8">Válvulas solenoides</option>
+                                            <option value="11">Válvulas de paso</option>
+                                            <option value="11">Separadores de aceite Acumuladores de succión</option>
+                                            <option value="11">Filtros deshidratadores Indicadores de liquidos</option>
+                                            <option value="11">Aceites Control de temperatura</option>
+                                        </select>
+                                    </div>  
+                                     <div class="form-group">
+                                        <label>Tecnico</label>
+                                        <select class="form-select text-dark m-1 ">
+                                            <option value="0" selected >Tecnico 1</option>
+                                            <option value="4">Tecnico 2</option>
+                                            <option value="8">Tecnico 3</option>
+                                            <option value="11">Tecnico 4</option>
+                                        </select>
+                                    </div>  
+                                    <div class="form-group">
+                                        <label>Diagnostico</label><br>
+                                        <textarea name="textarea"  class="form-control text-dark m-1" rows="7" >Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae impedit autem, ipsum illum accusamus recusandae illo aut, quisquam repudiandae exercitationem nostrum sequi quaerat tempore. Saepe minus placeat voluptatem corrupti. Et?</textarea>
+                                    </div>
+                                     <div class="form-group">
+                                        <label>Presupuesto</label>
+                                        <input type="text"  value="$" class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Costo Real del Servicio</label>
+                                        <input type="text" value="$" class="form-control text-dark m-1"
+                                        disabled >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Garantia</label>
+                                        <input type="text"  class="form-control text-dark m-1" >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Aceptacion de Presupuestos</label>
+                                        <select  class="form-select text-dark m-1 ">
+                                            <option  selected >No</option>
+                                            <option >Si</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha Estimada de terminado</label>
+                                        <input type="date"   class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Lugar de Reparacion</label>
+                                        <select  class="form-select text-dark m-1 " >
+                                            <option >Casa del cliente</option>
+                                            <option  selected>Taller</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Estado del Servicio</label>
+                                        <select  class="form-select text-dark m-1 " >
+                                            <option >Estado 1</option>
+                                            <option  >Estado 2</option>
+                                            <option >Estado 3</option>
+                                            <option  >Estado 4</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha Real de terminado</label>
+                                        <input type="date"   class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha de Entrega</label>
+                                        <input type="date"  class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                     <div class="form-group">
+                                        <label>Vigencia de Garantia</label>
+                                        <select  class="form-select text-dark m-1 " >
+                                            <option >Estado 1</option>
+                                            <option  >Estado 2</option>
+                                            <option >Estado 3</option>
+                                            <option  >Estado 4</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Articulo o Servicio en Garantia</label>
+                                         <input type="text"   class="form-control text-dark m-1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha de Vencimiento</label>
+                                        <input type="date"   class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Dias para Vencimiento</label>
+                                        <input type="number"   class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group">
+                                        <button class="btn btn-success btn-block mx-1 " title="Enviar">
+
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const busqueda = document.getElementById("busqueda")
+    
+    let arrayE = []
+   
+            let a = 1
+            {{#each equipo }}
+            arrayE.push({
+                IdCliente: "{{IdCliente}}",
+                IdEquipo: "{{IdEquipo}}",
+                Categoria: "{{Categoria}}",
+                Tipo: "{{Tipo}}",
+                Marca: "{{Marca}}",
+                Color: "{{Color}}",
+                Modelo: "{{Modelo}}",
+                LugarS: a
+            })
+            a++
+            {{/each}}
+
+                    function SelE(selecE) {
+                            for(index = 0; index < arrayE.length; index++){
+                                if(selecE ==arrayE[index].LugarS){
+                                    document.getElementById("IdCliente").value=arrayE[index].IdCliente
+                                    document.getElementById("IdEquipo").value=arrayE[index].IdEquipo
+                                    document.getElementById("Categoria").value=arrayE[index].Categoria
+                                    document.getElementById("Tipo").value=arrayE[index].Tipo
+                                    document.getElementById("Marca").value=arrayE[index].Marca
+                                    document.getElementById("Color").value=arrayE[index].Color
+                                    document.getElementById("Modelo").value=arrayE[index].Modelo
+                                    document.getElementById("EquipoRr").value=arrayE[index].IdEquipo
+                                    document.getElementById("EquipoR").value=arrayE[index].IdEquipo
+                                    document.getElementById("Agregar").style.display = "block"
+                                    document.getElementById("agregare").style.display = "block"
+                                    document.getElementById("btnadd").style.display = "none"
+
+
+                                }
+                            }
+                    }
+
+                    function Agregar(){
+                        document.getElementById("agregare").style.display = "block"
+                        document.getElementById("btnadd").style.display = "none"
+                        document.getElementById("IdEquipo").value=arrayE.length+1
+                        document.getElementById("IdEquiporr").value=arrayE.length+1
+                        document.getElementById("Categoria").disabled=false
+                        document.getElementById("Tipo").disabled=false
+                        document.getElementById("Marca").disabled=false
+                        document.getElementById("Color").disabled=false
+                        document.getElementById("Modelo").disabled=false
+                        document.getElementById("btnagr").style.display = "block"
+                        document.getElementById("busE").style.display = "none"
+                    }
+
+                    function tipo(){
+                        if (document.getElementById("Categoria").selectedIndex==1){
+                            document.getElementById("ref1").style.display = "none"
+                            document.getElementById("ref2").style.display = "none"
+                            document.getElementById("lav1").style.display = "block"
+                            document.getElementById("lav2").style.display = "block"
+                        }else if(document.getElementById("Categoria").selectedIndex==2){
+                            document.getElementById("ref1").style.display = "block"
+                            document.getElementById("ref2").style.display = "block"
+                            document.getElementById("lav1").style.display = "none"
+                            document.getElementById("lav2").style.display = "none"
+                        }
+                    }
+
+
+</script>

@@ -1,0 +1,182 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item" >
+          <a class=" nav-link" id="h1" href="/serviflash/servicios_pendientes">
+            <center><i class="fas fa-home fa-2x"></i><br>Inicio
+          </a> </center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" id="h2" href="/serviflash/clientes">
+            <center><i class="fas fa-address-book fa-2x"></i><br>Clientes
+          </a></center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link" id="h3" href="/serviflash/agregar_registro">
+            <center><i class="fas fa-file-alt fa-2x"></i><br>Registrar <br> Servicio
+          </a></center>
+        </li>
+        <li class="nav-item" id="admin" style="display: block;">
+          <a style="color: blue;" class="nav-link " href="/serviflash/reportes">
+            <center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+        </li>
+        <li class="nav-item">
+          <a  class="nav-link " ><center><i style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p style="color: #f8f9fa;">...</p></a></center>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">
+            <center><i class="fas fa-user fa-2x"></i></i><br>Hola {{user.Nombre}}
+          </a></center>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<body>
+  <div class="container p-4">
+    <div class="row">
+      <div class=" mx-auto">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="text-dark mb-3 h4">Reportes</h1>
+            <div class=" mx-auto">
+              <div class="card">
+                <div class="card-body" style="background-color:#e6e6e6;">
+                  <h1 class="text-dark mb-3 h4">Reporte de totales por tecnico</h1>
+                  <form action="/serviflash/ver_reporte" method="post">
+                    <div class="form-group">
+                      <label>Desde la fecha</label>
+                      <input type="date" name="desde" class="form-control text-dark" required>
+                    </div>
+                    <div class="form-group">
+                      <label>Hasta</label>
+                      <input type="date" name="hasta" class="form-control text-dark" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <button class="btn btn-info btn-block mx-1" title="ENVIAR">
+                        <i style="color: white;" class="fas fa-check"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <br>
+              <div class="card">
+                <div class="card-body" style="background-color:#e6e6e6;">
+                  <h1 class="text-dark mb-3 h4">Reporte de Medios de informacion</h1>
+                  <form action="/serviflash/reporte_medio" method="post">
+                    <div class="form-group">
+                      <label>Desde la fecha</label>
+                      <input type="date" name="desde" class="form-control text-dark" required>
+                    </div>
+                    <div class="form-group">
+                      <label>Hasta</label>
+                      <input type="date" name="hasta" class="form-control text-dark" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <button class="btn btn-info btn-block mx-1" title="ENVIAR">
+                        <i style="color: white;" class="fas fa-check"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div><br></div>
+      <div class=" mx-auto">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="text-dark mb-3 h4">Opciones de Administrador</h1>
+            <div class=" mx-auto">
+              <div class="card">
+                <div class="card-body" style="display:block; background-color:#e6e6e6;" id="busE">
+                  <h1 class="text-dark mb-3 h4">Activar y desactivar cuentas</h1>
+                  <form action="/serviflash/activar_desactivar" method="post">
+                    {{#each cuenta}}
+                    <div class="form-group">
+                      <label><strong>Cuenta de {{Nombre}}</strong></label> <br>
+                      <div>
+                        <input type="radio" id="contactChoice1" name="Activa" value="SI">
+                        <label for="contactChoice1">Activar</label>
+                        <input type="radio" id="contactChoice2" name="Activa" value="NO">
+                        <label for="contactChoice2">Desactivar</label>
+                      </div>
+                    </div>
+                    <hr>
+                    <br>
+                    {{/each}}
+                    <div class="form-group">
+                      <button class="btn btn-info btn-block mx-1" title="ENVIAR">
+                        <i style="color: white;" class="fas fa-check"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              </div>
+              <br>
+              <div class="card">
+                <div class="card-body" style="background-color:#e6e6e6;">
+                  <h1 class="text-dark mb-3 h4">Abrir Nota</h1>
+                  <form action="/abrir_nota" method="post">
+                    <div class="form-group">
+                      <label>Folio de orden de servicio</label>
+                      <input type="number" name="folio" class="form-control text-dark" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <button class="btn btn-info btn-block mx-1" title="ENVIAR">
+                        <i style="color: white;" class="fas fa-check"></i>
+                      </button>
+                    </div>
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>
+        <div><br></div>
+      <div class=" mx-auto">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="text-dark mb-3 h4">Registro Movimientos</h1>
+            <div class=" mx-auto">
+              <div class="card">
+                <div class="card-body" style="display:block; background-color:#e6e6e6;" id="busE">
+                  <h1 class="text-dark mb-3 h4">Registro de Movimientos por fecha</h1>
+                 <form action="/serviflash/ver_movimientos" method="post">
+                    <div class="form-group">
+                      <label>Desde la fecha</label>
+                      <input type="date" name="desde" class="form-control text-dark" required>
+                    </div>
+                    <div class="form-group">
+                      <label>Hasta</label>
+                      <input type="date" name="hasta" class="form-control text-dark" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <button class="btn btn-info btn-block mx-1" title="ENVIAR">
+                        <i style="color: white;" class="fas fa-check"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

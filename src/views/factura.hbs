@@ -1,0 +1,114 @@
+<div class="container-fluid p-1">
+  <div class="row mx-auto">
+    <div class="col-md-12">
+      <div class="row">
+
+        <div class="col-md-4">
+          <img alt="" src="logoCompleto02.png" width="700px" height="150px">
+        </div>
+        <div class="row" style="margin-top: 20px;" >
+          <div class="col-md-12">
+            <address style="font-size:x-large; margin-left: 10px;">
+              {{#each datos}}
+              <strong style="margin-left: 300px;">Fechas</strong>
+              <br>
+             <strong>Solicitud:</strong> {{moment FechaSolicitud}} &nbsp; &nbsp;
+              <strong>Visita:</strong> {{moment FechaVisita}} &nbsp;&nbsp;
+             <strong>Entrega:</strong> {{moment FechaRealizacion}}
+              {{/each}}
+            </address>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+ <div class="row mx-auto ">
+<table class="table" style="font-size:x-large; margin-left: 10px; color: #000000; text-transform: uppercase; width:750px">
+  <tbody>
+    {{#each cliente}}
+    <tr>
+      <td><strong>Cliente</strong></td>
+      <td>{{Nombre}}</td>
+    </tr>
+    <tr style="background-color: #dbdbdb;">
+      <td><strong>Domicilio</strong></td>
+      <td>{{DirCalle}} {{DirNum}}</td>
+    </tr>
+    <tr>
+      <td><strong>Entre</strong></td>
+      <td>{{DirEntre}}</td>
+    </tr>
+    <tr style="background-color: #dbdbdb;">
+      <td><strong>Colonia</strong></td>
+      <td>{{DirColonia}}</td>
+    </tr>
+    <tr>
+      <td><strong>Telefono</strong></td>
+      <td>{{Telefono}}</td>
+    </tr>
+    {{/each}}
+    {{#each equipo}}
+    <tr style="background-color: #b3b3b3;">
+      <td><strong>Aparato</strong></td>
+      <td>{{Tipo}}</td>
+    </tr>
+    <tr>
+      <td><strong>Marca</strong></td>
+      <td>{{Marca}}</td>
+    </tr>
+    {{/each}}
+    {{#each datos}}
+     <tr style="background-color: #b3b3b3;">
+      <td><strong>Falla</strong></td>
+      <td>{{Falla}}</td>
+    </tr>
+     {{/each}}
+     {{#each equipo}}
+    <tr>
+      <td><strong>Modelo</strong></td>
+      <td>{{Modelo}}</td>
+    </tr>
+    <br><br>
+    {{/each}}
+    {{#each datos}}
+    <tr style="background-color: #b3b3b3;">
+      <td><strong>Servicio</strong></td>
+      <td>{{Realizado}}</td>
+    </tr>
+    <tr>
+      <td><strong>Costo del Servicio</strong></td>
+      <td>${{CostoServicio}}</td>
+    </tr>
+    {{/each}}
+    {{#each tecnico}}
+    <tr style="background-color: #dbdbdb;">
+      <td><strong>Tecnico</strong></td>
+      <td>{{Nombre}}</td>
+    </tr>
+      {{/each}}
+      {{#each datos}}
+      <tr >
+      <td><strong>Medio de difusion</strong></td>
+      <td>{{MedioDeInformacion}}</td>
+    </tr>
+     <tr style="background-color: #dbdbdb;">
+      <td><strong>Reparaciones</strong></td>
+      <td>{{Observaciones}}</td>
+    </tr>
+    <tr >
+      <td><strong>Dia</strong></td>
+      <td style="color: red;"><strong>{{momentD FechaRealizacion}}</strong></td>
+    </tr>
+    <tr style="background-color: #dbdbdb;">
+      <td><strong>Hora</strong></td>
+      <td style="color: red;"><strong>{{Hora}}</strong></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>

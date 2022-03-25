@@ -1,0 +1,181 @@
+<nav class="navbar navbar-expand-lg navbar-light  bg-light ">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+       <ul class="navbar-nav">
+        <li class="nav-item" >
+            <a style="color: blue;" id="h1" class=" nav-link" href="/serviflash/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  id="h2" href="/serviflash/clientes"><center><i class="fas fa-address-book fa-2x"></i><br>Clientes</a></center>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="h3" href="/serviflash/agregar_registro"><center><i class="fas fa-file-alt fa-2x"></i><br>Registrar <br> Servicio </a></center>
+        </li>
+        <li class="nav-item" id="admin" style="display: block; ">
+          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+        </li>
+        <li class="nav-item">
+          <a  class="nav-link " ><center><i style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p style="color: #f8f9fa;">...</p></a></center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link"><center><i class="fas fa-user fa-2x"></i><br>Hola {{user.Nombre}}</a></center>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-20 mx-auto">
+      <strong>
+        {{#if clientep}}
+        <table class="table table-bordered table-hover" style="color: white;">
+        <thead>
+          <tr style="background-color: #00aff0; color: white;">
+            <th>N°</th>
+            <th>Cliente</th>
+            <th>Calle</th>
+            <th>Colonia</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each clientep}}
+          <tr id="p{{IdOrden}}" style="background-color: #c4c4c4; color:#ec7c26;">
+            <td>{{IdOrden}}</td>
+            <td>{{Nombre}}</td>
+            <td>{{Calle}}</td>
+            <td>{{Colonia}}</td>
+            <td>{{moment FechaRealizacion}}</td>
+            <td>{{Hora}}</td>
+            <td><center><a  href="/serviflash/ver_cliente{{IdCliente}}/" title="VER CLIENTE" class="mx-auto btn btn-info"><i style="color: white;" class="fas fa-user"></i></a></center>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{/if}}
+      <br>
+      <br>
+      <table class="table table-bordered table-hover" style="color: white;">
+        <thead>
+          <tr style="background-color: #00aff0; color: white;">
+            <th>N°</th>
+            <th>Cliente</th>
+            <th>Calle</th>
+            <th>Colonia</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each clienteg}}
+          <tr id="G{{IdOrden}}" style="background-color: #c4c4c4; color:#940008;">
+            <td>{{IdOrden}}</td>
+            <td>{{Nombre}}</td>
+            <td>{{Calle}}</td>
+            <td>{{Colonia}}</td>
+            <td>{{moment FechaGarantiaNew}}</td>
+            <td>{{Hora}}</td>
+            <td><center><a href="/serviflash/ver_cliente{{IdCliente}}/" title="VER CLIENTE" class="mx-auto btn btn-info"><i style="color: white;" class="fas fa-user"></i></a></center>
+            </td>
+          </tr>
+          {{/each}}
+          {{#each cliente}}
+          <tr id="{{IdOrden}}" style="background-color: #c4c4c4; color:black;">
+            <td>{{IdOrden}}</td>
+            <td style="">{{Nombre}}</td>
+            <td>{{Calle}}</td>
+            <td>{{Colonia}}</td>
+            <td>{{moment FechaVisita}}</td>
+            <td>{{Hora}}</td>
+            <td><center><a  href="/serviflash/ver_cliente{{IdCliente}}/" title="VER CLIENTE" class="mx-auto btn btn-info"><i style="color: white;" class="fas fa-user"></i></a></center>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      </strong>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+  let array = []
+  let arrayD = []
+  let clientep =[]
+  {{#each pendientes}}
+  array.push({
+    IdOrdenServicio: "{{IdOrdenServicio}}",
+    IdCliente: "{{IdCliente}}",
+    FechaVisita: "{{moment FechaVisita}}",
+    IdEquipo: "{{IdEquipo}}",
+    Falla: "{{Falla}}",
+    Hora: "{{Hora}}",
+  })
+  {{/each}}
+  {{#each clientep}}
+  clientep.push({
+            IdOrden:"{{IdOrden}}",
+            FechaRealizacion:"{{moment FechaRealizacion}}"
+        })
+  {{/each}}
+  {{#each array}}
+  arrayD.push({
+    ahora:"{{ahora}}"
+  })
+  {{/each}}
+
+
+      ordenes()
+
+      function ordenes() {
+
+        var hoy = new Date();
+        let mes = (hoy.getMonth() + 1)
+        if (mes < 10) {
+          mes = "0" + mes
+        }
+        let dia = (hoy.getDate())
+        if (dia < 10) {
+          dia = "0" + dia
+        }
+        var fecha = hoy.getFullYear() + '-' + mes + '-' + dia
+
+        for (index = 0; index < array.length; index++) {
+
+          if (fecha == array[index].FechaVisita) {
+            document.getElementById(array[index].IdOrdenServicio).style.color="blue"
+            console.log(arrayD[index].ahora)
+            if(arrayD[index].ahora=="si"){
+              document.getElementById(array[index].IdOrdenServicio).style.color = "#008f39"
+
+            }
+          }
+        }
+
+        for(index = 0; index < clientep.length; index++){
+             if (fecha == clientep[index].FechaRealizacion) {
+            document.getElementById("p"+clientep[index].IdOrden).style.color="green"
+             }
+        }
+
+      }
+
+
+
+      function actualizar(){location.reload(true);}
+
+setInterval("actualizar()",300000);
+
+</script>

@@ -1,0 +1,436 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item">
+            <a  class=" nav-link" id="h1" href="/serviflash/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="h2"  href="/serviflash/clientes"><center><i class="fas fa-address-book fa-2x"></i><br>Clientes</a></center>
+        </li>
+        <li class="nav-item">
+          <a style="color: blue;" id="h3" class="nav-link" href="/serviflash/agregar_registro"><center><i class="fas fa-file-alt fa-2x"></i><br>Registrar <br> Servicio </a></center>
+        </li>
+        <li class="nav-item" id="admin" style="display: block;">
+          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+        </li>
+        <li class="nav-item">
+          <a  class="nav-link " ><center><i style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p style="color: #f8f9fa;">...</p></a></center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link"><center><i class="fas fa-user fa-2x"></i></i><br>Hola {{user.Nombre}}</a></center>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Cliente</h1>
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Datos</h1>
+                                <form action="/agregar_registro" method="POST">
+                                    {{#each cliente}}
+                                    <div class="form-group">
+                                        <label>Id Cliente</label>
+                                        <input type="number"  class="form-control text-dark m-1"
+                                            placeholder="{{IdCliente}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Nombre</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{Nombre}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Colonia</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{DirColonia}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Calle</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{DirCalle}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Numero</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{DirNum}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Entre</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{DirEntre}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Telefono</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{Telefono}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>RFC</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{RFC}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Municipio</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{Municipio}}" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>CP</label>
+                                        <input type="text"  class="form-control text-dark m-1"
+                                            placeholder="{{CP}}" disabled>
+                                    </div>
+                                    {{/each}}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Equipo</h1>
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body" style="display:block; background-color:#d9d9d9;" id="busE">
+                                <h1 class="text-dark mb-3 h4">Buscar</h1>
+                                {{#each equipo}}
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Equipo {{IdEquipo}}/{{Tipo}}/{{Marca}}</div>
+                                    Ver equipo =>
+                                    <button class="btn btn-info" title="VER EQUIPO" onclick=SelE({{IdEquipo}})><i style="color: white;" class="fas fa-camera-retro"></i></button>
+                                </div>
+                            </li>
+                            {{/each}}
+                            </div>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4" id="titulo">Agregar Equipo</h1>
+                                <button class="btn btn-info size-2" onclick=Agregar() id="btnadd" title="AGREGAR EQUIPO">
+                                <i style="color: white;" class="fas fa-plus"></i>
+                                </button>
+                                <form action="/agregar_equipo" method="POST" style="display:none" id="agregare">
+                                    <div class="form-group">
+                                        <label>Id cliente</label>
+                                        <input type="number" value="{{idcliente}}" class="form-control text-dark m-1" disabled>
+                                        <input type="number" name="IdCliente" id="IdCliente" value="{{idcliente}}" class="form-control text-dark m-1" style="display:none">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Id equipo</label>
+                                        <input type="number" id="IdEquipo" class="form-control text-dark m-1" disabled>
+                                        <input type="number" name="IdEquipo" id="IdEquiporr" class="form-control text-dark m-1" style="display:none">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Categoria</label>
+                                        <select name="Categoria" id="Categoria" class="form-select text-dark m-1 " onclick=tipo() disabled>
+                                            <option  value="">Elige una categoria</option>
+                                            <option value="LAVADO">LAVADO</option>
+                                            <option value="REFRIGERACION">REFRIGERACION</option>
+                                            <option value="MICROONDAS">MICROONDAS</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Tipo</label> 
+
+                                       <select name="Tipo" id="Tipo" class="form-select text-dark m-1 " disabled>
+                                           <option value="">Elige un tipo</option>
+                                        <option id="lav1" style="display:none" value="LAVADORA">LAVADORA</option>
+                                        <option id="lav2" style="display:none" value="SECADORA">SECADORA</option>
+                                        <option id="ref1" style="display:none" value="REFRIGERADOR">REFRIGERADOR
+                                        </option>
+                                        <option id="ref2" style="display:none" value="ENFRIADOR DE AGUA">ENFRIADOR DE
+                                            AGUA</option>
+                                        <option id="ref3" style="display:none" value="CONGELADOR">CONGELADOR</option>
+                                        <option id="ref4" style="display:none" value="ENFRIADOR DE BOTELLAS">ENFRIADOR
+                                            DE BOTELLAS</option>
+                                        <option id="ref5" style="display:none" value="SERVIBAR">SERVIBAR</option>
+                                        <option id="mic1" style="display:none" value="MICROONDAS">MICROONDAS</option>
+                                        </select>
+                                    <div class="form-group">
+                                        <label>Marca</label>
+                                        <input type="text" name="Marca" id="Marca" class="form-control text-dark m-1"
+                                             disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Color</label>
+                                        <input type="text" name="Color" id="Color" class="form-control text-dark m-1"
+                                             disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Modelo</label>
+                                        <input type="text" name="Modelo" id="Modelo" class="form-control text-dark m-1"
+                                             disabled>
+                                    </div>
+                                    <div class="form-group" id="btnagr" style="display:none" title="ENVIAR">
+                                        <button class="btn btn-info btn-block mx-1 ">
+                                            <i style="color: white;" class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class=" mx-auto" style="display:none" id="Agregar">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Registro</h1>
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">AgregaR Orden de Servicio</h1>
+                                <form action="/agregar_registro" method="POST">
+                                    <div class="form-group">
+                                        <label>Numero de Solicitud</label>
+                                        <input type="number" name="IdOrdenServicio" value="{{num}}" style="display:none" class="form-control text-dark m-1">
+                                        <input type="number" value="{{num}}" class="form-control text-dark m-1" disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Cliente</label>
+                                              <input type="number" style="display:none" name="IdCliente" value="{{idcliente}}"   class="form-control text-dark m-1">
+                                              <input type="text" name="NoCliente" value="{{nombre}}" class="form-control text-dark m-1"disabled>
+                                    </div>
+                                    <div class="form-group">
+                                        <label id="equipo">Equipo</label>
+                                        <input type="text" name="IdEquipo" id="EquipoRr" style="display:none" class="form-control text-dark m-1">
+                                        <input type="text"  id="EquipoR" class="form-control text-dark m-1" disabled>
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Falla</label>
+                                        <input type="text" name="Falla"  class="form-control text-dark m-1"
+                                            required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha de Solicitud</label>
+                                        <input type="date" name="FechaSolicitud"  class="form-control text-dark m-1"
+                                             required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha de Visita</label>
+                                        <input type="date" name="FechaVisita"  class="form-control text-dark m-1"
+                                             required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Realizado</label>
+                                        <select name="Realizado" class="form-select text-dark m-1 " >
+                                            <option value="255">Si</option>
+                                            <option value="0" selected>No</option>
+                                            <option value="128" >Cotizacion</option>
+                                            <option value="100">En Proceso</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Fecha de Entrega</label>
+                                        <input type="date" name="FechaRealizacion"  class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Observaciones</label>
+                                        <input type="text" name="Observaciones"  class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Presupuesto</label>
+                                        <input type="text" name="Presupuesto"  class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Costo del Servicio</label>
+                                        <input type="text" name="CostoServicio"  class="form-control text-dark m-1"
+                                             >
+                                    </div>
+                                     <div class="form-group">
+                                        <label>Horario</label>
+                                        <select name="Hora" class="form-select text-dark m-1 " size="5">
+                                            <option >Seleccione uno</option>
+                                            <option value="08:00 - 09:00">8:00-9:00</option>
+                                            <option value="08:00 - 09:30">8:00-9:30</option>
+                                            <option value="08:00 - 10:00">8:00-10:00</option>
+                                            <option value="09:00 - 10:00">9:00-10:00</option>
+                                            <option value="09:00 - 10:30">9:00-10:30</option>
+                                            <option value="09:00 - 11:00">9:00-11:00</option>
+                                            <option value="10:00 - 11:00">10:00-11:00</option>
+                                            <option value="10:00 - 11:30">10:00-11:30</option>
+                                            <option value="10:00 - 12:00">10:00-12:00</option>
+                                            <option value="11:00 - 12:00">11:00-12:00</option>
+                                            <option value="11:00 - 12:30">11:00-12:30</option>
+                                            <option value="11:00 - 01:00">11:00-1:00</option>
+                                            <option value="12:00 - 01:00">12:00-1:00</option>
+                                            <option value="12:00 - 01:30">12:00-1:30</option>
+                                            <option value="12:00 - 02:00">12:00-2:00</option>
+                                            <option value="01:00 - 02:00">1:00-2:00</option>
+                                            <option value="01:00 - 02:30">1:00-2:30</option>
+                                            <option value="01:00 - 03:00">1:00-3:00</option>
+                                            <option value="02:00 - 03:00">2:00-3:00</option>
+                                            <option value="02:00 - 03:30">2:00-3:30</option>
+                                            <option value="02:00 - 04:00">2:00-4:00</option>
+                                            <option value="03:00 - 04:00">3:00-4:00</option>
+                                            <option value="03:00 - 04:30">3:00-4:30</option>
+                                            <option value="03:00 - 05:00">3:00-5:00</option>
+                                            <option value="04:00 - 05:00">4:00-5:00</option>
+                                            <option value="04:00 - 05:30">4:00-5:30</option>
+                                            <option value="04:00 - 06:00">4:00-6:00</option>
+                                            <option value="05:00 - 06:00">5:00-6:00</option>
+                                            <option value="05:00 - 06:30">5:00-6:30</option>
+                                            <option value="05:00 - 07:00">5:00-7:00</option>
+                                            <option value="06:00 - 07:00">6:00-7:00</option>
+                                            <option value="06:00 - 07:30">6:00-7:30</option>
+                                            <option value="06:00 - 08:00">6:00-8:00</option>
+                                            <option value="07:00 - 08:00">7:00-8:00</option>
+                                        </select>
+                                    </div>   
+                                    <div class="form-group">
+                                        <label>Tecnico</label>
+                                        <select name="IdTecnico" class="form-select text-dark m-1 ">
+                                            <option value="0" selected >Seleccione uno</option>
+                                            <option value="4">ALEJO FAJARDO</option>
+                                            <option value="8">RICARDO ANTONIO</option>
+                                            <option value="11">ALBERTO CARLOS</option>
+                                        </select>
+                                    </div>                                
+                                    <div class="form-group">
+                                        <label>Medio por el cual de entero del servicio</label>
+                                        <select name="MedioDeInformacion" id="" class="form-select text-dark m-1 " required>
+                                            <option value="tarjeta">Tarjeta</option>
+                                            <option value="revista/anuncio"selected>Revista/Anuncio</option>
+                                            <option value="cliente">Cliente</option>
+                                             <option value="recomendacion">Recomendacion</option>
+                                          </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-info btn-block mx-1 " title="GUARDAR ORDEN DE SERVICIO">
+
+                                            <i style="color: white;" class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const busqueda = document.getElementById("busqueda")
+    
+    let arrayE = []
+   
+            let a = 1
+            {{#each equipo }}
+            arrayE.push({
+                IdCliente: "{{IdCliente}}",
+                IdEquipo: "{{IdEquipo}}",
+                Categoria: "{{Categoria}}",
+                Tipo: "{{Tipo}}",
+                Marca: "{{Marca}}",
+                Color: "{{Color}}",
+                Modelo: "{{Modelo}}",
+                LugarS: a
+            })
+            a++
+            {{/each}}
+
+                    function SelE(selecE) {
+                            for(index = 0; index < arrayE.length; index++){
+                                if(selecE ==arrayE[index].LugarS){
+                                    document.getElementById("IdCliente").value=arrayE[index].IdCliente
+                                    document.getElementById("IdEquipo").value=arrayE[index].IdEquipo
+                                    document.getElementById("Categoria").value=arrayE[index].Categoria
+                                    document.getElementById("Tipo").value=arrayE[index].Tipo
+                                    document.getElementById("Marca").value=arrayE[index].Marca
+                                    document.getElementById("Color").value=arrayE[index].Color
+                                    document.getElementById("Modelo").value=arrayE[index].Modelo
+                                    document.getElementById("EquipoRr").value=arrayE[index].IdEquipo
+                                    document.getElementById("EquipoR").value=arrayE[index].IdEquipo
+                                    document.getElementById("Agregar").style.display = "block"
+                                    document.getElementById("agregare").style.display = "block"
+                                    document.getElementById("btnadd").style.display = "none"
+                                    document.getElementById("titulo").innerText="EQUIPO SELECCIONADO"
+                                    document.getElementById("equipo").innerText="EQUIPO "+arrayE[index].Tipo+" "+arrayE[index].Marca
+
+
+
+                                }
+                            }
+                    }
+
+                    function Agregar(){
+                        document.getElementById("agregare").style.display = "block"
+                        document.getElementById("btnadd").style.display = "none"
+                        document.getElementById("IdEquipo").value=arrayE.length+1
+                        document.getElementById("IdEquiporr").value=arrayE.length+1
+                        document.getElementById("Categoria").disabled=false
+                        document.getElementById("Tipo").disabled=false
+                        document.getElementById("Marca").disabled=false
+                        document.getElementById("Color").disabled=false
+                        document.getElementById("Modelo").disabled=false
+                        document.getElementById("btnagr").style.display = "block"
+                        document.getElementById("busE").style.display = "none"
+                    }
+
+                    function tipo(){
+                       if (document.getElementById("Categoria").selectedIndex == 1) {
+
+                        document.getElementById("ref1").style.display = "none"
+                        document.getElementById("ref2").style.display = "none"
+                        document.getElementById("ref3").style.display = "none"
+                        document.getElementById("ref4").style.display = "none"
+                        document.getElementById("ref5").style.display = "none"
+
+                        document.getElementById("lav1").style.display = "block"
+                        document.getElementById("lav2").style.display = "block"
+
+                        document.getElementById("mic1").style.display = "none"
+
+                    } else if (document.getElementById("Categoria").selectedIndex == 2) {
+
+                        document.getElementById("ref1").style.display = "block"
+                        document.getElementById("ref2").style.display = "block"
+                        document.getElementById("ref3").style.display = "block"
+                        document.getElementById("ref4").style.display = "block"
+                        document.getElementById("ref5").style.display = "block"
+
+                        document.getElementById("lav1").style.display = "none"
+                        document.getElementById("lav2").style.display = "none"
+
+                        document.getElementById("mic1").style.display = "none"
+
+                    } else if (document.getElementById("Categoria").selectedIndex == 3) {
+                        document.getElementById("ref1").style.display = "none"
+                        document.getElementById("ref2").style.display = "none"
+                        document.getElementById("ref3").style.display = "none"
+                        document.getElementById("ref4").style.display = "none"
+                        document.getElementById("ref5").style.display = "none"
+
+                        document.getElementById("lav1").style.display = "none"
+                        document.getElementById("lav2").style.display = "none"
+
+                        document.getElementById("mic1").style.display = "block"
+                    }
+                    }
+
+
+</script>

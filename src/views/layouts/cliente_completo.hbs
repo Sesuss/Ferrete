@@ -1,0 +1,822 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+        <li class="nav-item">
+            <a  class=" nav-link" id="h1" href="/serviflash/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
+        </li>
+        <li class="nav-item">
+          <a style="color: blue;" id="h2" class="nav-link"  href="/serviflash/clientes"><center><i class="fas fa-address-book fa-2x"></i><br>Clientes</a></center>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="h3" href="/serviflash/agregar_registro"><center><i class="fas fa-file-alt fa-2x"></i><br>Registrar <br> Servicio </a></center>
+        </li>
+        <li class="nav-item" id="admin" style="display: block;">
+          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+        </li>
+        <li class="nav-item">
+          <a  class="nav-link " ><center><i style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p style="color: #f8f9fa;">...</p></a></center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link"><center><i class="fas fa-user fa-2x"></i></i><br>Hola {{user.Nombre}}</a></center>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Cliente</h1>
+                    <div class="card">
+                        <div class="card-body" style="background-color:#d9d9d9;">
+                            <h1 class="text-dark mb-3 h4">Datos</h1>
+                            <form action="/editar_cliente" method="POST" >
+                                {{#each cliente}}
+                                <div class="form-group">
+                                    <label>Id Cliente</label>
+                                    <input type="number" class="form-control text-dark m-1" value="{{IdCliente}}"
+                                        disabled>
+                                    <input type="number" style="display: none;" name="IdCliente"
+                                        class="form-control text-dark m-1" value="{{IdCliente}}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Nombre</label>
+                                    <input type="text" id="nombre" name="Nombre" class="form-control text-dark m-1"
+                                        value="{{Nombre}}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Colonia</label>
+                                    <input type="text" id="colonia" name="DirColonia" class="form-control text-dark m-1"
+                                        value="{{DirColonia}}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Calle</label>
+                                    <input type="text" id="calle" name="DirCalle" class="form-control text-dark m-1"
+                                        value="{{DirCalle}}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Numero</label>
+                                    <input type="text" id="numero" name="DirNum" class="form-control text-dark m-1"
+                                        value="{{DirNum}}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Entre</label>
+                                    <input type="text" id="entre" name="DirEntre" class="form-control text-dark m-1"
+                                        value="{{DirEntre}}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Telefono</label>
+                                    <input type="text" id="telefono" name="Telefono" class="form-control text-dark m-1"
+                                        value="{{Telefono}}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>RFC</label>
+                                    <input type="text" id="rfc" name="RFC" class="form-control text-dark m-1"
+                                        value="{{RFC}}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Municipio</label>
+                                    <input type="text" id="municipio" name="Municipio"
+                                        class="form-control text-dark m-1" value="{{Municipio}}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>CP</label>
+                                    <input type="text" id="cp" name="CP" class="form-control text-dark m-1"
+                                        value="{{CP}}" disabled>
+                                </div>
+                                {{/each}}
+                                <button class="btn btn-info size-2" onclick=AgregarC() id="btnaddc" title="GUARDAR"
+                                    style="display: none;"> <i style="color: white;" class="fas fa-check"></i></button>
+                            </form>
+                            <button class="btn btn-info" title="EDITAR" id="btneditarc" onclick=editarc()
+                                style="display: block;"><i style="color: white;" class="far fa-edit"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class=" mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-dark mb-3 h4">Equipo</h1>
+                <div class=" mx-auto">
+                    <div class="card">
+                        <div class="card-body" style="display:block; background-color:#d9d9d9;" id="busE">
+                            <h1 class="text-dark mb-3 h4">Buscar</h1>
+                            {{#each equipo}}
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Equipo {{IdEquipo}}/{{Tipo}}/{{Marca}}</div>
+                                    Ver equipo =>
+                                    <button class="btn btn-info" title="VER EQUIPO" onclick=SelE({{IdEquipo}})><i style="color: white;" class="fas fa-camera-retro"></i></button>
+                                </div>
+                            </li>
+                            {{/each}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-body" style="background-color:#d9d9d9;">
+                            <h1 class="text-dark mb-3 h4">Agregar</h1>
+                            <button class="btn btn-info size-2" onclick=Agregar() id="btnadd" title="AGREGAR EQUIPO"><i style="color: white;"
+                                    class="fas fa-plus"></i></button>
+                            <form action="/ver_cliente/agregare" method="POST" style="display:none" id="agregare">
+                                <div class="form-group">
+                                    <label>Id cliente</label>
+                                    <input type="number" class="form-control text-dark m-1" disabled id="IdClienterr"
+                                        value="{{id}}">
+                                    <input type="number" value="{{id}}" name="IdCliente" id="IdCliente"
+                                        class="form-control text-dark m-1" style="display:none">
+                                </div>
+                                <div class="form-group">
+                                    <label>Id equipo</label>
+                                    <input type="number" id="IdEquipo" class="form-control text-dark m-1" disabled>
+                                    <input type="number" name="IdEquipo" id="IdEquiporr"
+                                        class="form-control text-dark m-1" style="display:none">
+                                </div>
+                                <div class="form-group">
+                                    <label>Categoria</label>
+                                    <select name="Categoria" id="Categoria" class="form-select text-dark m-1 "
+                                        onclick=tipo() disabled>
+                                        <option value="">Elige una categoria</option>
+                                        <option value="LAVADO">LAVADO</option>
+                                        <option value="REFRIGERACION">REFRIGERACION</option>
+                                        <option value="MICROONDAS">MICROONDAS</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select name="Tipo" id="Tipo" class="form-select text-dark m-1 " disabled>
+                                        <option value="">Elige un tipo</option>
+                                        <option id="lav1" style="display:none" value="LAVADORA">LAVADORA</option>
+                                        <option id="lav2" style="display:none" value="SECADORA">SECADORA</option>
+                                        <option id="ref1" style="display:none" value="REFRIGERADOR">REFRIGERADOR
+                                        </option>
+                                        <option id="ref2" style="display:none" value="ENFRIADOR DE AGUA">ENFRIADOR DE
+                                            AGUA</option>
+                                        <option id="ref3" style="display:none" value="CONGELADOR">CONGELADOR</option>
+                                        <option id="ref4" style="display:none" value="ENFRIADOR DE BOTELLAS">ENFRIADOR
+                                            DE BOTELLAS</option>
+                                        <option id="ref5" style="display:none" value="SERVIBAR">SERVIBAR</option>
+                                        <option id="mic1" style="display:none" value="MICROONDAS">MICROONDAS</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Marca</label>
+                                    <input type="text" name="Marca" id="Marca" class="form-control text-dark m-1"
+                                        disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Color</label>
+                                    <input type="text" name="Color" id="Color" class="form-control text-dark m-1"
+                                        disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Modelo</label>
+                                    <input type="text" name="Modelo" id="Modelo" class="form-control text-dark m-1"
+                                        disabled>
+                                </div>
+                                <div class="form-group" id="btnagr" style="display:none" title="GUARDAR">
+                                    <button class="btn btn-info btn-block mx-1 ">
+                                        <i style="color: white;" class="fas fa-check"></i>
+                                    </button>
+                                </div>
+                            </form>
+
+                            <form action="/editar_equipo" method="POST" style="display:none" id="editare">
+                                <div class="form-group">
+                                    <label>Id cliente</label>
+                                    <input type="number" class="form-control text-dark m-1" disabled id="IdClienterrE"
+                                        value="{{id}}">
+
+                                    <input type="number" name="IdCliente" value="{{id}}" id="IdClienteE"
+                                        class="form-control text-dark m-1" style="display:none">
+                                </div>
+                                <div class="form-group">
+                                    <label>Id equipo</label>
+                                    <input type="number" id="IdEquipoE" class="form-control text-dark m-1" disabled>
+                                    <input type="number" name="IdEquipo" id="IdEquiporrE"
+                                        class="form-control text-dark m-1" style="display:none">
+                                </div>
+                                <div class="form-group">
+                                    <label>Categoria</label>
+                                    <select name="Categoria" id="CategoriaE" class="form-select text-dark m-1 "
+                                        onclick=tipo("E") disabled>
+                                        <option value="">Elige una categoria</option>
+                                        <option value="LAVADO">LAVADO</option>
+                                        <option value="REFRIGERACION">REFRIGERACION</option>
+                                        <option value="MICROONDAS">MICROONDAS</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select name="Tipo" id="TipoE" class="form-select text-dark m-1 " disabled>
+                                        <option value="">Elige un tipo</option>
+                                        <option id="lav1E" style="display:none" value="LAVADORA">LAVADORA</option>
+                                        <option id="lav2E" style="display:none" value="SECADORA">SECADORA</option>
+                                        <option id="ref1E" style="display:none" value="REFRIGERADOR">REFRIGERADOR
+                                        </option>
+                                        <option id="ref2E" style="display:none" value="ENFRIADOR DE AGUA">ENFRIADOR DE
+                                            AGUA</option>
+                                        <option id="ref3E" style="display:none" value="CONGELADOR">CONGELADOR</option>
+                                        <option id="ref4E" style="display:none" value="ENFRIADOR DE BOTELLAS">ENFRIADOR
+                                            DE BOTELLAS</option>
+                                        <option id="ref5E" style="display:none" value="SERVIBAR">SERVIBAR</option>
+                                        <option id="mic1E" style="display:none" value="MICROONDAS">MICROONDAS</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Marca</label>
+                                    <input type="text" name="Marca" id="MarcaE" class="form-control text-dark m-1"
+                                        disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Color</label>
+                                    <input type="text" name="Color" id="ColorE" class="form-control text-dark m-1"
+                                        disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Modelo</label>
+                                    <input type="text" name="Modelo" id="ModeloE" class="form-control text-dark m-1"
+                                        disabled>
+                                </div>
+                                <div class="form-group" id="btnagrE" style="display:none" title="GUARDAR">
+                                    <button class="btn btn-info  mx-1 ">
+                                        <i style="color: white;" class="fas fa-check"></i>
+                                    </button>
+                                </div>
+                            </form>
+                            <button class="btn btn-info" title="EDITAR" id="btneditare" onclick=editare()
+                                style="display: none;"><i style="color: white;" class="far fa-edit"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class=" mx-auto" id="Agregar">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="text-dark mb-3 h4">Registros</h1>
+                <div class="card">
+                    <div class="card-body" style="background-color:#d9d9d9;">
+                        <ol class="list-group list-group-numbered" id="registros" style="display:block">
+                            {{#each orden}}
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold" id="p{{IdOrdenServicio}}"> Folio {{IdOrdenServicio}}</div>
+                                   Ver orden de servicio =>
+                                    <button class="btn btn-info" title="VER ORDEN" onclick=registro({{IdOrdenServicio}})><i style="color: white;"
+                                            class="far fa-id-badge"></i></button>
+                                            <a href="/ver_garantia{{IdOrdenServicio}}/"  id="garra{{IdOrdenServicio}}" title="GARANTIA" class="btn btn-info"><i style="color: white;"
+                                            class="fas fa-exclamation-triangle"></i></a>
+                                            <a href="/serviflash/notas{{IdOrdenServicio}}/" title="VER NOTAS" class="btn btn-info"><i style="color: white;"
+                                             class="fas fa-file-invoice-dollar"></i></a>
+                                            <a href="/ver_nota/{{IdOrdenServicio}}" title="IMAGEN ORDEN DE SERVICIO" class="btn btn-info"><i style="color: white;"
+                                            class="far fa-file-image"></i></a>
+                                </div>
+                            </li>
+                            {{/each}}
+                        </ol>
+                        {{#each orden}}
+
+                        <div style="display:none" id="btn{{IdOrdenServicio}}">
+                            <button class="btn btn-info" title="ATRAS" onclick=registro({{IdOrdenServicio}})><i style="color: white;"
+                                    class="fas fa-chevron-left"></i></button>
+                            <button class="btn btn-info" title="EDITAR" onclick=editarr({{IdOrdenServicio}})><i style="color: white;"
+                                    class="far fa-edit"></i></button>
+
+                        </div>
+
+                        <form action="/editar_registro" method="POST" style="display:none" id="{{IdOrdenServicio}}">
+
+                            <div class="form-group">
+                                <label>Numero de Solicitud</label>
+                                <input type="number" name="IdOrdenServicio" id="Idre" value="{{IdOrdenServicio}}"
+                                    style="display:none" class="form-control text-dark m-1">
+                                <input type="number" value="{{IdOrdenServicio}}" class="form-control text-dark m-1"
+                                    disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Cliente</label>
+                                <input type="number" style="display:none" name="IdCliente" value="{{IdCliente}}"
+                                    class="form-control text-dark m-1">
+                                <input type="text"  value="{{IdCliente}}"
+                                    class="form-control text-dark m-1" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label id="E{{IdOrdenServicio}}">Equipo</label>
+                                <input type="number" style="display:none" name="IdEquipo" value="{{IdEquipo}}"
+                                    class="form-control text-dark m-1">
+                                <input type="text" value="{{IdEquipo}}"
+                                    class="form-control text-dark m-1" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Falla</label>
+                                <input type="text" name="Falla" value="{{Falla}}" id="Falla{{IdOrdenServicio}}" class="form-control text-dark m-1"
+                                    required disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Fecha de Solicitud</label>
+                                <input type="date" name="FechaSolicitud" id="FechaSolicitud{{IdOrdenServicio}}" value="{{moment FechaSolicitud }}"
+                                    class="form-control text-dark m-1" required disabled>
+                            </div>
+                             <div class="form-group">
+                                <label>Fecha de Visita</label>
+                                <input type="date" name="FechaVisita" id="FechaVisita{{IdOrdenServicio}}" value="{{moment FechaVisita }}"
+                                    class="form-control text-dark m-1" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Realizado</label>
+                                <select name="Realizado" id="Realizado{{IdOrdenServicio}}" class="form-select text-dark m-1 " disabled>
+                                    <option  style="display:block" id="Extra{{IdOrdenServicio}}">{{Realizado}}</option>
+
+                                    <option value="255">Si</option>
+                                    <option value="0">No</option>
+                                    <option value="128">Cotizacion</option>
+                                    <option value="100">En Proceso</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Fecha de Entrega</label>
+                                <input type="date" name="FechaRealizacion" id="FechaRealizacion{{IdOrdenServicio}}" value="{{moment FechaRealizacion}}"
+                                    class="form-control text-dark m-1" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Observaciones</label>
+                                <input type="text" name="Observaciones" id="Observaciones{{IdOrdenServicio}}" value="{{Observaciones}}"
+                                    class="form-control text-dark m-1" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Presupuesto</label>
+                                <input type="text" name="Presupuesto" id="Presupuesto{{IdOrdenServicio}}" value="{{Presupuesto}}"
+                                    class="form-control text-dark m-1" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Costo del Servicio</label>
+                                <input type="text" name="CostoServicio" id="CostoServicio{{IdOrdenServicio}}" value="{{CostoServicio}}"
+                                    class="form-control text-dark m-1" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Horario</label>
+                                <select name="Hora" id="Hora{{IdOrdenServicio}}" class="form-select text-dark m-1 " disabled>
+                                    <option value="{{Hora}}">{{Hora}}</option>
+
+                                    <option>Seleccione uno</option>
+                                            <option value="08:00 - 09:00">8:00-9:00</option>
+                                            <option value="08:00 - 09:30">8:00-9:30</option>
+                                            <option value="08:00 - 10:00">8:00-10:00</option>
+                                            <option value="09:00 - 10:00">9:00-10:00</option>
+                                            <option value="09:00 - 10:30">9:00-10:30</option>
+                                            <option value="09:00 - 11:00">9:00-11:00</option>
+                                            <option value="10:00 - 11:00">10:00-11:00</option>
+                                            <option value="10:00 - 11:30">10:00-11:30</option>
+                                            <option value="10:00 - 12:00">10:00-12:00</option>
+                                            <option value="11:00 - 12:00">11:00-12:00</option>
+                                            <option value="11:00 - 12:30">11:00-12:30</option>
+                                            <option value="11:00 - 01:00">11:00-1:00</option>
+                                            <option value="12:00 - 01:00">12:00-1:00</option>
+                                            <option value="12:00 - 01:30">12:00-1:30</option>
+                                            <option value="12:00 - 02:00">12:00-2:00</option>
+                                            <option value="01:00 - 02:00">1:00-2:00</option>
+                                            <option value="01:00 - 02:30">1:00-2:30</option>
+                                            <option value="01:00 - 03:00">1:00-3:00</option>
+                                            <option value="02:00 - 03:00">2:00-3:00</option>
+                                            <option value="02:00 - 03:30">2:00-3:30</option>
+                                            <option value="02:00 - 04:00">2:00-4:00</option>
+                                            <option value="03:00 - 04:00">3:00-4:00</option>
+                                            <option value="03:00 - 04:30">3:00-4:30</option>
+                                            <option value="03:00 - 05:00">3:00-5:00</option>
+                                            <option value="04:00 - 05:00">4:00-5:00</option>
+                                            <option value="04:00 - 05:30">4:00-5:30</option>
+                                            <option value="04:00 - 06:00">4:00-6:00</option>
+                                            <option value="05:00 - 06:00">5:00-6:00</option>
+                                            <option value="05:00 - 06:30">5:00-6:30</option>
+                                            <option value="05:00 - 07:00">5:00-7:00</option>
+                                            <option value="06:00 - 07:00">6:00-7:00</option>
+                                            <option value="06:00 - 07:30">6:00-7:30</option>
+                                            <option value="06:00 - 08:00">6:00-8:00</option>
+                                            <option value="07:00 - 08:00">7:00-8:00</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tecnico</label>
+                                <select name="IdTecnico" id="IdTecnico{{IdOrdenServicio}}" class="form-select text-dark m-1 " disabled required>
+                                    <option  style="display:block" id="Extra1{{IdOrdenServicio}}" value="{{IdTecnico}}">{{IdTecnico}}</option>
+                                    
+
+                                    <option value="0">Seleccione uno</option>
+                                    <option value="4">ALEJO FAJARDO</option>
+                                    <option value="8">RICARDO ANTONIO</option>
+                                    <option value="11">ALBERTO CARLOS</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Medio por el cual de entero del servicio</label>
+                                <select name="MedioDeInformacion" id="MedioDeInformacion{{IdOrdenServicio}}" class="form-select text-dark m-1 " required
+                                    disabled>
+                                    <option  style="display:block" id="Extra2{{IdOrdenServicio}}">{{MedioDeInformacion}}</option>
+                                   
+
+                                    <option value="tarjeta">Tarjeta</option>
+                                    <option value="revista/anuncio">Revista/Anuncio</option>
+                                    <option value="cliente">Cliente</option>
+                                    <option value="recomendacion">Recomendacion</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-info btn-block mx-1 " id="btnenv{{IdOrdenServicio}}" title="GUARDAR" style="display:none;">
+                                    <i style="color: white;" class="fas fa-check"></i>
+                                </button>
+                            </div>
+                        </form>
+                        {{/each}}
+                        <br>
+                        <br>
+                        {{#each orden}}
+
+                        <form action="/agregar_garantia" method="post" style="margin-left: 96%; display:none" id="btnGG{{IdOrdenServicio}}">
+                               
+                                <div class="form-group" style="display: none;">
+                                <input type="date" name="FechaGarantia" id="qg{{IdOrdenServicio}}"  value="2021-12-31"
+                                    style="display:none" class="form-control text-dark m-1">
+                                <input type="number" name="IdOrdenServicio"  value="{{IdOrdenServicio}}"
+                                    style="display:none" class="form-control text-dark m-1">
+                                <input type="text" name="IdCliente"  value="{{IdCliente}}"
+                                    style="display:none" class="form-control text-dark m-1">
+                            </div>
+                                     <button class="btn btn-info" style="display: none;" id="btng{{IdOrdenServicio}}" title="ACTIVAR GARANTIA" ><i style="color: white;" class="fas fa-exclamation-triangle"></i></button>
+                                     <button class="btn btn-info" style="display: none;" id="btngq{{IdOrdenServicio}}" title="DESACTIVAR GARANTIA" ><i style="color: white;" class="fas fa-exclamation-triangle"></i></button>
+
+
+                            </form>
+
+                        {{/each}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    
+    const busqueda = document.getElementById("busqueda")
+
+    let arrayE = []
+    let array = []
+
+    let a = 1
+    {{#each equipo}}
+    arrayE.push({
+        IdCliente: "{{IdCliente}}",
+        IdEquipo: "{{IdEquipo}}",
+        Categoria: "{{Categoria}}",
+        Tipo: "{{Tipo}}",
+        Marca: "{{Marca}}",
+        Color: "{{Color}}",
+        Modelo: "{{Modelo}}",
+        LugarS: a
+    })
+    a++
+    {{/each}}
+    {{#each orden}}
+    array.push({
+        Id:"{{IdOrdenServicio}}",
+        Realizado:"{{Realizado}}",
+        Garantia:"{{moment FechaGarantia}}",
+        IdEquipo:"{{IdEquipo}}",
+        Realizado:"{{Realizado}}"
+    })
+    {{/each}}
+
+
+            function SelE(selecE) {
+                    for (index = 0; index < arrayE.length; index++) {
+                        if (selecE == arrayE[index].LugarS) {
+                            document.getElementById("IdCliente").value = arrayE[index].IdCliente
+                            document.getElementById("IdClienterr").value = arrayE[index].IdCliente
+                            document.getElementById("IdEquipo").value = arrayE[index].IdEquipo
+                            document.getElementById("Categoria").value = arrayE[index].Categoria
+                            document.getElementById("Tipo").value = arrayE[index].Tipo
+                            document.getElementById("Marca").value = arrayE[index].Marca
+                            document.getElementById("Color").value = arrayE[index].Color
+                            document.getElementById("Modelo").value = arrayE[index].Modelo
+                            document.getElementById("Agregar").style.display = "block"
+                            document.getElementById("agregare").style.display = "block"
+                            document.getElementById("btneditare").style.display = "block"
+
+
+                        }
+                    }
+                }
+
+            function Agregar() {
+                document.getElementById("agregare").style.display = "block"
+                document.getElementById("btnadd").style.display = "none"
+                document.getElementById("IdEquipo").value = arrayE.length + 1
+                document.getElementById("IdEquiporr").value = arrayE.length + 1
+                document.getElementById("Categoria").disabled = false
+                document.getElementById("Categoria").value = ""
+                document.getElementById("Tipo").disabled = false
+                document.getElementById("Tipo").value = ""
+                document.getElementById("Marca").disabled = false
+                document.getElementById("Marca").value = ""
+                document.getElementById("Color").disabled = false
+                document.getElementById("Color").value = ""
+                document.getElementById("Modelo").disabled = false
+                document.getElementById("Modelo").value = ""
+                document.getElementById("btnagr").style.display = "block"
+                document.getElementById("busE").style.display = "none"
+                document.getElementById("btneditare").style.display = "none"
+            }
+
+            function tipo(op) {
+
+                if (op == "E") {
+
+                    if (document.getElementById("CategoriaE").selectedIndex == 1) {
+
+                        document.getElementById("ref1E").style.display = "none"
+                        document.getElementById("ref2E").style.display = "none"
+                        document.getElementById("ref3E").style.display = "none"
+                        document.getElementById("ref4E").style.display = "none"
+                        document.getElementById("ref5E").style.display = "none"
+
+                        document.getElementById("lav1E").style.display = "block"
+                        document.getElementById("lav2E").style.display = "block"
+
+                        document.getElementById("mic1E").style.display = "none"
+
+                    } else if (document.getElementById("CategoriaE").selectedIndex == 2) {
+
+                        document.getElementById("ref1E").style.display = "block"
+                        document.getElementById("ref2E").style.display = "block"
+                        document.getElementById("ref3E").style.display = "block"
+                        document.getElementById("ref4E").style.display = "block"
+                        document.getElementById("ref5E").style.display = "block"
+
+                        document.getElementById("lav1E").style.display = "none"
+                        document.getElementById("lav2E").style.display = "none"
+
+                        document.getElementById("mic1E").style.display = "none"
+
+                    } else if (document.getElementById("CategoriaE").selectedIndex == 3) {
+                        document.getElementById("ref1E").style.display = "none"
+                        document.getElementById("ref2E").style.display = "none"
+                        document.getElementById("ref3E").style.display = "none"
+                        document.getElementById("ref4E").style.display = "none"
+                        document.getElementById("ref5E").style.display = "none"
+
+                        document.getElementById("lav1E").style.display = "none"
+                        document.getElementById("lav2E").style.display = "none"
+
+                        document.getElementById("mic1E").style.display = "block"
+                    }
+
+                } else {
+                    if (document.getElementById("Categoria").selectedIndex == 1) {
+
+                        document.getElementById("ref1").style.display = "none"
+                        document.getElementById("ref2").style.display = "none"
+                        document.getElementById("ref3").style.display = "none"
+                        document.getElementById("ref4").style.display = "none"
+                        document.getElementById("ref5").style.display = "none"
+
+                        document.getElementById("lav1").style.display = "block"
+                        document.getElementById("lav2").style.display = "block"
+
+                        document.getElementById("mic1").style.display = "none"
+
+                    } else if (document.getElementById("Categoria").selectedIndex == 2) {
+
+                        document.getElementById("ref1").style.display = "block"
+                        document.getElementById("ref2").style.display = "block"
+                        document.getElementById("ref3").style.display = "block"
+                        document.getElementById("ref4").style.display = "block"
+                        document.getElementById("ref5").style.display = "block"
+
+                        document.getElementById("lav1").style.display = "none"
+                        document.getElementById("lav2").style.display = "none"
+
+                        document.getElementById("mic1").style.display = "none"
+
+                    } else if (document.getElementById("Categoria").selectedIndex == 3) {
+                        document.getElementById("ref1").style.display = "none"
+                        document.getElementById("ref2").style.display = "none"
+                        document.getElementById("ref3").style.display = "none"
+                        document.getElementById("ref4").style.display = "none"
+                        document.getElementById("ref5").style.display = "none"
+
+                        document.getElementById("lav1").style.display = "none"
+                        document.getElementById("lav2").style.display = "none"
+
+                        document.getElementById("mic1").style.display = "block"
+                    }
+
+
+                }
+            }
+
+            function registro(id) {
+                if (document.getElementById(id).style.display == "block") {
+                    document.getElementById(id).style.display = "none"
+                    document.getElementById("btn" + id).style.display = "none"
+                    document.getElementById("registros").style.display = "block"
+                    document.getElementById("btnGG"+id).style.display = "none"
+                    return
+                } else {
+                    document.getElementById(id).style.display = "block"
+                    document.getElementById("btn" + id).style.display = "block"
+                    document.getElementById("registros").style.display = "none"
+                   //garantia(id)
+                }
+            }
+
+            function editarc() {
+                document.getElementById("nombre").disabled = false
+                document.getElementById("colonia").disabled = false
+                document.getElementById("calle").disabled = false
+                document.getElementById("numero").disabled = false
+                document.getElementById("entre").disabled = false
+                document.getElementById("telefono").disabled = false
+                document.getElementById("rfc").disabled = false
+                document.getElementById("municipio").disabled = false
+                document.getElementById("cp").disabled = false
+                document.getElementById("btneditarc").style.display = "none"
+                document.getElementById("btnaddc").style.display = "block"
+            }
+
+            function editare() {
+                document.getElementById("agregare").style.display = "none"
+                document.getElementById("editare").style.display = "block"
+                document.getElementById("btneditare").style.display = "none"
+                document.getElementById("IdEquipoE").value = document.getElementById("IdEquipo").value
+                document.getElementById("IdEquiporrE").value = document.getElementById("IdEquipo").value
+                document.getElementById("CategoriaE").value = document.getElementById("Categoria").value
+                document.getElementById("TipoE").value = document.getElementById("Tipo").value
+                document.getElementById("MarcaE").value = document.getElementById("Marca").value
+                document.getElementById("ColorE").value = document.getElementById("Color").value
+                document.getElementById("ModeloE").value = document.getElementById("Modelo").value
+                document.getElementById("btnagrE").style.display = "block"
+                document.getElementById("CategoriaE").disabled = false
+                document.getElementById("TipoE").disabled = false
+                document.getElementById("MarcaE").disabled = false
+                document.getElementById("ColorE").disabled = false
+                document.getElementById("ModeloE").disabled = false
+            }
+
+            function editarr(id){
+                if (document.getElementById("Realizado"+id).value=="No"){
+                    document.getElementById("Extra"+id).style.display = "none"
+                    document.getElementById("Realizado"+id).selectedIndex=2
+
+                }else if(document.getElementById("Realizado"+id).value=="Si"){
+                    document.getElementById("Extra"+id).style.display = "none"
+                    document.getElementById("Realizado"+id).selectedIndex=1
+
+                }else if(document.getElementById("Realizado"+id).value=="En Proceso"){
+                    document.getElementById("Extra"+id).style.display = "none"
+                    document.getElementById("Realizado"+id).selectedIndex=4
+
+                } else {
+                    document.getElementById("Extra"+id).style.display = "none"
+                    document.getElementById("Realizado"+id).selectedIndex=3
+
+                }
+                
+
+
+                if (document.getElementById("IdTecnico"+id).value=="ALEJO FAJARDO"){
+                   // document.getElementById("Extra1"+id).style.display = "none"
+                    document.getElementById("IdTecnico"+id).selectedIndex=2
+
+                }else if(document.getElementById("IdTecnico"+id).value=="RICARDO ANTONIO"){
+                    //document.getElementById("Extra1"+id).style.display = "none"
+                    document.getElementById("IdTecnico"+id).selectedIndex=3
+
+                }else if(document.getElementById("IdTecnico"+id).value=="ALBERTO CARLOS"){
+                   // document.getElementById("Extra1"+id).style.display = "none"
+                    document.getElementById("IdTecnico"+id).selectedIndex=4
+                }
+
+
+
+
+
+                if (document.getElementById("MedioDeInformacion"+id).value=="tarjeta"){
+                    document.getElementById("Extra2"+id).style.display = "none"
+                    document.getElementById("MedioDeInformacion"+id).selectedIndex=1
+
+                }else if(document.getElementById("MedioDeInformacion"+id).value=="revista/anuncio"){
+                    document.getElementById("Extra2"+id).style.display = "none"
+                    document.getElementById("MedioDeInformacion"+id).selectedIndex=2
+
+                }else  if(document.getElementById("MedioDeInformacion"+id).value=="cliente"){
+                    document.getElementById("Extra2"+id).style.display = "none"
+                    document.getElementById("MedioDeInformacion"+id).selectedIndex=3
+
+                }else  if(document.getElementById("MedioDeInformacion"+id).value=="recomendacion"){
+                    document.getElementById("Extra2"+id).style.display = "none"
+                    document.getElementById("MedioDeInformacion"+id).selectedIndex=4
+                }
+                
+
+                document.getElementById("Falla"+id).disabled = false
+                document.getElementById("FechaSolicitud"+id).disabled = false
+                document.getElementById("FechaVisita"+id).disabled = false
+                document.getElementById("Realizado"+id).disabled = false
+                document.getElementById("FechaRealizacion"+id).disabled = false
+                document.getElementById("Observaciones"+id).disabled = false
+                document.getElementById("Presupuesto"+id).disabled = false
+                document.getElementById("CostoServicio"+id).disabled = false
+                document.getElementById("Hora"+id).disabled = false 
+                document.getElementById("IdTecnico"+id).disabled = false
+                document.getElementById("MedioDeInformacion"+id).disabled = false
+
+                document.getElementById("btn"+id).style.display = "none"
+                document.getElementById("btnenv"+id).style.display = "block"
+            }
+
+            function garantia(id){
+
+
+                for(let index=0; index<array.length; index++){
+
+                    if(array[index].Id==id ){
+                        console.log(array[index].Id,id,array[index].Realizado,array[index].Garantia)
+                        if(array[index].Garantia !="2021-12-31" & array[index].Realizado=="Si"){
+                            document.getElementById("btngq"+id).style.display = "none"
+                            document.getElementById("btng"+id).style.display = "block"
+                            document.getElementById("btnGG"+id).style.display = "block"
+                            
+                            return
+
+                        }else if(array[index].Garantia =="2021-12-31" & array[index].Realizado=="Si"){
+                            document.getElementById("btngq"+id).style.display = "block"
+                            document.getElementById("btnGG"+id).style.display = "block"
+                            document.getElementById("btng"+id).style.display = "none"
+                            document.getElementById("qg"+id).value="0000-00-00"
+                            console.log(document.getElementById("qg"+id).value)
+                            return
+
+                        }
+                    }
+                }
+            }
+
+            function Equipo(){
+                let e
+                for(let inde=0;inde<array.length;inde++){
+                    for(let index=0;index<arrayE.length;index++){
+                        if(array[inde].IdEquipo==arrayE[index].IdEquipo){
+                            e="Equipo "+arrayE[index].Tipo+" "+arrayE[index].Marca
+                            document.getElementById("E"+array[inde].Id).innerHTML=e
+                        }
+                    }
+                }
+            } 
+            Equipo()  
+
+            function marca(){
+                for(index=0;index<array.length;index++){
+                    if(array[index].Realizado=="No"){
+                        document.getElementById("p"+array[index].Id).innerText=document.getElementById("p"+array[index].Id).innerText+" Abierto"
+                        document.getElementById("p"+array[index].Id).style.color="blue"
+                    } else if(array[index].Garantia=="2021-12-31"){
+                        document.getElementById("p"+array[index].Id).innerText=document.getElementById("p"+array[index].Id).innerText+" Garantia"
+                        document.getElementById("p"+array[index].Id).style.color="red"
+                    }else if(array[index].Realizado=="En Proceso"){
+                        document.getElementById("p"+array[index].Id).innerText=document.getElementById("p"+array[index].Id).innerText+" En Proceso"
+                        document.getElementById("p"+array[index].Id).style.color="green"
+                    }
+                }
+            }
+            marca()
+
+            function garra1(){
+                for(let index=0; index<array.length;index++){
+                    if(array[index].Realizado=="Si"){
+                    }else{
+                        document.getElementById("garra"+array[index].Id).style.display="none"
+
+                    }
+                }
+            }
+            garra1()
+</script>

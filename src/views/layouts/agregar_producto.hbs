@@ -1,0 +1,350 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item">
+            <a  class=" nav-link" id="h1" href="/serviflash/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
+        </li>
+        <li class="nav-item" style="display: none;">
+          <a class="nav-link" id="h2"  href="/serviflash/clientes"><center><i class="fas fa-address-book fa-2x"></i><br>Clientes</a></center>
+        </li>
+        <li class="nav-item dropdown" style="margin-top: 15px;">
+        <a class="nav-link dropdown-toggle " style="color: blue;" href="#" id="h3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <center><i class="fas fa-file-alt fa-2x"></i><br>Catalogo</center>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/ferreteria/agregar_producto">Productos</a>
+          <a class="dropdown-item" href="/ferreteria/agregar_proveedor">Proveedores</a>
+        </div>
+      </li>
+        <li class="nav-item" id="admin" style="display: block;">
+          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+        </li>
+
+        <li class="nav-item">
+          <a  class="nav-link " ><center><i style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p style="color: #f8f9fa;">...</p></a></center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link"><center><i class="fas fa-user fa-2x"></i></i><br>Hola {{user.Nombre}}</a></center>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Producto</h1>
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body" style="background-color:#e6e6e6;">
+                                <h1 class="text-dark mb-3 h4">Buscar</h1>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input name="remitosucursal" id="busquedaNO" type="text"
+                                            class="form-control" placeholder="Descripcion">
+                                        <span class="input-group-addon"></span>
+                                        <input name="remitonumero" id="busquedaCO" type="text" 
+                                            class="form-control" placeholder="Proveedor">
+                                        <span class="input-group-addon"></span>
+                                        <input name="remitonumero" id="busquedaCA" type="text" 
+                                            class="form-control" placeholder="Categoria">
+                                    </div>
+                                </div>
+                                <div class="form-group px-2">
+                                    <table class="table table-bordered table-hover" id="tblmas">
+                                        <thead >
+                                            <tr role="row" id="tblh" style="display:none">
+                                                <th>Descripcion</th>
+                                                <th>Proveedor</th>
+                                                <th>Categoria</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblbody">
+                                            {{#each productos}}
+                                            <tr id="{{IdProducto}}" style="display:none">
+                                                <td><a href="/ferreteria/ver_producto{{IdProducto}}/"
+                                                        class="link-success">{{Descripcion}}</a></td>
+                                                <td>{{IdProveedor}}</td>
+                                                <td>{{Categoria}}</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="form-group pu-5">
+                                    <button style="display:none" id="lib" class="btn btn-success">
+                                        <a href="" id="link" class="btn btn-success"></a></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Producto</h1>
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body" style="background-color:#e6e6e6;">
+                                <h1 class="text-dark mb-3 h4">Buscar por codigo de barras</h1>
+                                <form action="/buscar_por_barra" method="post">
+
+                                 <div class="row">
+                                    <div class="col-md-4">
+                                      <label for="">Codigo de Barras</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="CodeBar">
+                                    </div>
+                                    <div class="col-md-4">
+                                      <label for="">Codigo de Truper</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="CodeTruper">
+                                    </div>
+                                    <div class="col-md-4">
+                                      <label for="">Codigo de Producto</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="CodeProducto">
+                                    </div>
+                                  </div>
+
+                                   <div class="form-group" title="ENVIAR">
+                                        <button class="btn btn-info btn-block mx-1 ">
+                                            <i style="color: white;" class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Nuevo Producto <button onclick=ocu() class="btn btn-info" ><i style="color: white;" class="fas fa-arrows-alt-v"></i></button></h1>
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                              <section style="display: block;" id="aa">
+                                <h1 class="text-dark mb-3 h4">Datos</h1>
+                                <form action="/agregar_producto" method="POST">
+                                <div class="forn">
+                                     <div class="row">
+                                      <div class="col-md-2">
+                                        <label>Id Producto</label>
+                                        <input type="number" id="a1"  class="form-control text-dark m-1"
+                                            name="IdProducto" value="{{id}}" readonly>
+                                    </div>
+                                   <div class="col-md-5">
+                                        <label>Proveedor</label>
+                                              <select name="IdProveedor" id="a2" class="form-select text-dark m-1 " required>
+                                          <option value="">Elige un proveedor</option>
+                                           {{#each proveedor}}
+                                          <option value="{{IdProveedor}}">{{Nombre}}</option>
+                                         
+                                          {{/each}}
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label>Categoria</label>
+                                              <select name="Categoria" id="a3" class="form-select text-dark m-1 " required>
+                                          <option value="">Elige una categoria</option>
+                                          <option value="1">Categoria 1</option>
+                                          <option value="2">Categoria 2</option>
+                                          <option value="3">Categoria 3</option>
+                                          <option value="4">Categoria 4</option>
+                                        </select>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Descripcion</label>
+                                             <textarea name="Descripcion" id="a4" class="form-control text-dark m-1" rows="2" required></textarea>
+                                    </div>
+                                   <div class="row">
+                                      <div class="col-md-6">
+                                        <label>Precio de Venta</label>
+                                        <input type="number" id="a5" class="form-control text-dark m-1"
+                                             name="PrecioVenta" required>
+                                    </div>
+                                      <div class="col-md-6">
+                                        <label>Precio de Compra</label>
+                                        <input type="number" id="a6" class="form-control text-dark m-1"
+                                             name="PrecioCompra" >
+                                    </div>
+                                    </div>
+                                     <div class="row">
+                                      <div class="col-md-4">
+                                        <label>Codigo de Barras</label>
+                                        <input type="number" id="a7" class="form-control text-dark m-1"
+                                             name="CodeBar" >
+                                    </div>
+                                      <div class="col-md-4">
+                                        <label>Codigo de Truper</label>
+                                        <input type="number" id="a8"  class="form-control text-dark m-1"
+                                             name="CodeTruper" >
+                                    </div>
+                                      <div class="col-md-4">
+                                        <label>Codigo de Producto</label>
+                                        <input type="number" id="a9" class="form-control text-dark m-1"
+                                             name="CodeProducto" >
+                                    </div>
+                                    </div>
+                                   <div class="row">
+                                      <div class="col-md-6">
+                                        <label>Existencias</label>
+                                        <input type="number" id="a10" class="form-control text-dark m-1"
+                                             name="Existencias" required>
+                                    </div>
+                                      <div class="col-md-6">
+                                        <label>Stock Minimo</label>
+                                        <input type="number" id="a11" class="form-control text-dark m-1"
+                                             name="StockMinimo" required>
+                                    </div>
+                                    </div>
+                                     <div class="form-group" title="ENVIAR">
+                                        <button class="btn btn-info btn-block mx-1 ">
+                                            <i style="color: white;" class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                    </div>
+                                </form>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+   document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('div.forn  input').forEach( node => node.addEventListener('keypress', e => {
+        if(e.keyCode == 13) {
+          e.preventDefault();
+        }
+      }))
+    });
+function ocu(){
+  if(document.getElementById("aa").style.display=="none"){
+  document.getElementById("aa").style.display="block"}
+  else{
+    document.getElementById("aa").style.display="none"
+  }
+}
+  const busquedaNO = document.getElementById("busquedaNO")
+    const busquedaCO = document.getElementById("busquedaCO")
+    const busquedaCA = document.getElementById("busquedaCA")
+
+    let array = []
+    {{#each productos }}
+    array.push({
+        id: "{{IdProducto}}",
+        Descripcion: "{{Descripcion}}",
+        Categoria: "{{Categoria}}",
+        Proveedor: "{{IdProveedor}}"
+    })
+    {{/each}}
+
+            function buscarNO() {
+                busquedaCO.value=""
+                busquedaCA.value=""
+                const texto = busquedaNO.value.toLowerCase()
+                
+                if (texto == "") {
+                    document.getElementById("tblh").style.display = "none"
+                    for (index = 0; index < array.length; index++) {
+                        document.getElementById(array[index].id).style.display = "none"
+                    }
+                    return
+                }
+                for (index = 0; index < array.length; index++) {
+                    let nombre = array[index].Descripcion.toLowerCase()
+                    if (nombre.indexOf(texto) !== -1) {
+                        document.getElementById(array[index].id).style.display = "block"
+                        document.getElementById("tblh").style.display = "block"
+                    } else {
+                        document.getElementById(array[index].id).style.display = "none"
+                    }
+                }
+
+            }
+
+            function buscarCO() {
+                busquedaNO.value=""
+                busquedaCA.value=""
+                const texto = busquedaCO.value.toLowerCase()
+                if (texto == "") {
+                    document.getElementById("tblh").style.display = "none"
+                    for (index = 0; index < array.length; index++) {
+                        document.getElementById(array[index].id).style.display = "none"
+                    }
+                    return
+                }
+                for (index = 0; index < array.length; index++) {
+                    let colonia = array[index].Proveedor.toLowerCase()
+                    if (colonia.indexOf(texto) !== -1) {
+                        document.getElementById(array[index].id).style.display = "block"
+                        document.getElementById("tblh").style.display = "block"
+                    } else {
+                        document.getElementById(array[index].id).style.display = "none"
+                    }
+                }
+
+            }
+
+            function buscarCA() {
+                busquedaCO.value=""
+                busquedaNO.value=""
+                const texto = busquedaCA.value.toLowerCase()
+                if (texto == "") {
+                    document.getElementById("tblh").style.display = "none"
+                    for (index = 0; index < array.length; index++) {
+                        document.getElementById(array[index].id).style.display = "none"
+                    }
+                    return
+                }
+                for (index = 0; index < array.length; index++) {
+                    let calle = array[index].Categoria.toLowerCase()
+                    if (calle.indexOf(texto) !== -1) {
+                        document.getElementById(array[index].id).style.display = "block"
+                        document.getElementById("tblh").style.display = "block"
+                    } else {
+                        document.getElementById(array[index].id).style.display = "none"
+                    }
+                }
+
+            }
+        
+
+            busquedaNO.addEventListener("keyup", buscarNO)
+            busquedaNO.addEventListener("keydown", buscarNO)
+            busquedaCO.addEventListener("keyup", buscarCO)
+            busquedaCO.addEventListener("keydown", buscarCO)
+            busquedaCA.addEventListener("keyup", buscarCA)
+            busquedaCA.addEventListener("keydown", buscarCA)
+
+
+</script>
+

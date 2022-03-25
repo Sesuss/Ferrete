@@ -1,0 +1,151 @@
+<div class="container-fluid p-1">
+  <div class="row mx-auto">
+    <div class="col-md-12">
+      <div class="row">
+
+        <div class="col-md-4">
+          <img alt="" src="bc4.png" width="770px">
+        </div>
+      </div>
+    </div>
+
+ <div class="row mx-auto " style="margin-bottom: 10px;">
+    
+      <table class=" table-bordered table-striped" style="font-size:small; margin-left: 5px; color: #000000; text-transform: uppercase; width:550px; border-color: #dddddd;">
+  <tbody>
+      {{#each cliente}}
+       <tr style="background-color: #dddddd; -webkit-print-color-adjust: exact; ">
+      <td><strong>Cliente</strong></td>
+      <td>{{Nombre}}</td>
+    </tr>
+     <tr>
+      <td><strong>Domicilio</strong></td>
+      <td>{{DirCalle}}  #{{DirNum}}</td>
+    </tr>
+     <tr style="background-color: #dddddd; -webkit-print-color-adjust: exact; ">
+      <td><strong>Colonia</strong></td>
+      <td>{{DirColonia}}</td>
+    </tr>
+    <tr>
+      <td><strong>Telefono</strong></td>
+      <td>{{Telefono}}</td>
+    </tr>
+    <tr style="background-color: #dddddd; -webkit-print-color-adjust: exact; ">
+      <td><strong>Municipio</strong></td>
+      <td>{{Municipio}}</td>
+    </tr>
+    {{/each}}
+      </tbody>
+</table>
+ <table class="table" style="font-size:small; margin-left: 20px; color: #000000; text-transform: uppercase; width:200px; border-color: #dddddd; " >
+  <tbody>
+             <tr class="table-active">
+                 <td><center><strong>Fecha del Servicio</strong></center></td>
+             </tr>
+    {{#each datos}}
+       <tr>
+      <td style="font-size: 20px;"><strong><center>{{moment FechaRealizacion}}</center></strong></td>
+    </tr>
+    {{/each}}
+      </tbody>
+</table>
+
+</div>
+
+ <div class="row mx-auto ">
+ <table  class=" table-bordered table-striped" style="font-size:x-small; margin-left: 5px; color: #000000; text-transform: uppercase; width:550px; border-color: #dddddd; ">
+     <thead style="font-size:large;background-color: #dddddd; -webkit-print-color-adjust: exact; ">
+         <th><center>Descripcion del servicio</center></th>
+         <th style="font-size:13px;"><center>Costo del  servicio</center></th>
+     </thead>
+  <tbody style="height: 3px;">
+      {{#each notas}}
+       <tr>
+      <td><strong>&nbsp;&nbsp;{{Cantidad}}&nbsp; &nbsp;&nbsp; &nbsp;{{Descripcion}}</strong></td>
+      <td>{{Importe}}</td>
+    </tr>
+    {{/each}}
+    <tr style="background-color: #dddddd; -webkit-print-color-adjust: exact; ">
+        <td><strong><center>---{{cantidad}}---</center></strong></td>
+        {{#each datos}}
+        <td><strong><center>{{CostoServicio}}</center></strong></td>
+        {{/each}}
+    </tr>
+    
+      </tbody>
+</table>
+<table class="table table-sm" style="font-size:xx-small; margin-left: 20px; color: #000000; text-transform: uppercase; width:200px; border-color: #dddddd; ">
+  <tbody>
+    {{#each equipo}}
+       <tr class="table-active" >
+      <td><center><strong>Aparato</strong></center></td>
+    </tr>
+    <tr>
+      <td><center>{{Tipo}}</center></td>
+    </tr>
+    <tr>
+<td><br></td>
+    </tr>
+    <tr class="table-active">
+      <td><center><strong>Marca</strong></center></td>
+    </tr>
+    <tr>
+      <td><center>{{Marca}}</center></td>
+    </tr>
+    <tr>
+        <td><br></td>
+    </tr>
+    <tr class="table-active">
+      <td><center><strong>Modelo</strong></center></td>
+    </tr>
+    <tr>
+      <td><center>{{Modelo}}</center></td>
+    </tr>
+    {{/each}}
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr class="table-active">
+      <td><center><strong>Tecnico</strong></center></td>
+    </tr>
+    <tr style="">
+      <td><center>{{tecnico}}</center></td>
+      </tr>
+      </tbody>
+</table>
+<div style="">
+</div>
+<div style="border: black 0.5px solid; line-height: 60% " >
+
+     <center style=""><p><strong>
+       <br>
+        Terminos y Condiciones
+      </strong></p>
+      <p style="font-size: 10px;"><strong>
+        -La garantia por este servicio es de ( {{garantia}} ) días a partir de la fecha del servicio <br>
+        - Para hacer efectiva esta garantía, deberá mencionar la fecha del servicio desde la comodidad de su hogar, llamando al 312-308-8137 o al 312-308-0274 y con todo gusto le atenderemos en la menor brevedad posible. <br>
+
+- Si el aparato presentara alguna otra falla ajena a la reparación anterior, se reparará, únicamente se cobrará el costo de las refacciones en caso necesario.<br>
+
+- La garantía cubre únicamente lo descrito por el servicio realizado, esto incluye las piezas y/o refacciones reemplazadas y la mano de obra. <br>
+
+LA GARANTÍA NO SERA VÁLIDA EN LOS SIGUIENTES CASOS:<br>
+
+- Si el aparato hubiera sido utilizado u operado en condiciones distintas a las normales (recomendadas por el fabricante).<br>
+
+- Por daños resultantes por siniestros tales como: incendios, inundaciones, temblores, descargas eléctricas, etc.<br>
+
+- Si el aparato hubiera sido reparado o alterado por personas ajenas a nuestro servicio.
+<div style="background-color: blue; -webkit-print-color-adjust: exact; color: white; padding-bottom: 10px ;padding-top: 10px; margin-buttom: 3px; font-size: small;">
+TRABAJAMOS PARA FACILITARLE LA VIDA, GRACIAS POR DARNOS LA OPORTUNIDAD DE SERVIRLE
+</div>
+      </strong></p></center>
+</div>
+<div class="col-md-4">
+          <img alt="" src="linea.png" width="770px">
+        </div>
+</div>
+</div>
+</div>
+</div>
+</div>

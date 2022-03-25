@@ -1,0 +1,71 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+            <a  class=" nav-link" id="h1" href="/serviflash/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="h2"  href="/serviflash/clientes"><center><i class="fas fa-address-book fa-2x"></i><br>Clientes</a></center>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="h3" href="/serviflash/agregar_registro"><center><i class="fas fa-file-alt fa-2x"></i><br>Registrar <br> Servicio </a></center>
+        </li>
+        <li class="nav-item" id="admin" style="display: block;">
+          <a style="color: blue;" class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+        </li>
+        <li class="nav-item">
+          <a  class="nav-link " ><center><i style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p style="color: #f8f9fa;">...</p></a></center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link"><center><i class="fas fa-user fa-2x"></i></i><br>Hola {{user.Nombre}}</a></center>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Reporte</h1>
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body" style="background-color:#e6e6e6;">
+                                <h1 class="text-dark mb-3 h4">Total de servicios  {{total}}</h1>
+                            <form action="/ver_reporte" method="post">
+                            <div class="form-group">
+                                <label><strong>Revistas y Anuncios</strong></label>
+                                <input style="font-weight: bold;" type="text" value="{{medios.Revista}}" class="form-control text-dark" disabled>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label><strong>Clientes</strong></label>
+                                <input style="font-weight: bold;" type="text" value="{{medios.Cliente}}"  class="form-control text-dark" disabled>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label><strong>Tarjeta</strong></label>
+                                <input style="font-weight: bold;" type="text"  value="{{medios.Tarjeta}}" class="form-control text-dark" disabled>
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <label><strong>Recomendacion</strong></label>
+                                <input style="font-weight: bold;" type="text"  value="{{medios.Recomendacion}}" class="form-control text-dark" disabled>
+                            </div>
+                                </div>
+                            </form>  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

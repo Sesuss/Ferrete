@@ -1,0 +1,118 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+        <li class="nav-item">
+            <a  class=" nav-link" id="h1" href="/serviflash/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
+        </li>
+        <li class="nav-item">
+          <a style="color: blue;" id="h2" class="nav-link"  href="/serviflash/clientes"><center><i class="fas fa-address-book fa-2x"></i><br>Clientes</a></center>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="h3" href="/serviflash/agregar_registro"><center><i class="fas fa-file-alt fa-2x"></i><br>Registrar <br> Servicio </a></center>
+        </li>
+        <li class="nav-item" id="admin" style="display: block;">
+          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+        </li>
+        <li class="nav-item">
+          <a  class="nav-link " ><center><i style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p style="color: #f8f9fa;">...</p></a></center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link"><center><i class="fas fa-user fa-2x"></i></i><br>Hola {{user.Nombre}}</a></center>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+   
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Notas</h1>
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Agregar CONCEPTO</h1>
+                                <form action="/agregar_nota_n" method="post" >
+                                    <div class="form-group" style="display: none;">
+                                        <input type="number" name="IdOrdenServicio" value="{{id}}">
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                        <input type="text" name="NotaCerrada" value="0">
+                                    </div>
+                                    {{#each orden}}
+                                    <div class="form-group" Style="display: none;" >
+                                        <input type="number" name="IdCliente" class="form-control text-dark m-1" value="{{IdCliente}}">
+                                    </div>
+                                    {{/each}}
+                                    <div class="form-group">
+                                        <label>Garantia</label>
+                                        <select name="Garantia" class="form-select text-dark m-1 " required>
+                                            <option value="0">0</option>
+                                            <option value="30">30</option>
+                                            <option value="60">60</option>
+                                            <option value="90">90</option>
+                                            <option value="120">120</option>
+                                            <option value="180">180</option>
+                                        </select>
+                                    </div>
+                                     <div class="form-group">
+                                        <label>Fecha de Nota</label>
+                                        <input type="date" name="FechaNota" class="form-control text-dark m-1"
+                                             required>
+                                    </div>
+                                    <hr>
+                                    <div class="form-group">
+                                        <label>Cantidad</label>
+                                        <input type="number" name="Cantidad" class="form-control text-dark m-1"
+                                            value="1" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Descripcion</label>
+                                        <input type="text" name="Descripcion" class="form-control text-dark m-1"
+                                            required>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Precio Unitario</label>
+                                        <input type="number" name="PrecioUnitario" class="form-control text-dark m-1"
+                                            value="0" required>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Importe</label>
+                                        <input type="number" name="Importe" class="form-control text-dark m-1" value="0"
+                                            required>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-info btn-block mx-1" title="ENVIAR CONCEPTO">
+                                            <i style="color: white;" class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                                <br>
+                                {{#each orden}}
+                                <div style="margin-left: 5px;">
+                                <button class="btn btn-info" title="REGRESAR">
+                                <a href="/serviflash/ver_cliente{{IdCliente}}/" ><i style="color: white;" class="fas fa-chevron-left"></i></a>
+                                </button>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

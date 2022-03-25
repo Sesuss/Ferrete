@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferreteria</title>
+    <link href="/src/public/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     {{>navigation}}
+    
+</head>
+<body style="text-transform: uppercase; background-color: #f4f4f4;">
+
+   
+    {{{body}}}
+
+ <nav class="navbar navbar-expand-lg navbar-light  bg-light ">
+  <div style="" class="container-fluid">
+    <div >
+        <ul class="navbar-nav">
+<li class="navbar-nav ml-auto" >
+          <a  class="nav-link " title="CERRAR SESION" href="/serviflash/salir"><i class="fas fa-sign-out-alt fa-2x"></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+<script>
+let id = {{user.IdUsuario}}
+if(id == 15 || id == 18){
+  if(document.getElementById("h1").style.color =="" && document.getElementById("h2").style.color == "" && document.getElementById("h3").style.color == ""){
+      document.getElementById("adminS").style.color="blue"
+      document.getElementById("adminI").style.color="blue"
+  } else {
+      document.getElementById("adminS").style.color="#707071"
+      document.getElementById("adminI").style.color="#707071"
+
+  }
+  
+}else{
+  document.getElementById("admin").style.display="none"
+}
+</script>
+<script src="https://kit.fontawesome.com/bd0149be30.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
