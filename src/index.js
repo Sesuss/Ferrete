@@ -19,7 +19,7 @@ const database = {
     user: "root",
     port:"3306",
     password: "",
-    database: "ferrete",
+    database: "ferrete"
   
   
   }

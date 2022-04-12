@@ -403,7 +403,7 @@ if (time.isBetween(ATime, DTime)) {
     }
     res.render("layouts/servicios_pendientes", {pendientes, array, garantia, cliente, clienteg, clientep})
     */
-   res.redirect("/ferreteria/agregar_producto")
+   res.redirect("/ferreteria/punto")
 })
 
 
@@ -474,6 +474,61 @@ router.post("/buscar_por_barra", isLoggedIn, async (req, res) => {
     res.redirect("/ferreteria/agregar_producto")
     }
 })
+
+//---------------------------------------------Punto De Venta---------------------------------------------------------------------
+router.get("/ferreteria/punto", isLoggedIn, async (req, res) => {
+    let producto = await pool.query("SELECT * FROM tblproductos WHERE Existencias > 0")
+    res.render("layouts/punto_venta",{producto})
+    
+})
+
+router.get("/ferreteria/punto_de_venta:id/", isLoggedIn, async (req, res) => {
+    let {id} = req.params
+    let producto = await pool.query("SELECT * FROM tblproductos WHERE Existencias > 0")
+    let productos = await pool.query("SELECT tbldetalleventa.*,tblproductos.Descripcion FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[id])
+    res.render("layouts/punto_venta_v",{producto,productos,id})
+    
+})
+
+router.post("/agregar_carrito", isLoggedIn, async (req, res) => {
+    const {IdProducto, Cantidad, Precio} = req.body
+    let Importe=Cantidad*Precio
+    let carrito = await pool.query("INSERT INTO tblventas (`IdVendedor`, `IdCliente`, `Total`) VALUES (NULL, NULL, NULL)")
+    await pool.query("INSERT INTO tbldetalleventa SET IdVenta = ?, IdProducto = ?, Cantidad = ?, Precio = ?, Importe = ?",[carrito.insertId,IdProducto, Cantidad, Precio,Importe])
+    res.redirect("/ferreteria/punto_de_venta"+carrito.insertId)
+    
+})
+
+router.post("/agregar_al_carrito", isLoggedIn, async (req, res) => {
+    const {IdProducto, IdVenta, Cantidad, Precio} = req.body
+    let Importe=Cantidad*Precio
+    await pool.query("INSERT INTO tbldetalleventa SET IdVenta = ?, IdProducto = ?, Cantidad = ?, Precio = ?, Importe = ?",[IdVenta,IdProducto, Cantidad, Precio,Importe])
+    res.redirect("/ferreteria/punto_de_venta"+IdVenta)
+    
+})
+
+
+
+
+//---------------------------------------------REPORTES---------------------------------------------------------------------
+
+router.get("/ferreteria/reporte_minimo", isLoggedIn, async (req, res) => {
+    let productos = await pool.query("SELECT * FROM tblproductos WHERE Existencias < StockMinimo")
+    log(productos)
+    res.render("layouts/reporte_minimo",{productos})
+    
+})
+
+
+
+
+
+
+
+
+
+
+
 
 //---------------------------------------------PROVEEDORES---------------------------------------------------------------------
 
@@ -578,7 +633,7 @@ router.get("/serviflash/ver_cliente:id/", isLoggedIn, async (req, res) => {
 router.get("/serviflash/reportes", isLoggedIn, isAdmin, async (req, res) => {
     /*let cuenta = await pool.query("SELECT Email, Nombre, IdUsuario, Activa FROM tblusuarios WHERE IdUsuario = 16 OR IdUsuario = 17")
         res.render("layouts/reporte",{cuenta})*/
-        res.redirect("/ferreteria/agregar_producto")
+        res.redirect("/ferreteria/reporte_minimo")
     
 })
 router.get("/serviflash/eliminar_nota:id/", isLoggedIn, async (req, res) => {

@@ -42,107 +42,6 @@
         <div class=" mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="text-dark mb-3 h4">Producto</h1>
-                    <div class=" mx-auto">
-                        <div class="card">
-                            <div class="card-body" style="background-color:#e6e6e6;">
-                                <h1 class="text-dark mb-3 h4">Buscar</h1>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input name="remitosucursal" id="busquedaNO" type="text"
-                                            class="form-control" placeholder="Descripcion">
-                                        <span class="input-group-addon"></span>
-                                        <input name="remitonumero" id="busquedaCO" type="text" 
-                                            class="form-control" placeholder="Proveedor">
-                                        <span class="input-group-addon"></span>
-                                        <input name="remitonumero" id="busquedaCA" type="text" 
-                                            class="form-control" placeholder="Categoria">
-                                    </div>
-                                </div>
-                                <div class="form-group px-2">
-                                    <table class="table table-bordered table-hover" id="tblmas">
-                                        <thead >
-                                            <tr role="row" id="tblh" style="display:none">
-                                                <th>Descripcion</th>
-                                                <th>Proveedor</th>
-                                                <th>Categoria</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tblbody">
-                                            {{#each productos}}
-                                            <tr id="{{IdProducto}}" style="display:none">
-                                                <td><a href="/ferreteria/ver_producto{{IdProducto}}/"
-                                                        class="link-success">{{Descripcion}}</a></td>
-                                                <td>{{IdProveedor}}</td>
-                                                <td>{{Categoria}}</td>
-                                            </tr>
-                                            {{/each}}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="form-group pu-5">
-                                    <button style="display:none" id="lib" class="btn btn-success">
-                                        <a href="" id="link" class="btn btn-success"></a></button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-
-<div class="container p-4">
-    <div class="row">
-        <div class=" mx-auto">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="text-dark mb-3 h4">Producto</h1>
-                    <div class=" mx-auto">
-                        <div class="card">
-                            <div class="card-body" style="background-color:#e6e6e6;">
-                                <h1 class="text-dark mb-3 h4">Buscar por codigo de barras</h1>
-                                <form action="/buscar_por_barra" method="post">
-
-                                 <div class="row">
-                                    <div class="col-md-4">
-                                      <label for="">Codigo de Barras</label>
-                                     <input type="number"  class="form-control text-dark m-1" name="CodeBar">
-                                    </div>
-                                    <div class="col-md-4">
-                                      <label for="">Codigo de Truper</label>
-                                     <input type="number"  class="form-control text-dark m-1" name="CodeTruper">
-                                    </div>
-                                    <div class="col-md-4">
-                                      <label for="">Codigo de Producto</label>
-                                     <input type="number"  class="form-control text-dark m-1" name="CodeProducto">
-                                    </div>
-                                  </div>
-
-                                   <div class="form-group" title="ENVIAR">
-                                        <button class="btn btn-info btn-block mx-1 ">
-                                            <i style="color: white;" class="fas fa-check"></i>
-                                        </button>
-                                    </div>
-                                </form>
-                                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-
-<div class="container p-4">
-    <div class="row">
-        <div class=" mx-auto">
-            <div class="card">
-                <div class="card-body">
                     <h1 class="text-dark mb-3 h4">Nuevo Producto <button onclick=ocu() class="btn btn-info" ><i style="color: white;" class="fas fa-arrows-alt-v"></i></button></h1>
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
@@ -238,6 +137,96 @@
         </div>
     </div>
 </div>
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Producto</h1>
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body" style="background-color:#e6e6e6;">
+                                <h1 class="text-dark mb-3 h4">Buscar</h1>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input name="remitosucursal" id="busquedaNO" type="text"
+                                            class="form-control" placeholder="Descripcion">
+                                        <span class="input-group-addon"></span>
+                                        <input name="remitosucursal" id="busquedaMA" type="text"
+                                            class="form-control" placeholder="Marca">
+                                        <span class="input-group-addon"></span>
+                                        <input name="remitonumero" id="busquedaCO" type="text" 
+                                            class="form-control" placeholder="Proveedor">
+                                        <span class="input-group-addon"></span>
+                                        <input name="remitonumero" id="busquedaCA" type="text" 
+                                            class="form-control" placeholder="Categoria">
+                                    </div>
+                                </div>
+                                <div class="form-group px-2">
+                                    <table class="table table-bordered table-hover" id="tblmas">
+                                        <thead >
+                                            <tr role="row" id="tblh" style="display:none">
+                                                <th>Descripcion</th>
+                                                <th>Marca</th>
+                                                <th>Proveedor</th>
+                                                <th>Categoria</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblbody">
+                                            {{#each productos}}
+                                            <tr id="{{IdProducto}}" style="display:none">
+                                                <td><a href="/ferreteria/ver_producto{{IdProducto}}/"
+                                                        class="link-success">{{Descripcion}}</a></td>
+                                                <td>{{Marca}}</td>
+                                                <td>{{IdProveedor}}</td>
+                                                <td>{{Categoria}}</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="form-group pu-5">
+                                    <button style="display:none" id="lib" class="btn btn-success">
+                                        <a href="" id="link" class="btn btn-success"></a></button>
+                                </div>
+                            </div>
+                            </div>
+                            <br>
+                            <div class="card-body" style="background-color:#e6e6e6;">
+                                <h1 class="text-dark mb-3 h4">Buscar por codigo de barras</h1>
+                                <form action="/buscar_por_barra" method="post">
+
+                                 <div class="row">
+                                    <div class="col-md-4">
+                                      <label for="">Codigo de Barras</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="CodeBar">
+                                    </div>
+                                    <div class="col-md-4">
+                                      <label for="">Codigo de Truper</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="CodeTruper">
+                                    </div>
+                                    <div class="col-md-4">
+                                      <label for="">Codigo de Producto</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="CodeProducto">
+                                    </div>
+                                  </div>
+
+                                   <div class="form-group" title="ENVIAR">
+                                        <button class="btn btn-info btn-block mx-1 ">
+                                            <i style="color: white;" class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
    document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('div.forn  input').forEach( node => node.addEventListener('keypress', e => {
@@ -254,6 +243,7 @@ function ocu(){
   }
 }
   const busquedaNO = document.getElementById("busquedaNO")
+  const busquedaMA = document.getElementById("busquedaMA")
     const busquedaCO = document.getElementById("busquedaCO")
     const busquedaCA = document.getElementById("busquedaCA")
 

@@ -1,0 +1,281 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item">
+            <a  class=" nav-link" id="h1" style="color: blue;" href="/ferreteria/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
+        </li>
+        <li class="nav-item" style="display: none;">
+          <a class="nav-link" id="h2"  href="/serviflash/clientes"><center><i class="fas fa-address-book fa-2x"></i><br>Clientes</a></center>
+        </li>
+        <li class="nav-item dropdown" style="margin-top: 15px;">
+        <a class="nav-link dropdown-toggle " href="#" id="h3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <center><i class="fas fa-file-alt fa-2x"></i><br>Catalogo</center>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/ferreteria/agregar_producto">Productos</a>
+          <a class="dropdown-item" href="/ferreteria/agregar_proveedor">Proveedores</a>
+        </div>
+      </li>
+        <li class="nav-item" id="admin" style="display: block;">
+          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+        </li>
+
+        <li class="nav-item">
+          <a  class="nav-link " ><center><i style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p style="color: #f8f9fa;">...</p></a></center>
+        </li>
+        <li class="nav-item" >
+          <a class="nav-link"><center><i class="fas fa-user fa-2x"></i></i><br>Hola {{user.Nombre}}</a></center>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="container p-4">
+                <div class="row">
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="text-dark mb-3 h4">Producto</h1>
+                                <div class=" mx-auto">
+                                    <div class="card">
+                                        <div class="card-body" style="background-color:#e6e6e6;">
+                                            <h1 class="text-dark mb-3 h4">Buscar Producto</h1>
+                                            <form >
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label for="">Codigo de Barras</label>
+                                                        <input type="text" id="CodeBar" class="form-control text-dark m-1"
+                                                            >
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="">Codigo de Truper</label>
+                                                        <input type="number" id="CodeTru" class="form-control text-dark m-1"
+                                                            >
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label for="">Codigo de Producto</label>
+                                                        <input type="number" id="CodePro" class="form-control text-dark m-1"
+                                                            >
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                        <br>
+                                        <div class="card-body" style="background-color:#e6e6e6;">
+                                            <h1 class="text-dark mb-3 h4">Venta</h1>
+                                             <table class=" tabla-borderless table-striped" style="font-size:small; margin-left: 5px; color: #000000; text-transform: uppercase; width:550px; border-color: #dddddd;">
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Cantidad</th>
+                                            <th>Descripcion</th>
+                                            <th>Precio</th>
+                                            <th>Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each productos}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{Cantidad}}</td>
+                                            <td>{{Descripcion}}</td>
+                                            <td>{{Precio}}</td>
+                                            <td>{{Importe}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="container p-4">
+                <div class="row">
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="text-dark mb-3 h4">--</h1>
+                                <div class=" mx-auto">
+                                    <div class="card">
+                                        <div class="card-body" style="background-color:#e6e6e6;">
+                                            <h1 class="text-dark mb-3 h4">Informacion</h1>
+                                            <form action="/agregar_al_carrito" method="POST">
+                                <div class="forn">
+                                    
+                                     <div class="row">
+                                      <div class="col-md-4">
+                                        <label>Id</label>
+                                        <input type="number" id="form1"  class="form-control text-dark m-1"
+                                            name="IdProducto" readonly>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <label>Categoria</label>
+                                              <input type="number" id="form2"  class="form-control text-dark m-1"
+                                              readonly>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Descripcion</label>
+                                             <textarea id="form3" class="form-control text-dark m-1" rows="2" readonly></textarea>
+                                    </div>
+                                   <div class="row">
+                                      <div class="col-md-6">
+                                        <label>Precio de Venta</label>
+                                        <input type="number" id="form4" class="form-control text-dark m-1" name="Precio"
+                                              readonly>
+                                    </div>
+                                      <div class="col-md-6">
+                                        <label>Existencias</label>
+                                        <input type="number" id="form5" class="form-control text-dark m-1"
+                                              readonly>
+                                    </div>
+                                    </div>
+                                     <div class="form-group">
+                                        <label>Cantidad a agregar</label>
+                                             <input type="number" class="form-control text-dark m-1" name="Cantidad"
+                                              required id="formC" min=1 max=5 step=1 disabled>
+                                    </div>
+                                    <div class="form-group" style="display: none;">
+                                             <input type="number" class="form-control text-dark m-1" name="IdVenta" value="{{id}}">
+                                    </div>
+                                     <div class="form-group" title="ENVIAR" style="display: none;" id="formbtt">
+                                        <button class="btn btn-info btn-block mx-1 ">
+                                            <i style="color: white;" class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                    </div>
+                                </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('div.forn  input').forEach( node => node.addEventListener('keypress', e => {
+        if(e.keyCode == 13) {
+          e.preventDefault();
+        }
+      }))
+    });
+    let array=[]
+    {{#each producto}}
+    array.push({
+        IdProducto:"{{IdProducto}}",
+        Descripcion:"{{Descripcion}}",
+        Categoria:"{{Categoria}}",
+        PrecioVenta:"{{PrecioVenta}}",
+        Existencias:"{{Existencias}}",
+        CodeBar:"{{CodeBar}}",
+        CodeTru:"{{CodeTruper}}",
+        CodePro:"{{CodeProducto}}"
+    })
+    {{/each}}
+    let CodeBar=document.getElementById("CodeBar")
+    let CodeTru=document.getElementById("CodeTru")
+    let CodePro=document.getElementById("CodePro")
+   
+    CodeBar.addEventListener("change", BuCodeBar)
+    CodeTru.addEventListener("change", BuCodeTru)
+    CodePro.addEventListener("change", BuCodePro)
+    //CodeBar.addEventListener("keydown", BuCodeBar)
+    //CodeBar.addEventListener("keyup", BuCodeBar)
+    //CodeBar.addEventListener("keypress", BuCodeBar)
+
+   function BuCodeBar(){
+       CodeTru.value=""
+       CodePro.value=""
+       let value=0
+      for(let index=0;index<array.length;index++){
+          if(CodeBar.value===array[index].CodeBar){
+              value=1
+              console.log(array[index])
+
+              document.getElementById("form1").value=array[index].IdProducto
+              document.getElementById("form2").value=array[index].Categoria
+              document.getElementById("form3").value=array[index].Descripcion
+              document.getElementById("form4").value=array[index].PrecioVenta
+              document.getElementById("form5").value=array[index].Existencias
+              document.getElementById("formC").disabled=false
+              document.getElementById("formC").value=1
+              document.getElementById("formC").max=array[index].Existencias
+              document.getElementById("formbtt").style.display="block"
+              index=array.length
+          }
+      }
+      if(value==0){
+          alert("No se encontro producto")
+          CodeBar.value=""
+      }else{
+          CodeBar.value=""
+      }
+   }
+   function BuCodeTru(){
+       CodeBar.value=""
+       CodePro.value=""
+       let value=0
+      for(let index=0;index<array.length;index++){
+          if(CodeTru.value===array[index].CodeTru){
+              value=1
+              console.log(array[index])
+
+              document.getElementById("form1").value=array[index].IdProducto
+              document.getElementById("form2").value=array[index].Categoria
+              document.getElementById("form3").value=array[index].Descripcion
+              document.getElementById("form4").value=array[index].PrecioVenta
+              document.getElementById("form5").value=array[index].Existencias
+              index=array.length
+          }
+      }
+      if(value==0){
+          alert("No se encontro producto")
+          CodeTru.value=""
+      }else{
+          CodeTru.value=""
+      }
+   }
+   function BuCodePro(){
+       CodeTru.value=""
+       CodeBar.value=""
+       let value=0
+      for(let index=0;index<array.length;index++){
+          if(CodePro.value===array[index].CodePro){
+              value=1
+              console.log(array[index])
+
+              document.getElementById("form1").value=array[index].IdProducto
+              document.getElementById("form2").value=array[index].Categoria
+              document.getElementById("form3").value=array[index].Descripcion
+              document.getElementById("form4").value=array[index].PrecioVenta
+              document.getElementById("form5").value=array[index].Existencias
+              index=array.length
+          }
+      }
+      if(value==0){
+          alert("No se encontro producto")
+          CodePro.value=""
+      }else{
+          CodePro.value=""
+      }
+   }
+
+</script>

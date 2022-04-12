@@ -272,6 +272,7 @@ module.exports={
  
 
     async pdf(req,res){
+        /*
         let idOrden = await pool.query("SELECT * FROM `tblidnotas`")
         idOrden=idOrden[0].IdOrden
         const datos = await pool.query("SELECT * FROM tblordenservicio WHERE IdOrdenServicio = ?",[idOrden])
@@ -314,13 +315,14 @@ module.exports={
                         Importe:""
                     })
                 }
-              
-          }
-        res.render("nota.hbs",{ layout:"mainpdf",datos,cliente,tecnico,equipo,cantidad,notas,garantia})
+              ,datos,cliente,tecnico,equipo,cantidad,notas,garantia
+              }
+              */
+        res.render("nota.hbs",{ layout:"mainpdf"})
     },
     
     async despdf(req,res){
-        const pdf = await crearpdf("http://localhost:4000/verpdf")
+        const pdf = await crearpdf("http://localhost:3832/verpdf")
         res.contentType("application/pdf")
         res.send(pdf)
 
