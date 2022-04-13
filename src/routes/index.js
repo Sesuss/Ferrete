@@ -486,7 +486,13 @@ router.get("/ferreteria/punto_de_venta:id/", isLoggedIn, async (req, res) => {
     let {id} = req.params
     let producto = await pool.query("SELECT * FROM tblproductos WHERE Existencias > 0")
     let productos = await pool.query("SELECT tbldetalleventa.*,tblproductos.Descripcion FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[id])
-    res.render("layouts/punto_venta_v",{producto,productos,id})
+   
+    let Total=0
+    for (let index = 0; index < productos.length; index++) {
+        Total+=productos[index].Importe
+        
+    }
+    res.render("layouts/punto_venta_v",{producto,productos,id,Total})
     
 })
 
@@ -500,9 +506,21 @@ router.post("/agregar_carrito", isLoggedIn, async (req, res) => {
 })
 
 router.post("/agregar_al_carrito", isLoggedIn, async (req, res) => {
-    const {IdProducto, IdVenta, Cantidad, Precio} = req.body
+    let {IdProducto, IdVenta, Cantidad, Precio} = req.body
     let Importe=Cantidad*Precio
-    await pool.query("INSERT INTO tbldetalleventa SET IdVenta = ?, IdProducto = ?, Cantidad = ?, Precio = ?, Importe = ?",[IdVenta,IdProducto, Cantidad, Precio,Importe])
+    let CantidadOld=Cantidad
+    let productos = await pool.query("SELECT * FROM tbldetalleventa WHERE IdVenta = ? AND IdProducto = ?",[IdVenta,IdProducto])
+    if (productos.length != 0) {
+        productos[0].Cantidad=parseFloat(productos[0].Cantidad,10)
+        Cantidad=parseFloat(Cantidad,10)
+        Cantidad+=+productos[0].Cantidad
+        Importe=productos[0].Precio*Cantidad
+        await pool.query("UPDATE tbldetalleventa SET Cantidad = ?, Importe = ?",[Cantidad, Importe])
+        await pool.query("UPDATE tblproductos SET Existencias = Existencias-? WHERE IdProducto = ?",[CantidadOld,IdProducto])
+    }else{
+        await pool.query("INSERT INTO tbldetalleventa SET IdVenta = ?, IdProducto = ?, Cantidad = ?, Precio = ?, Importe = ?",[IdVenta,IdProducto, Cantidad, Precio,Importe])
+        await pool.query("UPDATE tblproductos SET Existencias = Existencias-? WHERE IdProducto = ?",[CantidadOld,IdProducto])
+    }
     res.redirect("/ferreteria/punto_de_venta"+IdVenta)
     
 })
