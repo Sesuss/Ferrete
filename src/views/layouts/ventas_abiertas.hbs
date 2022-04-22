@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
         <li class="nav-item">
-            <a  class=" nav-link" id="h1"  href="/ferreteria/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
+            <a  class=" nav-link" id="h1" style="color: blue;" href="/ferreteria/servicios_pendientes"> <center><i class="fas fa-home fa-2x"></i><br>Inicio</a> </center>
         </li>
         <li class="nav-item" style="display: none;">
           <a class="nav-link" id="h2"  href="/serviflash/clientes"><center><i class="fas fa-address-book fa-2x"></i><br>Clientes</a></center>
@@ -22,7 +22,7 @@
         </div>
       </li>
         <li class="nav-item" id="admin" style="display: block;">
-          <a  class="nav-link " style="color: blue;"  href="/ferreteria/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+          <a  class="nav-link "   href="/ferreteria/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
         </li>
 
         <li class="nav-item">
@@ -42,7 +42,7 @@
         <div class=" mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="text-dark mb-3 h4">Producto con stock Minimo <a href="/reporte_minimo" target="_blanck" title="Imprimir" class="btn btn-primary"><i style="color: white;" class="far fa-file-image"></i></a></h1>
+                    <h1 class="text-dark mb-3 h4">Ventas abiertas</h1>
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
                                 <h1 class="text-dark mb-3 h4">Datos</h1>
@@ -50,26 +50,14 @@
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
                                             <th>Id</th>
-                                            <th>Proveedor</th>
-                                            <th>Categoria</th>
-                                            <th>Descripcion</th>
-                                            <th >Precio Venta</th>
-                                            <th >Precio Compra</th>
-                                            <th>Existencias</th>
-                                            <th >Stock Minimo</th>
+                                            <th>Fecha</th>
                                             </tr>
                                         </thead>
                                         <tbody >
-                                            {{#each productos}}
+                                            {{#each ventas}}
                                             <tr style="border-top: 1px solid black;">
-                                            <td>{{IdProducto}}</td>
-                                            <td>{{Nombre}}</td>
-                                            <td>{{Categoria}}</td>
-                                            <td>{{Descripcion}}</td>
-                                            <td>{{PrecioVenta}}</td>
-                                            <td>{{PrecioCompra}}</td>
-                                            <td>{{Existencias}}</td>
-                                            <td>{{StockMinimo}}</td>
+                                            <td><a href="/ferreteria/punto_de_venta{{IdVenta}}">{{IdVenta}}</a></td>
+                                            <td>{{momentH FechaVenta}}</td>
                                             </tr>
                                             {{/each}}
                                             </tbody>

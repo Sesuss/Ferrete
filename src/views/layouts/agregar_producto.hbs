@@ -22,7 +22,7 @@
         </div>
       </li>
         <li class="nav-item" id="admin" style="display: block;">
-          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+          <a  class="nav-link "  href="/ferreteria/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
         </li>
 
         <li class="nav-item">
@@ -35,6 +35,97 @@
     </div>
   </div>
 </nav>
+
+
+
+<div class="container p-4">
+    <div class="row">
+        <div class=" mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="text-dark mb-3 h4">Producto</h1>
+                    <div class=" mx-auto">
+                        <div class="card">
+                            <div class="card-body" style="background-color:#e6e6e6;">
+                                <h1 class="text-dark mb-3 h4">Buscar</h1>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input name="remitosucursal" id="busquedaNO" type="text"
+                                            class="form-control" placeholder="Descripcion">
+                                        <span class="input-group-addon"></span>
+                                        <input name="remitosucursal" id="busquedaMA" type="text"
+                                            class="form-control" placeholder="Marca">
+                                        <span class="input-group-addon"></span>
+                                        <input name="remitonumero" id="busquedaCO" type="text" 
+                                            class="form-control" placeholder="Proveedor">
+                                        <span class="input-group-addon"></span>
+                                        <input name="remitonumero" id="busquedaCA" type="text" 
+                                            class="form-control" placeholder="Categoria">
+                                    </div>
+                                </div>
+                                <div class="form-group px-2">
+                                    <table class="table table-bordered table-hover" id="tblmas">
+                                        <thead >
+                                            <tr role="row" id="tblh" style="display:none">
+                                                <th>Descripcion</th>
+                                                <th>Marca</th>
+                                                <th>Proveedor</th>
+                                                <th>Categoria</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tblbody">
+                                            {{#each productos}}
+                                            <tr id="{{IdProducto}}" style="display:none">
+                                                <td><a href="/ferreteria/ver_producto{{IdProducto}}/"
+                                                        class="link-success">{{Descripcion}}</a></td>
+                                                <td>{{Marca}}</td>
+                                                <td>{{Nombre}}</td>
+                                                <td>{{Categoria}}</td>
+                                            </tr>
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="form-group pu-5">
+                                    <button style="display:none" id="lib" class="btn btn-success">
+                                        <a href="" id="link" class="btn btn-success"></a></button>
+                                </div>
+                            </div>
+                            </div>
+                            <br>
+                            <div class="card-body" style="background-color:#e6e6e6;">
+                                <h1 class="text-dark mb-3 h4">Buscar por codigo</h1>
+                                <form action="/buscar_por_barra" method="post">
+
+                                 <div class="row">
+                                    <div class="col-md-4">
+                                      <label for="">Codigo de Barras</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="CodeBar">
+                                    </div>
+                                    <div class="col-md-4">
+                                      <label for="">Codigo de Truper</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="CodeTruper">
+                                    </div>
+                                    <div class="col-md-4">
+                                      <label for="">Codigo de Producto</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="CodeProducto">
+                                    </div>
+                                  </div>
+
+                                   <div class="form-group" title="ENVIAR">
+                                        <button class="btn btn-info btn-block mx-1 ">
+                                            <i style="color: white;" class="fas fa-check"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="container p-4">
@@ -81,15 +172,20 @@
                                              <textarea name="Descripcion" id="a4" class="form-control text-dark m-1" rows="2" required></textarea>
                                     </div>
                                    <div class="row">
-                                      <div class="col-md-6">
+                                      <div class="col-md-4">
                                         <label>Precio de Venta</label>
                                         <input type="number" id="a5" class="form-control text-dark m-1"
                                              name="PrecioVenta" required>
                                     </div>
-                                      <div class="col-md-6">
+                                      <div class="col-md-4">
                                         <label>Precio de Compra</label>
                                         <input type="number" id="a6" class="form-control text-dark m-1"
                                              name="PrecioCompra" >
+                                    </div>
+                                      <div class="col-md-4">
+                                        <label>Marca</label>
+                                        <input type="text" id="a12" class="form-control text-dark m-1"
+                                             name="Marca" >
                                     </div>
                                     </div>
                                      <div class="row">
@@ -138,95 +234,6 @@
     </div>
 </div>
 
-<div class="container p-4">
-    <div class="row">
-        <div class=" mx-auto">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="text-dark mb-3 h4">Producto</h1>
-                    <div class=" mx-auto">
-                        <div class="card">
-                            <div class="card-body" style="background-color:#e6e6e6;">
-                                <h1 class="text-dark mb-3 h4">Buscar</h1>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input name="remitosucursal" id="busquedaNO" type="text"
-                                            class="form-control" placeholder="Descripcion">
-                                        <span class="input-group-addon"></span>
-                                        <input name="remitosucursal" id="busquedaMA" type="text"
-                                            class="form-control" placeholder="Marca">
-                                        <span class="input-group-addon"></span>
-                                        <input name="remitonumero" id="busquedaCO" type="text" 
-                                            class="form-control" placeholder="Proveedor">
-                                        <span class="input-group-addon"></span>
-                                        <input name="remitonumero" id="busquedaCA" type="text" 
-                                            class="form-control" placeholder="Categoria">
-                                    </div>
-                                </div>
-                                <div class="form-group px-2">
-                                    <table class="table table-bordered table-hover" id="tblmas">
-                                        <thead >
-                                            <tr role="row" id="tblh" style="display:none">
-                                                <th>Descripcion</th>
-                                                <th>Marca</th>
-                                                <th>Proveedor</th>
-                                                <th>Categoria</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="tblbody">
-                                            {{#each productos}}
-                                            <tr id="{{IdProducto}}" style="display:none">
-                                                <td><a href="/ferreteria/ver_producto{{IdProducto}}/"
-                                                        class="link-success">{{Descripcion}}</a></td>
-                                                <td>{{Marca}}</td>
-                                                <td>{{IdProveedor}}</td>
-                                                <td>{{Categoria}}</td>
-                                            </tr>
-                                            {{/each}}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="form-group pu-5">
-                                    <button style="display:none" id="lib" class="btn btn-success">
-                                        <a href="" id="link" class="btn btn-success"></a></button>
-                                </div>
-                            </div>
-                            </div>
-                            <br>
-                            <div class="card-body" style="background-color:#e6e6e6;">
-                                <h1 class="text-dark mb-3 h4">Buscar por codigo de barras</h1>
-                                <form action="/buscar_por_barra" method="post">
-
-                                 <div class="row">
-                                    <div class="col-md-4">
-                                      <label for="">Codigo de Barras</label>
-                                     <input type="number"  class="form-control text-dark m-1" name="CodeBar">
-                                    </div>
-                                    <div class="col-md-4">
-                                      <label for="">Codigo de Truper</label>
-                                     <input type="number"  class="form-control text-dark m-1" name="CodeTruper">
-                                    </div>
-                                    <div class="col-md-4">
-                                      <label for="">Codigo de Producto</label>
-                                     <input type="number"  class="form-control text-dark m-1" name="CodeProducto">
-                                    </div>
-                                  </div>
-
-                                   <div class="form-group" title="ENVIAR">
-                                        <button class="btn btn-info btn-block mx-1 ">
-                                            <i style="color: white;" class="fas fa-check"></i>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script>
    document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('div.forn  input').forEach( node => node.addEventListener('keypress', e => {
@@ -253,13 +260,15 @@ function ocu(){
         id: "{{IdProducto}}",
         Descripcion: "{{Descripcion}}",
         Categoria: "{{Categoria}}",
-        Proveedor: "{{IdProveedor}}"
+        Proveedor: "{{Nombre}}",
+        Marca: "{{Marca}}"
     })
     {{/each}}
 
             function buscarNO() {
                 busquedaCO.value=""
                 busquedaCA.value=""
+                busquedaMA.value=""
                 const texto = busquedaNO.value.toLowerCase()
                 
                 if (texto == "") {
@@ -284,6 +293,7 @@ function ocu(){
             function buscarCO() {
                 busquedaNO.value=""
                 busquedaCA.value=""
+                busquedaMA.value=""
                 const texto = busquedaCO.value.toLowerCase()
                 if (texto == "") {
                     document.getElementById("tblh").style.display = "none"
@@ -307,6 +317,7 @@ function ocu(){
             function buscarCA() {
                 busquedaCO.value=""
                 busquedaNO.value=""
+                busquedaMA.value=""
                 const texto = busquedaCA.value.toLowerCase()
                 if (texto == "") {
                     document.getElementById("tblh").style.display = "none"
@@ -326,6 +337,30 @@ function ocu(){
                 }
 
             }
+
+            function buscarMA() {
+                busquedaCO.value=""
+                busquedaNO.value=""
+                busquedaCA.value=""
+                const texto = busquedaMA.value.toLowerCase()
+                if (texto == "") {
+                    document.getElementById("tblh").style.display = "none"
+                    for (index = 0; index < array.length; index++) {
+                        document.getElementById(array[index].id).style.display = "none"
+                    }
+                    return
+                }
+                for (index = 0; index < array.length; index++) {
+                    let calle = array[index].Marca.toLowerCase()
+                    if (calle.indexOf(texto) !== -1) {
+                        document.getElementById(array[index].id).style.display = "block"
+                        document.getElementById("tblh").style.display = "block"
+                    } else {
+                        document.getElementById(array[index].id).style.display = "none"
+                    }
+                }
+
+            }
         
 
             busquedaNO.addEventListener("keyup", buscarNO)
@@ -334,6 +369,8 @@ function ocu(){
             busquedaCO.addEventListener("keydown", buscarCO)
             busquedaCA.addEventListener("keyup", buscarCA)
             busquedaCA.addEventListener("keydown", buscarCA)
+            busquedaMA.addEventListener("keyup", buscarMA)
+            busquedaMA.addEventListener("keydown", buscarMA)
 
 
 </script>

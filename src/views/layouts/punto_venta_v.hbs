@@ -22,7 +22,7 @@
         </div>
       </li>
         <li class="nav-item" id="admin" style="display: block;">
-          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+          <a  class="nav-link "  href="/ferreteria/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
         </li>
 
         <li class="nav-item">
@@ -54,7 +54,7 @@
                                                     <div class="col-md-4">
                                                         <label for="">Codigo de Barras</label>
                                                         <input type="text" id="CodeBar" class="form-control text-dark m-1"
-                                                            >
+                                                            autofocus>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="">Codigo de Truper</label>
@@ -88,9 +88,9 @@
                                             <tr style="border-top: 1px solid black;">
                                             <td>{{Cantidad}}</td>
                                             <td>{{Descripcion}}</td>
-                                            <td>{{Precio}}</td>
-                                            <td>{{Importe}}</td>
-                                            <td><center><a  title="Eliminar" class="mx-auto btn btn-primary"><i style="color: white;" class="fas fa-times"></i></a></center></td>
+                                            <td>${{Precio}}</td>
+                                            <td>${{Importe}}</td>
+                                            <td><a id="id{{IdProducto}}" title="Eliminar" class="mx-auto btn btn-primary"><i style="color: white;" class="fas fa-times"></i></a></td>
                                             </tr>
                                             {{/each}}
                                             </tbody>
@@ -125,7 +125,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <label>Categoria</label>
-                                              <input type="number" id="form2"  class="form-control text-dark m-1"
+                                              <input type="text" id="form2"  class="form-control text-dark m-1"
                                               readonly>
                                     </div>
                                     </div>
@@ -167,15 +167,17 @@
                                         <div class="card-body" style="background-color:#e6e6e6;">
                                             <h1 class="text-dark mb-3 h4">Total</h1>
                                            <h5>Total a pagar ${{Total}}</h5>
-                                           <form action="">
+                                           <form action="/ferreteria/cerrar_venta" method="post">
                                                <br>
                                                 <div class="form-group">
                                              <label>Efectivo recibido</label>
                                              <input type="number" class="form-control text-dark m-1" name="Cantidad"
-                                              required id="formC" min={{Total}}>
+                                              required id="formC" min={{Total}} style="height: ;">
                                              </div>
                                              <br>
-                                           <button style="width: 100%;" class="btn btn-primary btn-block">Pagar</button>
+                                             <input type="number" style="display: none;"name="Total" required value="{{Total}}">
+                                             <input type="number" style="display: none;"name="IdVenta" required value="{{id}}">
+                                           <button style="width: 100%; height: 50px;" class="btn btn-primary btn-block"><strong style="font-size: large;">Pagar</strong></button>
                                            </form>
                                            <br>
                                         </div>
@@ -190,6 +192,7 @@
     </div>
 </div>
 <script>
+
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('div.forn  input').forEach( node => node.addEventListener('keypress', e => {
         if(e.keyCode == 13) {
@@ -198,10 +201,11 @@
       }))
     });
     let array=[]
+    let arrayP=[]
     {{#each producto}}
     array.push({
         IdProducto:"{{IdProducto}}",
-        Descripcion:"{{Descripcion}}",
+        Descripcion:'{{{Descripcion}}}',
         Categoria:"{{Categoria}}",
         PrecioVenta:"{{PrecioVenta}}",
         Existencias:"{{Existencias}}",
@@ -210,6 +214,18 @@
         CodePro:"{{CodeProducto}}"
     })
     {{/each}}
+
+
+    {{#each productos}}
+    arrayP.push({
+        IdProducto:"{{IdProducto}}",
+    })
+    {{/each}}
+
+    for(let index=0;index<arrayP.length;index++){
+        document.getElementById("id"+arrayP[index].IdProducto).href="/eliminar{{id}}/producto"+arrayP[index].IdProducto
+    }
+
     let CodeBar=document.getElementById("CodeBar")
     let CodeTru=document.getElementById("CodeTru")
     let CodePro=document.getElementById("CodePro")

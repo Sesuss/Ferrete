@@ -18,13 +18,43 @@ async function crearimagen(url){
 }
 
 async function crearpdf(url){
-    let navegador=await puppeteer.launch({args:['--no-sandbox']})
+    let navegador=await puppeteer.launch({
+        args:['--no-sandbox'],
+      // headless: false,
+        defaultViewport: {
+            width: 100,
+            height: 100
+          }
+        //slowMo: 1000
+    })
 
     let pagina = await navegador.newPage()
 
     await pagina.goto(url)
 
     let pdf=await pagina.pdf()
+
+    navegador.close()
+
+    return pdf
+}
+
+async function crearticket(url){
+    let navegador=await puppeteer.launch({
+        args:['--no-sandbox'],
+      // headless: false,
+        defaultViewport: {
+            width: 100,
+            height: 100
+          }
+        //slowMo: 1000
+    })
+
+    let pagina = await navegador.newPage()
+
+    await pagina.goto(url)
+
+    let pdf=await pagina.pdf({ width:165,height:500 })
 
     navegador.close()
 
@@ -272,57 +302,75 @@ module.exports={
  
 
     async pdf(req,res){
-        /*
-        let idOrden = await pool.query("SELECT * FROM `tblidnotas`")
-        idOrden=idOrden[0].IdOrden
-        const datos = await pool.query("SELECT * FROM tblordenservicio WHERE IdOrdenServicio = ?",[idOrden])
-        const cliente = await pool.query("SELECT * FROM tblclientes WHERE IdCliente = ?",[datos[0].IdCliente])
-        let tecnico = await pool.query("SELECT * FROM tbltecnicos WHERE IdTecnico = ?",[datos[0].IdTecnico])
-        console.log(tecnico)
-        tecnico=tecnico[0].Nombre
-        
-        console.log(tecnico)
-        const equipo = await pool.query("SELECT * FROM tblequipos WHERE IdCliente = ? AND IdEquipo = ?", [datos[0].IdCliente, datos[0].IdEquipo])
-        let notas = await pool.query("SELECT * FROM tblnotas WHERE IdOrdenServicio = ?",[idOrden])
-        let garantia=notas[0].Garantia
-        notas = await pool.query("SELECT * FROM tbldetallenota WHERE IdNotas = ? ORDER BY `ID` ASC",[notas[0].IdNotas])
-        let total=0
-        for (let index = 0; index < notas.length; index++) {
-            total+=notas[index].Importe
-            
-            if (notas[index].Importe==0 || notas[index].Importe ==datos[0].CostoServicio ) {
-                notas[index].Importe=""
-            }
-        }
-        if (total==0) {
-            
-        }else{
-            datos[0].CostoServicio=total
-        }
-        const cantidad = numeroALetras(datos[0].CostoServicio, {
-            plural: "PESOS",
-            singular: "PESO",
-            centPlural: "CENTAVOS",
-            centSingular: "CENTAVO"
-          });
-          datos[0].CostoServicio = Intl.NumberFormat('en-EU', {style: 'currency',currency: 'MXN', minimumFractionDigits: 2}).format(datos[0].CostoServicio);
-          for (let index = 0; index < 12; index++) {
-                let num=notas.length
-                if (num<11) {
-                    notas.push({
-                        Cantidad:"",
-                        Descripcion:"",
-                        Importe:""
-                    })
-                }
-              ,datos,cliente,tecnico,equipo,cantidad,notas,garantia
-              }
-              */
-        res.render("nota.hbs",{ layout:"mainpdf"})
+        const {id} = req.params
+
+        let Venta = await pool.query("SELECT * FROM tblventas WHERE IdVenta = ?",[id])
+        let productos = await pool.query("SELECT tbldetalleventa.*,tblproductos.Descripcion FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[id])
+        let Cambio = Venta[0].Efectivo-Venta[0].Total
+        res.render("nota.hbs",{ layout:"mainpdf",Venta,productos,Cambio,id})
     },
     
     async despdf(req,res){
-        const pdf = await crearpdf("http://localhost:3832/verpdf")
+        const {id} = req.params
+        const pdf = await crearticket("http://localhost:3832/verpdf"+id)
+        res.contentType("application/pdf")
+        res.send(pdf)
+
+    },
+    
+    async reporte_minimo(req,res){
+        let productos = await pool.query("SELECT * FROM tblproductos,tblproveedores WHERE Existencias < StockMinimo AND tblproveedores.IdProveedor = tblproductos.IdProveedor")
+        res.render("reporte_minimo.hbs",{ layout:"mainpdf",productos})
+    },
+    
+    async despdf_reporte_minimo(req,res){
+        const pdf = await crearpdf("http://localhost:3832/rep_mi")
+        res.contentType("application/pdf")
+        res.send(pdf)
+
+    },
+
+    async reporte_ganancias(req,res){
+      let reporte = await pool.query("SELECT * FROM tblreportes")
+      let desde=reporte[0].Desde
+      let hasta=reporte[0].Hasta
+        desde=desde+" 00:00:00"
+        hasta=hasta+" 23:59:59"
+        let array=[]
+        let extra=0
+        let total=0
+        let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?",[hasta,desde])
+        for (let index1 = 0; index1 < ventas.length; index1++) {
+            total=total+ventas[index1].Total
+            let ven = await pool.query("SELECT * FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[ventas[index1].IdVenta])
+            for (let index2 = 0; index2 < ven.length; index2++) {
+                for (let index3 = 0; index3 < array.length; index3++) {
+                    if (ven[index2].IdProducto==array[index3].IdProducto) {
+                        array[index3].Cantidad=array[index3].Cantidad+ven[index2].Cantidad
+                        array[index3].Importe=array[index3].Importe+ven[index2].Importe
+                        extra=1
+                    }
+                }
+                if (extra==0) {
+                    array.push({
+                        IdProducto:ven[index2].IdProducto,
+                        Descripcion:ven[index2].Descripcion,
+                        Cantidad:ven[index2].Cantidad,
+                        Precio:ven[index2].Precio,
+                        Importe:ven[index2].Importe
+                    })
+                }else{
+                    extra=0
+                }
+            }
+        }
+        res.render("reporte_ganancias.hbs",{ layout:"mainpdf",array,total})
+    },
+    
+    async despdf_reporte_ganancias(req,res){
+        let {desde,hasta}=req.body
+        await pool.query("UPDATE tblreportes SET Desde = ?, Hasta = ? WHERE IdReporte = 1",[desde,hasta])
+        const pdf = await crearpdf("http://localhost:3832/rep_gan")
         res.contentType("application/pdf")
         res.send(pdf)
 

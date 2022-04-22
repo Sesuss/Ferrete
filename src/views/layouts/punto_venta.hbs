@@ -22,7 +22,7 @@
         </div>
       </li>
         <li class="nav-item" id="admin" style="display: block;">
-          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+          <a  class="nav-link "  href="/ferreteria/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
         </li>
 
         <li class="nav-item">
@@ -44,7 +44,25 @@
                     <div class=" mx-auto">
                         <div class="card">
                             <div class="card-body">
-                                <h1 class="text-dark mb-3 h4">Producto</h1>
+                                <div class="row">
+                                    <div class="col-md-11">
+                                <h1 class="text-dark mb-3 h4">Producto </h1>
+                                        </div>
+                                        {{#if aa}}
+                                    <div class="col-md-1">
+                                            <p align="right">
+                                        <a title="VER VENTAS ABIERTAS" href="/ferreteria/ventas_abiertas" class="btn btn-primary"> <i style="color: white;" class="fas fa-cash-register"></i></a>
+                                            </p>
+                                        </div>
+                                        </div>
+                                        {{else}}
+                                    <div class="col-md-1">
+                                            <p align="right">
+                                        <button class="btn btn-secondary"> <i style="color: white;" class="fas fa-cash-register"></i></button>
+                                            </p>
+                                        </div>
+                                        </div>
+                                        {{/if}}
                                 <div class=" mx-auto">
                                     <div class="card">
                                         <div class="card-body" style="background-color:#e6e6e6;">
@@ -98,7 +116,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <label>Categoria</label>
-                                              <input type="number" id="form2"  class="form-control text-dark m-1"
+                                              <input type="text" id="form2"  class="form-control text-dark m-1"
                                               readonly>
                                     </div>
                                     </div>
@@ -153,7 +171,7 @@
     {{#each producto}}
     array.push({
         IdProducto:"{{IdProducto}}",
-        Descripcion:"{{Descripcion}}",
+        Descripcion:'{{{Descripcion}}}',
         Categoria:"{{Categoria}}",
         PrecioVenta:"{{PrecioVenta}}",
         Existencias:"{{Existencias}}",
@@ -181,7 +199,7 @@
           if(CodeBar.value===array[index].CodeBar){
               value=1
               console.log(array[index])
-
+                console.log(array[index].Descripcion)
               document.getElementById("form1").value=array[index].IdProducto
               document.getElementById("form2").value=array[index].Categoria
               document.getElementById("form3").value=array[index].Descripcion

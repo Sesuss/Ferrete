@@ -22,7 +22,7 @@
         </div>
       </li>
         <li class="nav-item" id="admin" style="display: block;">
-          <a  class="nav-link "  href="/serviflash/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
+          <a  class="nav-link "  href="/ferreteria/reportes"><center><i id="adminI" style="color: #f8f9fa;" class="fas fa-user-tie fa-2x"></i><br><p id="adminS" style="color: #f8f9fa;">Administrador</p></a></center>
         </li>
 
         <li class="nav-item">
@@ -77,22 +77,27 @@
                                           <option value="3">Categoria 3</option>
                                           <option value="4">Categoria 4</option>
                                         </select>
-                                    </div>
+                                    </div> 
                                     </div>
                                     <div class="form-group">
                                         <label>Descripcion</label>
                                              <textarea name="Descripcion" id="a4" class="form-control text-dark m-1" rows="2" required>{{Descripcion}}</textarea>
                                     </div>
                                    <div class="row">
-                                      <div class="col-md-6">
+                                      <div class="col-md-4">
                                         <label>Precio de Venta</label>
                                         <input type="number" id="a5" class="form-control text-dark m-1"
                                              name="PrecioVenta" value="{{PrecioVenta}}" required>
                                     </div>
-                                      <div class="col-md-6">
+                                      <div class="col-md-4">
                                         <label>Precio de Compra</label>
                                         <input type="number" id="a6" class="form-control text-dark m-1"
                                              name="PrecioCompra"  value="{{PrecioCompra}}">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Marca</label>
+                                        <input type="text" id="a12" class="form-control text-dark m-1"
+                                             name="Marca" value="{{Marca}}">
                                     </div>
                                     </div>
                                      <div class="row">

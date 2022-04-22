@@ -1,0 +1,40 @@
+<div class="container-fluid p-1">
+  <div class="row mx-auto">
+    <div class="col-md-12">
+      <div class="row">
+
+        <div class="col-md-4">
+            <center>
+          <img alt="" src="log.jpeg" width="700px" height="150px">
+          <p>{{momentC}}</p>
+          <p>Total de Ingresos ${{total}}</p>
+          </center>
+        </div>
+        <div class="row" style="margin-top: 20px; margin-left:2px;" >
+          <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Descripcion</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio</th>
+                                            <th>Importe</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each array}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdProducto}}</td>
+                                            <td>{{Descripcion}}</td>
+                                            <td>{{Cantidad}}</td>
+                                            <td>{{Precio}}</td>
+                                            <td>{{Importe}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+</div>
+</div>
+</div>
+</div>
+</div>

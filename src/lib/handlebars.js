@@ -10,6 +10,11 @@ helpers.momentD= (timestamp)=>{
     let fecha= moment(timestamp).format("dddd LL");
      return fecha
  }
+helpers.momentC= ()=>{ 
+  
+    let fecha= moment().format("LLLL");
+     return fecha
+ }
 helpers.momentH= (timestamp)=>{ 
   
     let fecha= moment(timestamp).format("YYYY-MM-DD hh:mm");

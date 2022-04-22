@@ -4,8 +4,8 @@
     </head>
     <body>
         <div class="ticket">
-              <div style="font-size: ;">
-         <center> <img alt="" src="log2.jpg" height="90px" width="150px" ></center>
+              <div>
+         <center> <img alt="" src="log.jpeg" height="90px" width="150px" ></center>
         </div>
 
  <div>
@@ -13,11 +13,11 @@
        {{#each Venta}}
     <center><p><strong>RFC:</strong> GAVF871219GY8</p></center>
     <center><p><strong>Fecha:</strong>{{moment FechaVenta}}</p></center>
-    <center><p>FerreMax </p></center>
-    <center><p>El Boulevard </p></center>
+    <center><p><strong>Ticket No.</strong>--123--</p></center>
+    <center><p>FerreMax El Boulevard </p></center>
     <center><p>Pino Suarez Local 3</p></center>
+    <center><p><strong>Vendedor:</strong>{{IdVendedor}}</p></center>
     {{/each}}
-    <center><p><strong>Ticket No.</strong>{{id}}</p></center>
     </div>
 
    <center> 
@@ -53,6 +53,8 @@
 <p>Cambio pesos<u>${{Cambio}}</u></p>
 </div>
 <div style="font-size:x-small; line-height: 1px;" align="right">
+<center><p>Computadora:<strong></strong></p></center>
+<center><p>Folio Interno: {{id}}</p></center>
 <center><p><strong>Gracias Por Su Compra</strong></p></center>
  </div>
 
@@ -61,55 +63,8 @@
 
         </div>
     </body>
-    <style>
-      * {
-        color: #000000; ,
-    font-family: 'Times New Roman';
-}
 
-td,
-th,
-tr,
-table {
-    border-top: 1px solid black;
-    border-collapse: collapse;
-}
-
-td.producto,
-th.producto {
-    width: 75px;
-    max-width: 75px;
-}
-
-td.cantidad,
-th.cantidad {
-    width: 40px;
-    max-width: 40px;
-    word-break: break-all;
-}
-
-td.precio,
-th.precio {
-    width: 40px;
-    max-width: 40px;
-    word-break: break-all;
-}
-
-.centrado {
-    text-align: center;
-    align-content: center;
-}
-
-.ticket {
-    width: 155px;
-    max-width: 155px;
-}
-
-img {
-    max-width: inherit;
-    width: inherit;
-}
-    </style>
     <br>
-    <p style="color: white;"><center>-*-*-*-*-*-*-*-*-*-*-*-</center></p>
+    <p style="color: white;">asdfasdfasdfasdf</p>
+<button onclick="window.print()">Imprimir pantalla con otro ejemplo</button>
 </html>

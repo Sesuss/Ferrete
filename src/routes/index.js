@@ -414,10 +414,9 @@ router.get("/ferreteria/agregar_producto", isLoggedIn, async (req, res) => {
         id=1
     }else{
     id=id[0].IdProducto+1}
-    let productos=await pool.query("SELECT * FROM tblproductos")
+    let productos=await pool.query("SELECT tblproductos.* , tblproveedores.* FROM tblproductos,tblproveedores WHERE tblproveedores.IdProveedor=tblproductos.IdProveedor")
     let proveedor = await pool.query("SELECT * FROM tblproveedores") 
     res.render("layouts/agregar_producto",{id,productos,proveedor})
-    
 })
 
 router.get("/ferreteria/ver_producto:id/", isLoggedIn, async (req, res) => {
@@ -429,15 +428,15 @@ router.get("/ferreteria/ver_producto:id/", isLoggedIn, async (req, res) => {
 
 
 router.post("/agregar_producto", isLoggedIn, async (req, res) => {
-    const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo} = req.body
-    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo}
+    const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca} = req.body
+    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca}
     await pool.query("INSERT INTO tblproductos SET ? ",[newproducto])
     res.redirect("/ferreteria/agregar_producto")
     
 })
 router.post("/editar_producto", isLoggedIn, async (req, res) => {
-    const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo} = req.body
-    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo}
+    const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca} = req.body
+    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca}
     await pool.query("UPDATE tblproductos SET ? WHERE IdProducto = ?",[newproducto,IdProducto])
     res.redirect("/ferreteria/agregar_producto")
     
@@ -478,21 +477,52 @@ router.post("/buscar_por_barra", isLoggedIn, async (req, res) => {
 //---------------------------------------------Punto De Venta---------------------------------------------------------------------
 router.get("/ferreteria/punto", isLoggedIn, async (req, res) => {
     let producto = await pool.query("SELECT * FROM tblproductos WHERE Existencias > 0")
-    res.render("layouts/punto_venta",{producto})
+    log(await pool.query("SELECT * FROM `tblproductos` WHERE `CodeBar`=7501206695104;"))
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE VentaCerrada = 0")
+    if (ventas.length != 0) {
+        let aa=1
+        res.render("layouts/punto_venta",{producto,aa})
+    }else{
+
+        res.render("layouts/punto_venta",{producto})
+    }
     
 })
 
+router.get("/ferreteria/ventas_abiertas", isLoggedIn, async (req, res) => {
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE VentaCerrada = 0")
+
+    res.render("layouts/ventas_abiertas",{ventas})
+})
+
+
+
 router.get("/ferreteria/punto_de_venta:id/", isLoggedIn, async (req, res) => {
     let {id} = req.params
-    let producto = await pool.query("SELECT * FROM tblproductos WHERE Existencias > 0")
-    let productos = await pool.query("SELECT tbldetalleventa.*,tblproductos.Descripcion FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[id])
-   
-    let Total=0
-    for (let index = 0; index < productos.length; index++) {
-        Total+=productos[index].Importe
+    let venta = await pool.query("SELECT * FROM tblventas WHERE IdVenta = ?",[id])
+    if(venta[0].VentaCerrada == 1){
+        res.redirect("/ferreteria/punto")
+    }else{
+
+        let producto = await pool.query("SELECT * FROM tblproductos WHERE Existencias > 0")
+        let productos = await pool.query("SELECT tbldetalleventa.*,tblproductos.Descripcion FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[id])
         
+        let Total=0
+        for (let index = 0; index < productos.length; index++) {
+            Total+=productos[index].Importe
+            
+        }
+        res.render("layouts/punto_venta_v",{producto,productos,id,Total})
     }
-    res.render("layouts/punto_venta_v",{producto,productos,id,Total})
+        
+    })
+    
+router.get("/eliminar:id/producto:idP/", isLoggedIn, async (req, res) => {
+    let {id,idP} = req.params
+    let producto = await pool.query("SELECT * FROM tbldetalleventa WHERE IdVenta = ? AND IdProducto = ? ",[id,idP])
+    await pool.query("UPDATE tblproductos SET Existencias = Existencias+? WHERE IdProducto = ? ",[producto[0].Cantidad,idP])
+    await pool.query("DELETE FROM tbldetalleventa WHERE IdVenta = ? AND IdProducto = ? ",[id,idP])
+    res.redirect("/ferreteria/punto_de_venta"+id)
     
 })
 
@@ -501,7 +531,18 @@ router.post("/agregar_carrito", isLoggedIn, async (req, res) => {
     let Importe=Cantidad*Precio
     let carrito = await pool.query("INSERT INTO tblventas (`IdVendedor`, `IdCliente`, `Total`) VALUES (NULL, NULL, NULL)")
     await pool.query("INSERT INTO tbldetalleventa SET IdVenta = ?, IdProducto = ?, Cantidad = ?, Precio = ?, Importe = ?",[carrito.insertId,IdProducto, Cantidad, Precio,Importe])
+    await pool.query("UPDATE tblproductos SET Existencias = Existencias-? WHERE IdProducto = ?",[Cantidad,IdProducto])
     res.redirect("/ferreteria/punto_de_venta"+carrito.insertId)
+    
+})
+
+router.post("/ferreteria/cerrar_venta", isLoggedIn, async (req, res) => {
+    const {IdVenta, Cantidad, Total} = req.body
+   log(IdVenta, Cantidad, Total)
+   let Cambio=Cantidad-Total
+   log(Cambio)
+   await pool.query("UPDATE tblventas SET VentaCerrada = 1, Total = ?, Efectivo = ? WHERE IdVenta = ?",[Total,Cantidad,IdVenta])
+   res.render("layouts/post_venta",{Total,Cambio,IdVenta})
     
 })
 
@@ -515,7 +556,7 @@ router.post("/agregar_al_carrito", isLoggedIn, async (req, res) => {
         Cantidad=parseFloat(Cantidad,10)
         Cantidad+=+productos[0].Cantidad
         Importe=productos[0].Precio*Cantidad
-        await pool.query("UPDATE tbldetalleventa SET Cantidad = ?, Importe = ?",[Cantidad, Importe])
+        await pool.query("UPDATE tbldetalleventa SET Cantidad = ?, Importe = ? WHERE IdProducto = ? AND IdVenta = ?",[Cantidad, Importe,IdProducto,IdVenta])
         await pool.query("UPDATE tblproductos SET Existencias = Existencias-? WHERE IdProducto = ?",[CantidadOld,IdProducto])
     }else{
         await pool.query("INSERT INTO tbldetalleventa SET IdVenta = ?, IdProducto = ?, Cantidad = ?, Precio = ?, Importe = ?",[IdVenta,IdProducto, Cantidad, Precio,Importe])
@@ -525,22 +566,87 @@ router.post("/agregar_al_carrito", isLoggedIn, async (req, res) => {
     
 })
 
+router.get("/pdf:id",  pdfc.despdf)
 
+router.get("/verpdf:id",  pdfc.pdf)
 
 
 //---------------------------------------------REPORTES---------------------------------------------------------------------
 
 router.get("/ferreteria/reporte_minimo", isLoggedIn, async (req, res) => {
-    let productos = await pool.query("SELECT * FROM tblproductos WHERE Existencias < StockMinimo")
-    log(productos)
+    let productos = await pool.query("SELECT * FROM tblproductos,tblproveedores WHERE Existencias < StockMinimo AND tblproveedores.IdProveedor = tblproductos.IdProveedor")
     res.render("layouts/reporte_minimo",{productos})
+    
+})
+
+router.get("/reporte_minimo",  pdfc.despdf_reporte_minimo)
+
+router.get("/rep_mi",  pdfc.reporte_minimo)
+
+
+router.post("/ferreteria/reporte_ganancias", isLoggedIn, async (req, res) => {
+    let {desde,hasta}=req.body
+    let des=desde
+    let has=hasta
+    desde=desde+" 00:00:00"
+    hasta=hasta+" 23:59:59"
+    let array=[]
+    let extra=0
+    let total=0
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?",[hasta,desde])
+    for (let index1 = 0; index1 < ventas.length; index1++) {
+        total=total+ventas[index1].Total
+        let ven = await pool.query("SELECT * FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[ventas[index1].IdVenta])
+        for (let index2 = 0; index2 < ven.length; index2++) {
+            for (let index3 = 0; index3 < array.length; index3++) {
+                if (ven[index2].IdProducto==array[index3].IdProducto) {
+                    array[index3].Cantidad=array[index3].Cantidad+ven[index2].Cantidad
+                    array[index3].Importe=array[index3].Importe+ven[index2].Importe
+                    extra=1
+                }
+            }
+            if (extra==0) {
+                array.push({
+                    IdProducto:ven[index2].IdProducto,
+                    Descripcion:ven[index2].Descripcion,
+                    Cantidad:ven[index2].Cantidad,
+                    Precio:ven[index2].Precio,
+                    Importe:ven[index2].Importe
+                })
+            }else{
+                extra=0
+            }
+        }
+    }
+    res.render("layouts/reporte_ganancias",{array,total,des,has})
     
 })
 
 
 
+router.post("/reporte_ganancias",  pdfc.despdf_reporte_ganancias)
+
+router.get("/rep_gan",  pdfc.reporte_ganancias)
 
 
+
+
+
+
+
+
+
+//---------------------------------------------ADMINISTRADOR---------------------------------------------------------------------
+router.get("/ferreteria/reportes", isLoggedIn, isAdmin, async (req, res) => {
+    let productos = await pool.query("SELECT * FROM tblproductos,tblproveedores WHERE Existencias < StockMinimo AND tblproveedores.IdProveedor = tblproductos.IdProveedor")
+    let id = await pool.query("SELECT * FROM tblventas order by `IdVenta` desc LIMIT 1;")
+
+    id=id[0].IdVenta
+
+    res.render("layouts/reporte",{productos,id})
+
+    
+})
 
 
 
@@ -586,7 +692,10 @@ router.post("/editar_proveedor", isLoggedIn, async (req, res) => {
 
 
 
-
+router.get("/aaaa", isLoggedIn, async (req, res) => {
+  
+   res.render("layouts/ticket",{ layout:"mainpdf"})
+})
 
 
 
@@ -648,12 +757,7 @@ router.get("/serviflash/ver_cliente:id/", isLoggedIn, async (req, res) => {
 
 
 
-router.get("/serviflash/reportes", isLoggedIn, isAdmin, async (req, res) => {
-    /*let cuenta = await pool.query("SELECT Email, Nombre, IdUsuario, Activa FROM tblusuarios WHERE IdUsuario = 16 OR IdUsuario = 17")
-        res.render("layouts/reporte",{cuenta})*/
-        res.redirect("/ferreteria/reporte_minimo")
-    
-})
+
 router.get("/serviflash/eliminar_nota:id/", isLoggedIn, async (req, res) => {
     let {id} = req.params
     console.log(id)
@@ -835,9 +939,7 @@ router.get("/ver",  pdfc.img)
 
 
 
-router.get("/pdf",  pdfc.despdf)
 
-router.get("/verpdf",  pdfc.pdf)
 
 
 

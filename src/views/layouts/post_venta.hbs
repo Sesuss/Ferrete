@@ -1,0 +1,29 @@
+<div class="container p-4">
+    <br><br>
+    <br><br>
+  <div class="row">
+    <div class="col-md-4 mx-auto">
+      <div class="card ">
+        <div class="card-body">
+          <h1><center>Venta Cerrada</center></h1>
+          <form >
+            <br>
+           <h4>Total ${{Total}}</h4>
+           <br>
+           <h3>Cambio ${{Cambio}}</h3>
+          </form>
+           <button style="width: 100%;" onclick="time()" class="btn btn-primary btn-block">Continuar</button>
+
+           <a style="display: none;" href="/pdf{{IdVenta}}" target="_blank" id="link" >Hola</a>
+           <a style="display: none;" href="/ferreteria/punto" id="link2" >Hola</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+    function time(){
+    document.getElementById("link").click()
+    document.getElementById("link2").click()
+    }
+</script>
