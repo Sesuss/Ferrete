@@ -422,10 +422,32 @@ router.get("/ferreteria/agregar_producto", isLoggedIn, async (req, res) => {
 router.get("/ferreteria/ver_producto:id/", isLoggedIn, async (req, res) => {
     const { id } = req.params
    let producto = await pool.query("SELECT * FROM tblproductos,tblproveedores WHERE tblproductos.IdProducto = ? AND tblproveedores.IdProveedor = tblproductos.IdProveedor",[id])
-   let proveedor = await pool.query("SELECT * FROM tblproveedores") 
-   res.render("layouts/producto_completo", { producto,id,proveedor })
+   let proveedor = await pool.query("SELECT * FROM tblproveedores")
+   let limit = await pool.query("SELECT IdProducto FROM `tblproductos` order by `IdProducto` desc LIMIT 1;")
+   let ant=producto[0].IdProducto-1
+   let des=producto[0].IdProducto+1
+   if(ant==0){
+       ant=1
+   }
+   if(des == limit[0].IdProducto+1){
+       des=limit[0].IdProducto
+   }
+   if (producto[0].Espejo == 1) {
+       let aa=1
+       res.render("layouts/producto_completo", { ant,des,producto,id,proveedor,aa })
+   } else{
+       res.render("layouts/producto_completo", { ant,des,producto,id,proveedor })
+   }
 })
 
+
+router.get("/ferreteria/agregar_granel:id/", isLoggedIn, async (req, res) => {
+    const { id } = req.params
+   let producto = await pool.query("SELECT * FROM tblproductos WHERE IdProducto = ?",[id])
+  await pool.query("UPDATE tblproductos SET Existencias = Existencias + ? WHERE IdProducto = ? ",[producto[0].ValorEspejo,producto[0].IdEspejo])
+  await pool.query("UPDATE tblproductos SET Existencias = Existencias - 1  WHERE IdProducto = ? ",[id])
+    res.redirect("/ferreteria/ver_producto"+id)
+})
 
 router.post("/agregar_producto", isLoggedIn, async (req, res) => {
     const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca} = req.body
@@ -438,7 +460,7 @@ router.post("/editar_producto", isLoggedIn, async (req, res) => {
     const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca} = req.body
     const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca}
     await pool.query("UPDATE tblproductos SET ? WHERE IdProducto = ?",[newproducto,IdProducto])
-    res.redirect("/ferreteria/agregar_producto")
+    res.redirect("/ferreteria/ver_producto"+IdProducto)
     
 })
 
@@ -477,7 +499,6 @@ router.post("/buscar_por_barra", isLoggedIn, async (req, res) => {
 //---------------------------------------------Punto De Venta---------------------------------------------------------------------
 router.get("/ferreteria/punto", isLoggedIn, async (req, res) => {
     let producto = await pool.query("SELECT * FROM tblproductos WHERE Existencias > 0")
-    log(await pool.query("SELECT * FROM `tblproductos` WHERE `CodeBar`=7501206695104;"))
     let ventas = await pool.query("SELECT * FROM tblventas WHERE VentaCerrada = 0")
     if (ventas.length != 0) {
         let aa=1
@@ -495,6 +516,25 @@ router.get("/ferreteria/ventas_abiertas", isLoggedIn, async (req, res) => {
     res.render("layouts/ventas_abiertas",{ventas})
 })
 
+router.get("/devolucion:id/", isLoggedIn, async (req, res) => {
+    const { id } = req.params
+    let user = req.user
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE IdVenta = ?",[id])
+    if(ventas[0].VentaCerrada == 1){
+    let productos = await pool.query("SELECT * FROM tbldetalleventa WHERE IdVenta = ?",[id])
+    log(productos)
+    for (let index = 0; index < productos.length; index++) {
+       await pool.query("UPDATE tblproductos SET Existencias = Existencias + ? WHERE IdProducto = ?",[productos[index].Cantidad,productos[index].IdProducto])
+        
+    }
+    await pool.query("UPDATE tblventas SET VentaCerrada = 2 WHERE IdVenta = ?",[id])
+    await pool.query("INSERT INTO tbldevoluciones SET Vendedor = ?, IdVenta = ?",[user.Nombre,id])
+    res.redirect("/ferreteria/punto")
+}else{
+    res.redirect("/ferreteria/reportes")
+    }
+
+})
 
 
 router.get("/ferreteria/punto_de_venta:id/", isLoggedIn, async (req, res) => {
@@ -538,10 +578,12 @@ router.post("/agregar_carrito", isLoggedIn, async (req, res) => {
 
 router.post("/ferreteria/cerrar_venta", isLoggedIn, async (req, res) => {
     const {IdVenta, Cantidad, Total} = req.body
+    let user = req.user
+    log(user)
    log(IdVenta, Cantidad, Total)
    let Cambio=Cantidad-Total
    log(Cambio)
-   await pool.query("UPDATE tblventas SET VentaCerrada = 1, Total = ?, Efectivo = ? WHERE IdVenta = ?",[Total,Cantidad,IdVenta])
+   await pool.query("UPDATE tblventas SET VentaCerrada = 1, Total = ?, Efectivo = ?, IdVendedor = ? WHERE IdVenta = ?",[Total,Cantidad,user.Nombre,IdVenta])
    res.render("layouts/post_venta",{Total,Cambio,IdVenta})
     
 })
@@ -593,7 +635,7 @@ router.post("/ferreteria/reporte_ganancias", isLoggedIn, async (req, res) => {
     let array=[]
     let extra=0
     let total=0
-    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?",[hasta,desde])
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada = 1",[hasta,desde])
     for (let index1 = 0; index1 < ventas.length; index1++) {
         total=total+ventas[index1].Total
         let ven = await pool.query("SELECT * FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[ventas[index1].IdVenta])
@@ -619,6 +661,16 @@ router.post("/ferreteria/reporte_ganancias", isLoggedIn, async (req, res) => {
         }
     }
     res.render("layouts/reporte_ganancias",{array,total,des,has})
+    
+})
+router.post("/ferreteria/reporte_devoluciones", isLoggedIn, async (req, res) => {
+    let {desde,hasta}=req.body
+    let des=desde
+    let has=hasta
+    desde=desde+" 00:00:00"
+    hasta=hasta+" 23:59:59"
+    let ventas = await pool.query("SELECT * FROM tbldevoluciones,tblventas WHERE tbldevoluciones.Fecha < ? AND tbldevoluciones.Fecha > ? AND tblventas.VentaCerrada = 2 AND tblventas.IdVenta = tbldevoluciones.IdVenta",[hasta,desde])
+    res.render("layouts/reporte_devoluciones",{ventas})
     
 })
 

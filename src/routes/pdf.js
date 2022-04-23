@@ -54,7 +54,7 @@ async function crearticket(url){
 
     await pagina.goto(url)
 
-    let pdf=await pagina.pdf({ width:165,height:500 })
+    let pdf=await pagina.pdf({ width:165 })
 
     navegador.close()
 

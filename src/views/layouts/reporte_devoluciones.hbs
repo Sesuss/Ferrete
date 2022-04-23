@@ -50,29 +50,30 @@
                       <input type="date" name="hasta" class="form-control text-dark" value="{{has}}">
                     </div>
                     <br>
-                    <h1 class="text-dark mb-3 h4">Reporte de productos vendidos <button title="Imprimir" class="btn btn-primary"><i style="color: white;" class="far fa-file-image"></i></button></h1>
+                    <h1 class="text-dark mb-3 h4">Reporte de ventas canceladas </h1>
                     </form>
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Ventas totales ${{total}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
                                             <th>Id</th>
-                                            <th>Descripcion</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio</th>
-                                            <th>Importe</th>
+                                            <th>Vendedor</th>
+                                            <th>Fecha de Venta</th>
+                                            <th>Canceló</th>
+                                            <th>Fecha de devolucion</th>
+                                            <th>Total</th>
                                             </tr>
                                         </thead>
                                         <tbody >
-                                            {{#each array}}
+                                            {{#each ventas}}
                                             <tr style="border-top: 1px solid black;">
-                                            <td>{{IdProducto}}</td>
-                                            <td>{{Descripcion}}</td>
-                                            <td>{{Cantidad}}</td>
-                                            <td>{{Precio}}</td>
-                                            <td>{{Importe}}</td>
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{IdVendedor}}</td>
+                                            <td>{{momentH FechaVenta}}</td>
+                                            <td>{{Vendedor}}</td>
+                                            <td>{{momentH Fecha}}</td>
+                                            <td>${{Total}}</td>
                                             </tr>
                                             {{/each}}
                                             </tbody>

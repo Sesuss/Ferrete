@@ -13,9 +13,12 @@
        {{#each Venta}}
     <center><p><strong>RFC:</strong> GAVF871219GY8</p></center>
     <center><p><strong>Fecha:</strong>{{moment FechaVenta}}</p></center>
-    <center><p>FerreMax </p></center>
-    <center><p>El Boulevard </p></center>
-    <center><p>Pino Suarez Local 3</p></center>
+    <center><p><strong>Telefono:</strong> 312 352 0234</p></center>
+    <center><p><strong>Horario</strong></p></center>
+    <center><p><strong>Lunes-Vienes</strong> 8:00am-7:00pm</p></center>
+    <center><p><strong>Sabado</strong> 8:00am-3:00pm</p></center>
+    <center><p><strong>Domingo</strong> 8:00am-2:00pm</p></center>
+    <center><p><strong>Vendedor: </strong>{{IdVendedor}}</p></center>
     {{/each}}
     <center><p><strong>Ticket No.</strong>{{id}}</p></center>
     </div>
@@ -35,8 +38,8 @@
     <tr>
       <td>{{Cantidad}}</td>
       <td>{{Descripcion}}</td>
-      <td>{{Precio}}</td>
-      <td>{{Importe}}</td>
+      <td>${{Precio}}</td>
+      <td>${{Importe}}</td>
     </tr>
     {{/each}}
       </tbody>
@@ -111,5 +114,5 @@ img {
 }
     </style>
     <br>
-    <p style="color: white;"><center>-*-*-*-*-*-*-*-*-*-*-*-</center></p>
+    <p style="color: white;"><center>-*-*-*-*-*-*-*-*-*-</center></p>
 </html>

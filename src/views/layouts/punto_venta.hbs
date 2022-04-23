@@ -198,8 +198,6 @@
       for(let index=0;index<array.length;index++){
           if(CodeBar.value===array[index].CodeBar){
               value=1
-              console.log(array[index])
-                console.log(array[index].Descripcion)
               document.getElementById("form1").value=array[index].IdProducto
               document.getElementById("form2").value=array[index].Categoria
               document.getElementById("form3").value=array[index].Descripcion
@@ -226,13 +224,15 @@
       for(let index=0;index<array.length;index++){
           if(CodeTru.value===array[index].CodeTru){
               value=1
-              console.log(array[index])
-
-              document.getElementById("form1").value=array[index].IdProducto
+             document.getElementById("form1").value=array[index].IdProducto
               document.getElementById("form2").value=array[index].Categoria
               document.getElementById("form3").value=array[index].Descripcion
               document.getElementById("form4").value=array[index].PrecioVenta
               document.getElementById("form5").value=array[index].Existencias
+              document.getElementById("formC").disabled=false
+              document.getElementById("formC").value=1
+              document.getElementById("formC").max=array[index].Existencias
+              document.getElementById("formbtt").style.display="block"
               index=array.length
           }
       }
@@ -250,13 +250,15 @@
       for(let index=0;index<array.length;index++){
           if(CodePro.value===array[index].CodePro){
               value=1
-              console.log(array[index])
-
               document.getElementById("form1").value=array[index].IdProducto
               document.getElementById("form2").value=array[index].Categoria
               document.getElementById("form3").value=array[index].Descripcion
               document.getElementById("form4").value=array[index].PrecioVenta
               document.getElementById("form5").value=array[index].Existencias
+              document.getElementById("formC").disabled=false
+              document.getElementById("formC").value=1
+              document.getElementById("formC").max=array[index].Existencias
+              document.getElementById("formbtt").style.display="block"
               index=array.length
           }
       }
