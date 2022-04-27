@@ -83,6 +83,29 @@
               <div class="card">
                 <div class="card-body" style="background-color:#e6e6e6;">
                   <h1 class="text-dark mb-3 h4">Reporte de Ventas</h1>
+                  <form action="/ferreteria/reporte_ventas" method="post">
+                    <div class="form-group">
+                      <label>FECHA DE INICIO</label>
+                      <input type="date" name="desde" class="form-control text-dark" value="{{moment}}" required>
+                    </div>
+                    <div class="form-group">
+                      <label>FECHA FINAL</label>
+                      <input type="date" name="hasta" class="form-control text-dark" value="{{moment}}" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <button class="btn btn-primary btn-block mx-1" title="ENVIAR">
+                        <i style="color: white;" class="fas fa-check"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                </div>
+              <br>
+              <br>
+              <div class="card">
+                <div class="card-body" style="background-color:#e6e6e6;">
+                  <h1 class="text-dark mb-3 h4">REPORTE DE PRODUCTOS VENDIDOS</h1>
                   <form action="/ferreteria/reporte_ganancias" method="post">
                     <div class="form-group">
                       <label>FECHA DE INICIO</label>

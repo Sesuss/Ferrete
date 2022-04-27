@@ -1,0 +1,174 @@
+<div class="container-fluid p-1">
+  <div class="row mx-auto">
+    <div class="col-md-12">
+      <div class="row">
+
+        <div class="col-md-4">
+            <center>
+          <img alt="" src="log.jpeg" width="700px" height="150px">
+          <p>{{momentC}}</p>
+          </center>
+        </div>
+        <div class="row" style="margin-top: 20px; margin-left:2px;" >
+        {{#if ventas}}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total ${{total}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each ventas}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                    {{#if ventas2}}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas 2: total ${{total2}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each ventas2}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                    {{#if ventas3}}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas 3: total ${{total3}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each ventas3}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                    {{#if Gerencia}}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Gerencia: total ${{total4}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each Gerencia}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                    {{#if Gerencia2}}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Gerencia 2: total ${{total5}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each Gerencia2}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                         {{#if ZonaDigital}}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">ZonaDigital: total ${{aa}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each ZonaDigital}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+</div>
+</div>
+</div>
+</div>
+</div>

@@ -303,7 +303,6 @@ module.exports={
 
     async pdf(req,res){
         const {id} = req.params
-
         let Venta = await pool.query("SELECT * FROM tblventas WHERE IdVenta = ?",[id])
         let productos = await pool.query("SELECT tbldetalleventa.*,tblproductos.Descripcion FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[id])
         let Cambio = Venta[0].Efectivo-Venta[0].Total
@@ -371,6 +370,52 @@ module.exports={
         let {desde,hasta}=req.body
         await pool.query("UPDATE tblreportes SET Desde = ?, Hasta = ? WHERE IdReporte = 1",[desde,hasta])
         const pdf = await crearpdf("http://localhost:3832/rep_gan")
+        res.contentType("application/pdf")
+        res.send(pdf)
+
+    },
+
+    async reporte_ventas(req,res){
+      let reporte = await pool.query("SELECT * FROM tblreportes")
+      let desde=reporte[0].Desde
+      let hasta=reporte[0].Hasta
+        desde=desde+" 00:00:00"
+        hasta=hasta+" 23:59:59"
+        let total=0
+    let total2=0
+    let total3=0
+    let total4=0
+    let total5=0
+    function suma(ventas){
+        let tol=0
+        for (let index = 0; index < ventas.length; index++) {
+            tol=tol+ventas[index].Total
+            
+        }
+        return tol
+    }
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let ventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let ventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let Gerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let Gerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let ZonaDigital = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'ZonaDigital' ORDER BY FechaVenta ASC ",[hasta,desde])
+    total=suma(ventas)    
+    total2=suma(ventas2)    
+    total3=suma(ventas3)    
+    total4=suma(Gerencia)    
+    total5=suma(Gerencia2)  
+    let aa=suma(ZonaDigital)
+    console.log(ZonaDigital)
+    res.render("reporte_ventas.hbs",{ layout:"mainpdf",ZonaDigital,aa,ventas,ventas2,ventas3,Gerencia,Gerencia2,total,total2,total3,total4,total5})
+
+    },
+    
+    async despdf_reporte_ventas(req,res){
+        let {desde,hasta}=req.body
+        console.log(desde,hasta)
+        await pool.query("UPDATE tblreportes SET Desde = ?, Hasta = ? WHERE IdReporte = 1",[desde,hasta])
+        const pdf = await crearpdf("http://localhost:3832/rep_ven")
         res.contentType("application/pdf")
         res.send(pdf)
 

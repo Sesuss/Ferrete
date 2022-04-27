@@ -1,62 +1,120 @@
-<div class="container-fluid p-1">
-  <div class="row mx-auto">
-    <div class="col-md-12">
-      <div class="row">
-
-        <div class="col-md-4">
-         <center> <img alt="" src="log.jpeg" height="100px" width="500px" ></center>
+<html>
+    <head>
+ 
+    </head>
+    <body>
+        <div class="ticket">
+              <div style="font-size: ;">
+         <center> <img alt="" src="log2.jpg" height="90px" width="150px" ></center>
         </div>
-      </div>
+
+ <div>
+     <div style="font-size:x-small; line-height: 0px;">
+       {{#each Venta}}
+    <center><p><strong>RFC:</strong> GAVF871219GY8</p></center>
+    <center><p><strong>Fecha:</strong>{{moment FechaVenta}}</p></center>
+    <center><p><strong>Telefono:</strong> 312 352 0234</p></center>
+    <center><p><strong>Horario</strong></p></center>
+    <center><p><strong>Lunes-Vienes</strong> 8:00am-7:00pm</p></center>
+    <center><p><strong>Sabado</strong> 8:00am-3:00pm</p></center>
+    <center><p><strong>Domingo</strong> 8:00am-2:00pm</p></center>
+    <center><p><strong>Vendedor: </strong>{{IdVendedor}}</p></center>
+    {{/each}}
+    <center><p><strong>Ticket No.</strong>{{id}}</p></center>
     </div>
 
- <div class="row mx-auto " style="margin-bottom: 10px;">
-    <center><p style="line-height: 5px;"><strong>RFC:</strong> GAVF871219GY8</p></center>
-    <center><p style="line-height: 5px;"><strong>Fecha:</strong>--Algodefecha--</p></center>
-    <center><p style="line-height: 5px;"><strong>Ticket No.</strong>--123--</p></center>
-    <center><p style="line-height: 5px;">FerreMax El Boulevard Pino Suarez Local 3</p></center>
-    <center><p style="line-height: 5px;"><strong>Vendedor:</strong>--Empleado--</p></center>
    <center> 
-     <table class=" tabla-borderless table-striped" style="font-size:small; margin-left: 5px; color: #000000; text-transform: uppercase; width:550px; border-color: #dddddd;">
-  <thead>
+     <table class=" tabla-borderless table-striped" style="width: 155px;" >
+  <thead style="font-size: x-small;">
     <tr>
-      <th>Cantidad</th>
+      <th>Cant</th>
       <th>Descripcion</th>
       <th>Precio</th>
       <th>Importe</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody style="font-size: x-small;">
+    {{#each productos}}
     <tr>
-      <td>1</td>
-      <td>Tornillos de media pulgada, color rojo</td>
-      <td>26.13</td>
-      <td>26.13</td>
+      <td>{{Cantidad}}</td>
+      <td>{{Descripcion}}</td>
+      <td>${{Precio}}</td>
+      <td>${{Importe}}</td>
     </tr>
+    {{/each}}
       </tbody>
 </table>
 </center>
-<h6 align="right">Total Neto <u>$30.00</u></h6>
-<h6 align="right" style="line-height: 5px;">Importe en pesos</h6>
+
+<div style="font-size:x-small; line-height: 1px;" align="right">
+{{#each Venta}}
+<p>Total Neto <u>${{Total}}</u></p>
+<p>Importe en pesos</p>
 <br>
-<h6 align="right">Efectivo pesos</h6>
-<h6 align="right">Cambio pesos</h6>
-
-<center><p style="line-height: 5px;">Computadora:<strong>Ejemplo</strong></p></center>
-<center><p style="line-height: 5px;">Folio Interno: Ejemplo</p></center>
-<center><p style="line-height: 5px;"><strong>Gracias Por Su Compra</strong></p></center>
- 
-
+<p>Efectivo pesos<u>${{Efectivo}}</u></p>
+{{/each}}
+<p>Cambio pesos<u>${{Cambio}}</u></p>
 </div>
-
- <div class="row mx-auto ">
- 
-
-<div style="">
-</div>
+<div style="font-size:x-small; line-height: 1px;" align="right">
+<center><p><strong>Devolución o aclaración</strong></p></center>
+<center><p style="margin-bottom: 30px;"><strong>unicamente con ticket</strong></p></center>
+<center><p><strong>Gracias Por Su Compra</strong></p></center>
+ </div>
 
 
 </div>
-</div>
-</div>
-</div>
-</div>
+
+        </div>
+    </body>
+    <style>
+      * {
+        color: #000000; ,
+    font-family: 'Times New Roman';
+}
+
+td,
+th,
+tr,
+table {
+    border-top: 1px solid black;
+    border-collapse: collapse;
+}
+
+td.producto,
+th.producto {
+    width: 75px;
+    max-width: 75px;
+}
+
+td.cantidad,
+th.cantidad {
+    width: 40px;
+    max-width: 40px;
+    word-break: break-all;
+}
+
+td.precio,
+th.precio {
+    width: 40px;
+    max-width: 40px;
+    word-break: break-all;
+}
+
+.centrado {
+    text-align: center;
+    align-content: center;
+}
+
+.ticket {
+    width: 155px;
+    max-width: 155px;
+}
+
+img {
+    max-width: inherit;
+    width: inherit;
+}
+    </style>
+    <br>
+    <p style="color: white;"><center>-*-*-*-*-*-*-*-*-*-</center></p>
+</html>

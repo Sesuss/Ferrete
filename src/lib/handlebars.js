@@ -25,5 +25,10 @@ helpers.moment= (timestamp)=>{
    let fecha= moment(timestamp).format("yyyy-MM-DD");
     return fecha
 }
+helpers.resta= (id)=>{ 
+  
+  id=id-1
+    return id
+}
 
 module.exports=helpers

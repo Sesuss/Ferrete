@@ -457,7 +457,10 @@ router.post("/agregar_producto", isLoggedIn, async (req, res) => {
     
 })
 router.post("/editar_producto", isLoggedIn, async (req, res) => {
-    const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca} = req.body
+    let {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca} = req.body
+    if(PrecioCompra == ""||PrecioCompra==null){
+        PrecioCompra=0
+    }
     const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca}
     await pool.query("UPDATE tblproductos SET ? WHERE IdProducto = ?",[newproducto,IdProducto])
     res.redirect("/ferreteria/ver_producto"+IdProducto)
@@ -465,7 +468,7 @@ router.post("/editar_producto", isLoggedIn, async (req, res) => {
 })
 
 router.post("/buscar_por_barra", isLoggedIn, async (req, res) => {
-    const {CodeBar,CodeTruper,CodeProducto} = req.body
+    const {CodeBar,CodeTruper,CodeProducto, IdProducto} = req.body
     if(CodeBar != ""){
         let code = await pool.query("SELECT * FROM tblproductos WHERE CodeBar = ?",[CodeBar])
         if(code[0] == undefined){
@@ -489,6 +492,9 @@ router.post("/buscar_por_barra", isLoggedIn, async (req, res) => {
         } else {
             res.redirect("/ferreteria/ver_producto"+code[0].IdProducto)
         }
+        
+    } else if(IdProducto != ""){
+            res.redirect("/ferreteria/ver_producto"+IdProducto)
         
     }else{
 
@@ -584,8 +590,8 @@ router.post("/ferreteria/cerrar_venta", isLoggedIn, async (req, res) => {
    let Cambio=Cantidad-Total
    log(Cambio)
    await pool.query("UPDATE tblventas SET VentaCerrada = 1, Total = ?, Efectivo = ?, IdVendedor = ? WHERE IdVenta = ?",[Total,Cantidad,user.Nombre,IdVenta])
-   res.render("layouts/post_venta",{Total,Cambio,IdVenta})
-    
+   res.render("layouts/post_venta",{Total,Cambio,IdVenta, layout:"mainpdf"})
+  
 })
 
 router.post("/agregar_al_carrito", isLoggedIn, async (req, res) => {
@@ -615,7 +621,7 @@ router.get("/verpdf:id",  pdfc.pdf)
 
 //---------------------------------------------REPORTES---------------------------------------------------------------------
 
-router.get("/ferreteria/reporte_minimo", isLoggedIn, async (req, res) => {
+router.get("/ferreteria/reporte_minimo", isLoggedIn, isAdmin, async (req, res) => {
     let productos = await pool.query("SELECT * FROM tblproductos,tblproveedores WHERE Existencias < StockMinimo AND tblproveedores.IdProveedor = tblproductos.IdProveedor")
     res.render("layouts/reporte_minimo",{productos})
     
@@ -626,7 +632,7 @@ router.get("/reporte_minimo",  pdfc.despdf_reporte_minimo)
 router.get("/rep_mi",  pdfc.reporte_minimo)
 
 
-router.post("/ferreteria/reporte_ganancias", isLoggedIn, async (req, res) => {
+router.post("/ferreteria/reporte_ganancias", isLoggedIn, isAdmin, async (req, res) => {
     let {desde,hasta}=req.body
     let des=desde
     let has=hasta
@@ -663,7 +669,11 @@ router.post("/ferreteria/reporte_ganancias", isLoggedIn, async (req, res) => {
     res.render("layouts/reporte_ganancias",{array,total,des,has})
     
 })
-router.post("/ferreteria/reporte_devoluciones", isLoggedIn, async (req, res) => {
+router.post("/reporte_ganancias",  pdfc.despdf_reporte_ganancias)
+
+router.get("/rep_gan",  pdfc.reporte_ganancias)
+
+router.post("/ferreteria/reporte_devoluciones", isLoggedIn, isAdmin, async (req, res) => {
     let {desde,hasta}=req.body
     let des=desde
     let has=hasta
@@ -674,11 +684,46 @@ router.post("/ferreteria/reporte_devoluciones", isLoggedIn, async (req, res) => 
     
 })
 
+router.post("/ferreteria/reporte_ventas", isLoggedIn, isAdmin, async (req, res) => {
+    let {desde,hasta}=req.body
+    let des=desde
+    let has=hasta
+    desde=desde+" 00:00:00"
+    hasta=hasta+" 23:59:59"
+    let total=0
+    let total2=0
+    let total3=0
+    let total4=0
+    let total5=0
+    function suma(ventas){
+        let tol=0
+        for (let index = 0; index < ventas.length; index++) {
+            tol=tol+ventas[index].Total
+            
+        }
+        return tol
+    }
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let ventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let ventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let Gerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let Gerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let ZonaDigital = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'ZonaDigital' ORDER BY FechaVenta ASC ",[hasta,desde])
+    total=suma(ventas)    
+    total2=suma(ventas2)    
+    total3=suma(ventas3)    
+    total4=suma(Gerencia)    
+    total5=suma(Gerencia2)  
+    let aa=suma(ZonaDigital)
+    res.render("layouts/reporte_ventas",{ZonaDigital,aa,ventas,ventas2,ventas3,Gerencia,Gerencia2,total,total2,total3,total4,total5,des,has})
+    
+})
+
+router.post("/reporte_ventas",  pdfc.despdf_reporte_ventas)
+
+router.get("/rep_ven",  pdfc.reporte_ventas)
 
 
-router.post("/reporte_ganancias",  pdfc.despdf_reporte_ganancias)
-
-router.get("/rep_gan",  pdfc.reporte_ganancias)
 
 
 
@@ -692,8 +737,12 @@ router.get("/rep_gan",  pdfc.reporte_ganancias)
 router.get("/ferreteria/reportes", isLoggedIn, isAdmin, async (req, res) => {
     let productos = await pool.query("SELECT * FROM tblproductos,tblproveedores WHERE Existencias < StockMinimo AND tblproveedores.IdProveedor = tblproductos.IdProveedor")
     let id = await pool.query("SELECT * FROM tblventas order by `IdVenta` desc LIMIT 1;")
+if(id[0] != undefined){
 
     id=id[0].IdVenta
+}else{
+    id=0
+}
 
     res.render("layouts/reporte",{productos,id})
 

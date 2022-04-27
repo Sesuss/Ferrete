@@ -54,17 +54,30 @@
                                                     <div class="col-md-4">
                                                         <label for="">Codigo de Barras</label>
                                                         <input type="text" id="CodeBar" class="form-control text-dark m-1"
-                                                            autofocus>
+                                                            >
                                                     </div>
                                                     <div class="col-md-4">
                                                         <label for="">Codigo de Truper</label>
-                                                        <input type="number" id="CodeTru" class="form-control text-dark m-1"
+                                                        <input type="text" id="CodeTru" class="form-control text-dark m-1"
                                                             >
                                                     </div>
                                                     <div class="col-md-4">
-                                                        <label for="">Codigo de Producto</label>
-                                                        <input type="number" id="CodePro" class="form-control text-dark m-1"
+                                                        <label for="">Descripcion</label>
+                                                        <input type="text" id="CodePro" class="form-control text-dark m-1"
                                                             >
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-8">
+                                                       
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <select  id="sel" class="form-select text-dark m-1 " onchange="sele()">
+                                          <option value="">-----------</option>
+                                              {{#each producto}}
+                                                  <option id="Des{{IdProducto}}" style="display: block;" value="{{IdProducto}}">{{Descripcion}}</option>
+                                             {{/each}}
+                                        </select>
                                                     </div>
                                                 </div>
                                             </form>
@@ -233,10 +246,10 @@
     CodeBar.addEventListener("change", BuCodeBar)
     CodeTru.addEventListener("change", BuCodeTru)
     CodePro.addEventListener("change", BuCodePro)
-    //CodeBar.addEventListener("keydown", BuCodeBar)
-    //CodeBar.addEventListener("keyup", BuCodeBar)
-    //CodeBar.addEventListener("keypress", BuCodeBar)
-
+    CodePro.addEventListener("keydown", BuCodePro)
+    CodePro.addEventListener("keyup", BuCodePro)
+    CodePro.addEventListener("paste", BuCodePro)
+    CodePro.addEventListener("change", BuCodePro)
    function BuCodeBar(){
        CodeTru.value=""
        CodePro.value=""
@@ -289,13 +302,34 @@
           CodeTru.value=""
       }
    }
+  
+
    function BuCodePro(){
        CodeTru.value=""
        CodeBar.value=""
-       let value=0
+       document.getElementById("sel").value=0
+       let Des,Pro
+       Des=CodePro.value.toLowerCase()
+       if(CodePro.value == ""){
+            for(let index=0;index<array.length;index++){
+                 document.getElementById("Des"+array[index].IdProducto).style.display="none"
+            }
+       }
       for(let index=0;index<array.length;index++){
-          if(CodePro.value===array[index].CodePro){
-              value=1
+          Pro=array[index].Descripcion.toLowerCase()
+          if(Pro.indexOf(Des) !== -1){
+             document.getElementById("Des"+array[index].IdProducto).style.display="block"
+          }else{
+             document.getElementById("Des"+array[index].IdProducto).style.display="none"
+          }
+      }
+     
+   }
+
+    function sele (){
+       let sel = document.getElementById("sel").value
+       for(index=0;index<array.length;index++){
+           if(sel==array[index].IdProducto){
               document.getElementById("form1").value=array[index].IdProducto
               document.getElementById("form2").value=array[index].Categoria
               document.getElementById("form3").value=array[index].Descripcion
@@ -306,14 +340,8 @@
               document.getElementById("formC").max=array[index].Existencias
               document.getElementById("formbtt").style.display="block"
               index=array.length
-          }
-      }
-      if(value==0){
-          alert("No se encontro producto")
-          CodePro.value=""
-      }else{
-          CodePro.value=""
-      }
-   }
+           }
+       }
+    }
 
 </script>

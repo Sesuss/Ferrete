@@ -94,7 +94,7 @@
                             </div>
                             <br>
                             <div class="card-body" style="background-color:#e6e6e6;">
-                                <h1 class="text-dark mb-3 h4">Buscar por codigo</h1>
+                                <h1 class="text-dark mb-3 h4">Buscar por codigo/id</h1>
                                 <form action="/buscar_por_barra" method="post">
 
                                  <div class="row">
@@ -102,13 +102,17 @@
                                       <label for="">Codigo de Barras</label>
                                      <input type="number"  class="form-control text-dark m-1" name="CodeBar">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                       <label for="">Codigo de Truper</label>
-                                     <input type="number"  class="form-control text-dark m-1" name="CodeTruper">
+                                     <input type="text"  class="form-control text-dark m-1" name="CodeTruper">
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                       <label for="">Codigo de Producto</label>
                                      <input type="number"  class="form-control text-dark m-1" name="CodeProducto">
+                                    </div>
+                                    <div class="col-md-2">
+                                      <label for="">Id de producto</label>
+                                     <input type="number"  class="form-control text-dark m-1" name="IdProducto" max="{{resta id}}" step="1" min="1">
                                     </div>
                                   </div>
 
@@ -196,7 +200,7 @@
                                     </div>
                                       <div class="col-md-4">
                                         <label>Codigo de Truper</label>
-                                        <input type="number" id="a8"  class="form-control text-dark m-1"
+                                        <input type="text" id="a8"  class="form-control text-dark m-1"
                                              name="CodeTruper" >
                                     </div>
                                       <div class="col-md-4">
