@@ -583,13 +583,10 @@ router.post("/agregar_carrito", isLoggedIn, async (req, res) => {
 })
 
 router.post("/ferreteria/cerrar_venta", isLoggedIn, async (req, res) => {
-    const {IdVenta, Cantidad, Total} = req.body
+    const {IdVenta, Cantidad, Total, Metodo} = req.body
     let user = req.user
-    log(user)
-   log(IdVenta, Cantidad, Total)
    let Cambio=Cantidad-Total
-   log(Cambio)
-   await pool.query("UPDATE tblventas SET VentaCerrada = 1, Total = ?, Efectivo = ?, IdVendedor = ? WHERE IdVenta = ?",[Total,Cantidad,user.Nombre,IdVenta])
+   await pool.query("UPDATE tblventas SET VentaCerrada = 1, Total = ?, Efectivo = ?, IdVendedor = ?, Metodo = ? WHERE IdVenta = ?",[Total,Cantidad,user.Nombre,Metodo,IdVenta])
    res.render("layouts/post_venta",{Total,Cambio,IdVenta, layout:"mainpdf"})
   
 })
@@ -684,6 +681,21 @@ router.post("/ferreteria/reporte_devoluciones", isLoggedIn, isAdmin, async (req,
     
 })
 
+router.post("/ferreteria/reporte_facturas", isLoggedIn, isAdmin, async (req, res) => {
+    let {desde,hasta}=req.body
+    let des=desde
+    let has=hasta
+    desde=desde+" 00:00:00"
+    hasta=hasta+" 23:59:59"
+    let ventas = await pool.query("SELECT * FROM tblfacturas,tblproveedores WHERE FechaFactura < ? AND FechaFactura > ? AND FacturaCerrada = 1 AND tblproveedores.IdProveedor = tblfacturas.Proveedor ORDER BY FechaFactura DESC",[hasta,desde])
+    res.render("layouts/reporte_facturas",{ventas})
+    
+})
+
+router.get("/reporte_facturas:id",  pdfc.despdf_reporte_facturas)
+
+router.get("/rep_fac",  pdfc.reporte_facturas)
+
 router.post("/ferreteria/reporte_ventas", isLoggedIn, isAdmin, async (req, res) => {
     let {desde,hasta}=req.body
     let des=desde
@@ -695,6 +707,11 @@ router.post("/ferreteria/reporte_ventas", isLoggedIn, isAdmin, async (req, res) 
     let total3=0
     let total4=0
     let total5=0
+    let to=0
+    let to2=0
+    let to3=0
+    let to4=0
+    let to5=0
     function suma(ventas){
         let tol=0
         for (let index = 0; index < ventas.length; index++) {
@@ -703,19 +720,28 @@ router.post("/ferreteria/reporte_ventas", isLoggedIn, isAdmin, async (req, res) 
         }
         return tol
     }
-    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let ventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let ventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let Gerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let Gerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let ZonaDigital = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'ZonaDigital' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total=suma(ventas)    
+    to=suma(Tventas)    
+    let ventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total2=suma(ventas2)    
+    to2=suma(Tventas2)    
+    let ventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total3=suma(ventas3)    
+    to3=suma(Tventas3)    
+    let Gerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let TGerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total4=suma(Gerencia)    
+    to4=suma(TGerencia)    
+    let Gerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let TGerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total5=suma(Gerencia2)  
-    let aa=suma(ZonaDigital)
-    res.render("layouts/reporte_ventas",{ZonaDigital,aa,ventas,ventas2,ventas3,Gerencia,Gerencia2,total,total2,total3,total4,total5,des,has})
+    to5=suma(TGerencia2) 
+    
+    res.render("layouts/reporte_ventas",{ventas,ventas2,ventas3,Gerencia,Gerencia2,total,total2,total3,total4,total5,des,has,Tventas,Tventas2,Tventas3,TGerencia,TGerencia2,to,to2,to3,to4,to5})
     
 })
 
@@ -747,6 +773,56 @@ if(id[0] != undefined){
     res.render("layouts/reporte",{productos,id})
 
     
+})
+
+router.get("/agregar_factura", isLoggedIn, isAdmin, async (req, res) => {  
+    let user=req.user
+    let fatura=await pool.query("INSERT INTO tblfacturas SET IdUsuario = ?",[user.Nombre])
+    log(fatura)
+    res.redirect("/ferreteria/factura"+fatura.insertId)
+})
+
+router.get("/ferreteria/factura:id", isLoggedIn, isAdmin, async (req, res) => {  
+    let {id}=req.params
+    let fatura=await pool.query("SELECT * FROM tblfacturas WHERE IdFactura = ?",[id])
+    if (fatura[0].FacturaCerrada == 0) {
+        let productos=await pool.query("SELECT tbldetallefactura.*, tblproductos.Descripcion, tblproductos.PrecioCompra AS PrecioOld FROM tbldetallefactura,tblproductos WHERE tbldetallefactura.IdFactura = ? AND tblproductos.IdProducto = tbldetallefactura.IdProducto",[id])
+        let producto=await pool.query("SELECT * FROM tblproductos")
+        let proveedor=await pool.query("SELECT * FROM tblproveedores")
+        res.render("layouts/factura",{id,productos,producto,proveedor})
+    } else{
+        res.redirect("/ferreteria/reportes")
+    }
+})
+router.get("/eliminar_factura:id", isLoggedIn, isAdmin, async (req, res) => {  
+    let {id}=req.params
+    let producto = await pool.query("SELECT * FROM tbldetallefactura WHERE Id = ?",[id])
+    await pool.query("DELETE FROM tbldetallefactura WHERE Id = ?",[id])
+    res.redirect("/ferreteria/factura"+producto[0].IdFactura)
+})
+
+router.post("/agregar_a_factura", isLoggedIn, isAdmin, async (req, res) => {  
+   let {IdProducto,Cantidad,PrecioCompra,IdFactura} = req.body 
+   let factura={IdProducto,Cantidad,PrecioCompra,IdFactura}
+   let producto = await pool.query("SELECT * FROM tbldetallefactura WHERE IdFactura = ? AND IdProducto = ?",[IdFactura,IdProducto])
+   if (producto[0] == undefined) {
+        await pool.query("INSERT INTO tbldetallefactura SET ?",[factura])
+    } else{
+        await pool.query("UPDATE tbldetallefactura SET Cantidad = Cantidad + ?, PrecioCompra = ?",[Cantidad,PrecioCompra])
+   }
+
+   res.redirect("/ferreteria/factura"+IdFactura)
+})
+
+router.post("/ferreteria/cerrar_factura", isLoggedIn, isAdmin, async (req, res) => {  
+   let {FechaOriginal,FolioFactura,Proveedor,Total,IdFactura} = req.body 
+    let venta={FechaOriginal,FolioFactura,Proveedor,Total,}
+    let productos = await pool.query("SELECT * FROM tbldetallefactura WHERE IdFactura = ?",[IdFactura])
+for (let index = 0; index < productos.length; index++) {
+    await pool.query("UPDATE tblproductos SET Existencias = Existencias + ?, PrecioCompra = ? WHERE IdProducto = ?",[productos[index].Cantidad,productos[index].PrecioCompra,productos[index].IdProducto])
+}
+  await pool.query("UPDATE tblfacturas SET ?, FacturaCerrada = 1 WHERE IdFactura = ?",[venta,IdFactura])
+   res.redirect("/ferreteria/reportes")
 })
 
 

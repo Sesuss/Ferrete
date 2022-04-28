@@ -50,10 +50,10 @@
                     <br>
                     <h1 class="text-dark mb-3 h4">Reporte de ventas <button title="Imprimir" class="btn btn-primary"><i style="color: white;" class="far fa-file-image"></i></button></h1>
                     </form>
-                    {{#if ventas}}
+                    {{#if ventas }}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Ventas: total ${{total}}</h1>
+                                <h1 class="text-dark mb-3 h4">Ventas: total en efectico ${{total}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
@@ -78,10 +78,38 @@
                         </div>
                         <br>
                         {{/if}}
+                    {{#if Tventas }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            <th>Ticket</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each Tventas}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            <td><a class="btn btn-primary" href="/pdf{{IdVenta}}" target="_blank" ><i style="color: white;" class="fas fa-th-list"></i></a></td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
                     {{#if ventas2}}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Ventas 2: total ${{total2}}</h1>
+                                <h1 class="text-dark mb-3 h4">Ventas 2: total en efectico ${{total2}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
@@ -106,10 +134,38 @@
                         </div>
                         <br>
                         {{/if}}
+                         {{#if Tventas2 }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to2}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            <th>Ticket</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each Tventas2}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            <td><a class="btn btn-primary" href="/pdf{{IdVenta}}" target="_blank" ><i style="color: white;" class="fas fa-th-list"></i></a></td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
                     {{#if ventas3}}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Ventas 3: total ${{total3}}</h1>
+                                <h1 class="text-dark mb-3 h4">Ventas 3: total en efectico ${{total3}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
@@ -134,10 +190,38 @@
                         </div>
                         <br>
                         {{/if}}
+                         {{#if Tventas3 }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to3}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            <th>Ticket</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each Tventas3}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            <td><a class="btn btn-primary" href="/pdf{{IdVenta}}" target="_blank" ><i style="color: white;" class="fas fa-th-list"></i></a></td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
                     {{#if Gerencia}}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Gerencia: total ${{total4}}</h1>
+                                <h1 class="text-dark mb-3 h4">Gerencia: total en efectico ${{total4}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
@@ -162,10 +246,38 @@
                         </div>
                         <br>
                         {{/if}}
+                         {{#if TGerencia }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to4}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            <th>Ticket</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each TGerencia}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            <td><a class="btn btn-primary" href="/pdf{{IdVenta}}" target="_blank" ><i style="color: white;" class="fas fa-th-list"></i></a></td>
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
                     {{#if Gerencia2}}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Gerencia 2: total ${{total5}}</h1>
+                                <h1 class="text-dark mb-3 h4">Gerencia 2: total en efectico ${{total5}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
@@ -190,10 +302,10 @@
                         </div>
                         <br>
                         {{/if}}
-                    {{#if ZonaDigital}}
+                         {{#if TGerencia2 }}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">ZonaDigital: total ${{aa}}</h1>
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to5}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
@@ -204,7 +316,7 @@
                                             </tr>
                                         </thead>
                                         <tbody >
-                                            {{#each ZonaDigital}}
+                                            {{#each TGerencia2}}
                                             <tr style="border-top: 1px solid black;">
                                             <td>{{IdVenta}}</td>
                                             <td>{{momentC FechaVenta}}</td>
@@ -218,6 +330,7 @@
                         </div>
                         <br>
                         {{/if}}
+                
                        
                     </div>
                 </div>

@@ -146,6 +146,28 @@
                   </form>
                 </div>
               </div>
+              <br>
+              <div class="card">
+                <div class="card-body" style="background-color:#e6e6e6;">
+                  <h1 class="text-dark mb-3 h4">Reporte de Facturas</h1>
+                  <form action="/ferreteria/reporte_facturas" method="post">
+                    <div class="form-group">
+                      <label>FECHA DE INICIO</label>
+                      <input type="date" name="desde" class="form-control text-dark" value="{{moment}}" required>
+                    </div>
+                    <div class="form-group">
+                      <label>FECHA FINAL</label>
+                      <input type="date" name="hasta" class="form-control text-dark" value="{{moment}}" required>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <button class="btn btn-primary btn-block mx-1" title="ENVIAR">
+                        <i style="color: white;" class="fas fa-check"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -181,6 +203,19 @@
                         <i style="color: white;" class="fas fa-check"></i>
                       </a>
                     </div>
+                </div>
+              </div>
+              <br>
+              <div class="card">
+                <div class="card-body" style="background-color:#e6e6e6;">
+                   <h1 class="text-dark mb-3 h4">Agregar Factura</h1>          
+                   
+                    <div class="form-group">
+                      <a href="/agregar_factura" id="btnpdf" class="btn btn-primary" title="ENVIAR">
+                        <i style="color: white;" class="fas fa-check"></i>
+                      </a>
+                    </div>
+
                 </div>
               </div>
             </div>

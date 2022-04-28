@@ -394,28 +394,52 @@ module.exports={
         }
         return tol
     }
-    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let ventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let ventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let Gerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let Gerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' ORDER BY FechaVenta ASC ",[hasta,desde])
-    let ZonaDigital = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'ZonaDigital' ORDER BY FechaVenta ASC ",[hasta,desde])
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total=suma(ventas)    
+    to=suma(Tventas)    
+    let ventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total2=suma(ventas2)    
+    to2=suma(Tventas2)    
+    let ventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total3=suma(ventas3)    
+    to3=suma(Tventas3)    
+    let Gerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let TGerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total4=suma(Gerencia)    
+    to4=suma(TGerencia)    
+    let Gerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let TGerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total5=suma(Gerencia2)  
-    let aa=suma(ZonaDigital)
-    console.log(ZonaDigital)
-    res.render("reporte_ventas.hbs",{ layout:"mainpdf",ZonaDigital,aa,ventas,ventas2,ventas3,Gerencia,Gerencia2,total,total2,total3,total4,total5})
+    to5=suma(TGerencia2) 
+    
+    res.render("reporte_ventas.hbs",{ layout:"mainpdf",ventas,ventas2,ventas3,Gerencia,Gerencia2,total,total2,total3,total4,total5,Tventas,Tventas2,Tventas3,TGerencia,TGerencia2,to,to2,to3,to4,to5})
 
     },
     
     async despdf_reporte_ventas(req,res){
         let {desde,hasta}=req.body
-        console.log(desde,hasta)
         await pool.query("UPDATE tblreportes SET Desde = ?, Hasta = ? WHERE IdReporte = 1",[desde,hasta])
         const pdf = await crearpdf("http://localhost:3832/rep_ven")
+        res.contentType("application/pdf")
+        res.send(pdf)
+
+    },
+
+    async reporte_facturas(req,res){
+     let productos= await pool.query("SELECT * FROM tblreportes, tbldetallefactura, tblproductos, tblproveedores WHERE tbldetallefactura.IdFactura = tblreportes.Id AND tblproductos.IdProducto = tbldetallefactura.IdProducto AND tblproveedores.IdProveedor = tblproductos.IdProveedor")
+        let id=await pool.query("SELECT Id FROM tblreportes")
+        id=id[0].Id
+     res.render("reporte_facturas.hbs",{ layout:"mainpdf",productos,id})
+
+    },
+    
+    async despdf_reporte_facturas(req,res){
+        let {id}=req.params
+        await pool.query("UPDATE tblreportes SET Id = ? WHERE IdReporte = 1",[id])
+        const pdf = await crearpdf("http://localhost:3832/rep_fac")
         res.contentType("application/pdf")
         res.send(pdf)
 

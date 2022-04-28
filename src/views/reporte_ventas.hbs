@@ -6,20 +6,22 @@
         <div class="col-md-4">
             <center>
           <img alt="" src="log.jpeg" width="700px" height="150px">
-          <p>{{momentC}}</p>
+          <p>{{momentRe}}</p>
           </center>
         </div>
         <div class="row" style="margin-top: 20px; margin-left:2px;" >
-        {{#if ventas}}
+      
+                    {{#if ventas }}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Ventas: total ${{total}}</h1>
+                                <h1 class="text-dark mb-3 h4">Ventas: total en efectico ${{total}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
                                             <th>Id</th>
                                             <th>Fecha y Hora</th>
                                             <th>Total</th>
+                                            
                                             </tr>
                                         </thead>
                                         <tbody >
@@ -28,6 +30,35 @@
                                             <td>{{IdVenta}}</td>
                                             <td>{{momentC FechaVenta}}</td>
                                             <td>{{Total}}</td>
+                                            
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                    {{#if Tventas }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each Tventas}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            
                                             </tr>
                                             {{/each}}
                                             </tbody>
@@ -39,13 +70,14 @@
                     {{#if ventas2}}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Ventas 2: total ${{total2}}</h1>
+                                <h1 class="text-dark mb-3 h4">Ventas 2: total en efectico ${{total2}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
                                             <th>Id</th>
                                             <th>Fecha y Hora</th>
                                             <th>Total</th>
+                                            
                                             </tr>
                                         </thead>
                                         <tbody >
@@ -54,6 +86,35 @@
                                             <td>{{IdVenta}}</td>
                                             <td>{{momentC FechaVenta}}</td>
                                             <td>{{Total}}</td>
+                                            
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                         {{#if Tventas2 }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to2}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each Tventas2}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            
                                             </tr>
                                             {{/each}}
                                             </tbody>
@@ -65,13 +126,14 @@
                     {{#if ventas3}}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Ventas 3: total ${{total3}}</h1>
+                                <h1 class="text-dark mb-3 h4">Ventas 3: total en efectico ${{total3}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
                                             <th>Id</th>
                                             <th>Fecha y Hora</th>
                                             <th>Total</th>
+                                            
                                             </tr>
                                         </thead>
                                         <tbody >
@@ -80,6 +142,35 @@
                                             <td>{{IdVenta}}</td>
                                             <td>{{momentC FechaVenta}}</td>
                                             <td>{{Total}}</td>
+                                            
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                         {{#if Tventas3 }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to3}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each Tventas3}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            
                                             </tr>
                                             {{/each}}
                                             </tbody>
@@ -91,13 +182,14 @@
                     {{#if Gerencia}}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Gerencia: total ${{total4}}</h1>
+                                <h1 class="text-dark mb-3 h4">Gerencia: total en efectico ${{total4}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
                                             <th>Id</th>
                                             <th>Fecha y Hora</th>
                                             <th>Total</th>
+                                            
                                             </tr>
                                         </thead>
                                         <tbody >
@@ -106,6 +198,35 @@
                                             <td>{{IdVenta}}</td>
                                             <td>{{momentC FechaVenta}}</td>
                                             <td>{{Total}}</td>
+                                            
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                         {{#if TGerencia }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to4}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each TGerencia}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            
                                             </tr>
                                             {{/each}}
                                             </tbody>
@@ -117,33 +238,7 @@
                     {{#if Gerencia2}}
                         <div class="card">
                             <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">Gerencia 2: total ${{total5}}</h1>
-                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
-                                        <thead>
-                                            <tr style="border-top: 1px solid black;">
-                                            <th>Id</th>
-                                            <th>Fecha y Hora</th>
-                                            <th>Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                            {{#each Gerencia2}}
-                                            <tr style="border-top: 1px solid black;">
-                                            <td>{{IdVenta}}</td>
-                                            <td>{{momentC FechaVenta}}</td>
-                                            <td>{{Total}}</td>
-                                            </tr>
-                                            {{/each}}
-                                            </tbody>
-                                        </table>
-                            </div>
-                        </div>
-                        <br>
-                        {{/if}}
-                         {{#if ZonaDigital}}
-                        <div class="card">
-                            <div class="card-body" style="background-color:#d9d9d9;">
-                                <h1 class="text-dark mb-3 h4">ZonaDigital: total ${{aa}}</h1>
+                                <h1 class="text-dark mb-3 h4">Gerencia 2: total en efectico ${{total5}}</h1>
                                  <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
@@ -154,11 +249,12 @@
                                             </tr>
                                         </thead>
                                         <tbody >
-                                            {{#each ZonaDigital}}
+                                            {{#each Gerencia2}}
                                             <tr style="border-top: 1px solid black;">
                                             <td>{{IdVenta}}</td>
                                             <td>{{momentC FechaVenta}}</td>
                                             <td>{{Total}}</td>
+                                            
                                             </tr>
                                             {{/each}}
                                             </tbody>
@@ -167,6 +263,35 @@
                         </div>
                         <br>
                         {{/if}}
+                         {{#if TGerencia2 }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Ventas: total con Tarjeta ${{to5}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+                                        <thead>
+                                            <tr style="border-top: 1px solid black;">
+                                            <th>Id</th>
+                                            <th>Fecha y Hora</th>
+                                            <th>Total</th>
+                                            
+                                            </tr>
+                                        </thead>
+                                        <tbody >
+                                            {{#each TGerencia2}}
+                                            <tr style="border-top: 1px solid black;">
+                                            <td>{{IdVenta}}</td>
+                                            <td>{{momentC FechaVenta}}</td>
+                                            <td>{{Total}}</td>
+                                            
+                                            </tr>
+                                            {{/each}}
+                                            </tbody>
+                                        </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
+                        
 </div>
 </div>
 </div>

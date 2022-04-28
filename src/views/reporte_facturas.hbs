@@ -10,34 +10,40 @@
           </center>
         </div>
         <div class="row" style="margin-top: 20px; margin-left:2px;" >
-         <table class=" tabla-borderless " style="width: 100%; height: auto;" >
+         {{#if productos }}
+                        <div class="card">
+                            <div class="card-body" style="background-color:#d9d9d9;">
+                                <h1 class="text-dark mb-3 h4">Productos de Factura No.{{id}}</h1>
+                                 <table class=" tabla-borderless " style="width: 100%; height: auto;" >
                                         <thead>
                                             <tr style="border-top: 1px solid black;">
                                             <th>Id</th>
+                                            <th>Cantidad</th>
+                                            <th>Precio Compra</th>
+                                            <th>Precio Venta</th>
                                             <th>Proveedor</th>
                                             <th>Categoria</th>
                                             <th>Descripcion</th>
-                                            <th >Precio Venta</th>
-                                            <th >Precio Compra</th>
-                                            <th>Existencias</th>
-                                            <th >Stock Minimo</th>
                                             </tr>
                                         </thead>
                                         <tbody >
                                             {{#each productos}}
                                             <tr style="border-top: 1px solid black;">
                                             <td>{{IdProducto}}</td>
+                                            <td>{{Cantidad}}</td>
+                                            <td>{{PrecioCompra}}</td>
+                                            <td>{{PrecioVenta}}</td>
                                             <td>{{Nombre}}</td>
                                             <td>{{Categoria}}</td>
                                             <td>{{Descripcion}}</td>
-                                            <td>{{PrecioVenta}}</td>
-                                            <td>{{PrecioCompra}}</td>
-                                            <td>{{Existencias}}</td>
-                                            <td>{{StockMinimo}}</td>
                                             </tr>
                                             {{/each}}
                                             </tbody>
                                         </table>
+                            </div>
+                        </div>
+                        <br>
+                        {{/if}}
 </div>
 </div>
 </div>
