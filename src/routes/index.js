@@ -522,13 +522,23 @@ router.get("/ferreteria/ventas_abiertas", isLoggedIn, async (req, res) => {
     res.render("layouts/ventas_abiertas",{ventas})
 })
 
+router.get("/ferreteria/devoluciones", isLoggedIn, async (req, res) => {
+    let id = await pool.query("SELECT * FROM tblventas WHERE VentaCerrada = 1 order by `IdVenta` desc LIMIT 1;")
+if(id[0] != undefined){
+
+    id=id[0].IdVenta
+}else{
+    id=0
+}
+    res.render("layouts/devoluciones",{id})
+})
+
 router.get("/devolucion:id/", isLoggedIn, async (req, res) => {
     const { id } = req.params
     let user = req.user
     let ventas = await pool.query("SELECT * FROM tblventas WHERE IdVenta = ?",[id])
     if(ventas[0].VentaCerrada == 1){
     let productos = await pool.query("SELECT * FROM tbldetalleventa WHERE IdVenta = ?",[id])
-    log(productos)
     for (let index = 0; index < productos.length; index++) {
        await pool.query("UPDATE tblproductos SET Existencias = Existencias + ? WHERE IdProducto = ?",[productos[index].Cantidad,productos[index].IdProducto])
         
