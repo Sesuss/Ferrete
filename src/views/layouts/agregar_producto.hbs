@@ -188,6 +188,7 @@
                           <option value="Agricola">Agricola</option>
                           <option value="Tornilleria">Tornilleria</option>
                           <option value="Quemadores">Quemadores</option>
+                          <option value="Polvos">Polvos</option>
                           <option value="Escaleras">Escaleras</option>
                           <option value="Hilos">Hilos</option>
                           <option value="Iluminadores">Iluminadores</option>
@@ -199,9 +200,9 @@
                                         </select>
                                     </div>
                                     </div>
-                                    <div class="form-group">
+                                    <div class="form-group" >
                                         <label>Descripcion</label>
-                                             <textarea name="Descripcion" id="a4" class="form-control text-dark m-1" rows="2" required></textarea>
+                                             <input type="text" id="a4" class="form-control text-dark m-1" name="Descripcion" required>
                                     </div>
                                    <div class="row">
                                       <div class="col-md-4">
@@ -241,7 +242,7 @@
                                       <div class="col-md-6">
                                         <label>Existencias</label>
                                         <input type="number" id="a10" class="form-control text-dark m-1"
-                                             name="Existencias" required>
+                                             name="Existencias" min="0" step="0.001" required>
                                     </div>
                                       <div class="col-md-6">
                                         <label>Stock Minimo</label>
@@ -265,7 +266,9 @@
         </div>
     </div>
 </div>
-
+<p style="font-family: 'Libre Barcode EAN13 Text', cursive; font-size:100px; text-align: center;">
+                                     9789708100571
+                                </p>
 <script>
    document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('div.forn  input').forEach( node => node.addEventListener('keypress', e => {

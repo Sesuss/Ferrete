@@ -730,24 +730,24 @@ router.post("/ferreteria/reporte_ventas", isLoggedIn, isAdmin, async (req, res) 
         }
         return tol
     }
-    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
-    let Tventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND IdVendedor = 'Ventas' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total=suma(ventas)    
     to=suma(Tventas)    
-    let ventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
-    let Tventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas2' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let ventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas2' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas2' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total2=suma(ventas2)    
     to2=suma(Tventas2)    
-    let ventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
-    let Tventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Ventas3' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let ventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas3' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas3' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total3=suma(ventas3)    
     to3=suma(Tventas3)    
-    let Gerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
-    let TGerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Gerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Gerencia' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let TGerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Gerencia' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total4=suma(Gerencia)    
     to4=suma(TGerencia)    
-    let Gerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' AND Metodo = 0 ORDER BY FechaVenta DESC ",[hasta,desde])
-    let TGerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND VentaCerrada > 0 AND IdVendedor = 'Gerencia2' AND Metodo = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Gerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Gerencia2' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let TGerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Gerencia2' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
     total5=suma(Gerencia2)  
     to5=suma(TGerencia2) 
     
@@ -834,9 +834,6 @@ for (let index = 0; index < productos.length; index++) {
   await pool.query("UPDATE tblfacturas SET ?, FacturaCerrada = 1 WHERE IdFactura = ?",[venta,IdFactura])
    res.redirect("/ferreteria/reportes")
 })
-
-
-
 
 
 
