@@ -182,7 +182,7 @@
                                                <br>
                                                 <div class="form-group" style="display: block;" id="saldo">
                                              <label>Efectivo recibido</label>
-                                             <input type="number" class="form-control text-dark m-1" name="Cantidad"
+                                             <input type="number" class="form-control text-dark m-1" step="0.001" name="Cantidad"
                                               required id="Efe" min={{Total}} style="height: ;">
                                              </div>
                                               <div class="col-md-6">
@@ -294,7 +294,7 @@
        let value=0
       for(let index=0;index<array.length;index++){
           if(CodeTru.value===array[index].CodeTru){
-              if(array[index].Presentacion=="kilos" || array[index].Presentacion=="litros"){  
+              if(array[index].Presentacion=="kilos" || array[index].Presentacion=="litros" || array[index].Presentacion=="metros" || array[index].Presentacion=="mtros"){
                     document.getElementById("formC").min=0.100
                     document.getElementById("formC").step=0.001
                }else{

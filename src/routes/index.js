@@ -450,18 +450,18 @@ router.get("/ferreteria/agregar_granel:id/", isLoggedIn, async (req, res) => {
 })
 
 router.post("/agregar_producto", isLoggedIn, async (req, res) => {
-    const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca} = req.body
-    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca}
+    const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion} = req.body
+    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion}
     await pool.query("INSERT INTO tblproductos SET ? ",[newproducto])
     res.redirect("/ferreteria/agregar_producto")
     
 })
 router.post("/editar_producto", isLoggedIn, async (req, res) => {
-    let {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca} = req.body
+    let {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion} = req.body
     if(PrecioCompra == ""||PrecioCompra==null){
         PrecioCompra=0
     }
-    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca}
+    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion}
     await pool.query("UPDATE tblproductos SET ? WHERE IdProducto = ?",[newproducto,IdProducto])
     res.redirect("/ferreteria/ver_producto"+IdProducto)
     
