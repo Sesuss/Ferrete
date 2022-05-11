@@ -261,8 +261,8 @@
        let value=0
       for(let index=0;index<array.length;index++){
           if(CodeBar.value===array[index].CodeBar){
-              if(array[index].Presentacion=="kilos" || array[index].Presentacion=="litros"){  
-                    document.getElementById("formC").min=0.100
+              if(array[index].Presentacion=="Kilo" || array[index].Presentacion=="Litro"  || array[index].Presentacion=="Metro" || array[index].Presentacion=="Saco"){  
+                    document.getElementById("formC").min=0.030
                     document.getElementById("formC").step=0.001
                }else{
                     document.getElementById("formC").min=1
@@ -294,8 +294,8 @@
        let value=0
       for(let index=0;index<array.length;index++){
           if(CodeTru.value===array[index].CodeTru){
-              if(array[index].Presentacion=="Kilo" || array[index].Presentacion=="Litro" || array[index].Presentacion=="Metro"){  
-                    document.getElementById("formC").min=0.100
+              if(array[index].Presentacion=="Kilo" || array[index].Presentacion=="Litro" || array[index].Presentacion=="Metro" || array[index].Presentacion=="Saco"){ 
+                    document.getElementById("formC").min=0.030
                     document.getElementById("formC").step=0.001
                }else{
                     document.getElementById("formC").min=1
@@ -350,8 +350,8 @@
        let sel = document.getElementById("sel").value
        for(index=0;index<array.length;index++){
            if(sel==array[index].IdProducto){
-               if(array[index].Presentacion=="kilos" || array[index].Presentacion=="litros"){  
-                    document.getElementById("formC").min=0.100
+               if(array[index].Presentacion=="Kilo" || array[index].Presentacion=="Litro" || array[index].Presentacion=="Metro" || array[index].Presentacion=="Saco"){ 
+                    document.getElementById("formC").min=0.030
                     document.getElementById("formC").step=0.001
                }else{
                     document.getElementById("formC").min=1

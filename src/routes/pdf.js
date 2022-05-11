@@ -306,6 +306,13 @@ module.exports={
         let Venta = await pool.query("SELECT * FROM tblventas WHERE IdVenta = ?",[id])
         let productos = await pool.query("SELECT tbldetalleventa.*,tblproductos.Descripcion FROM tbldetalleventa,tblproductos WHERE tbldetalleventa.IdVenta = ? AND tblproductos.IdProducto = tbldetalleventa.IdProducto",[id])
         let Cambio = Venta[0].Efectivo-Venta[0].Total
+        Cambio=Cambio.toFixed(2)
+        Venta[0].Total=Venta[0].Total.toFixed(2)
+        for (let index = 0; index < productos.length; index++) {
+            productos[index].Importe=productos[index].Importe.toFixed(2)
+            productos[index].Cantidad=productos[index].Cantidad.toFixed(2)
+            
+        }
         res.render("nota.hbs",{ layout:"mainpdf",Venta,productos,Cambio,id})
     },
     

@@ -566,8 +566,11 @@ router.get("/ferreteria/punto_de_venta:id/", isLoggedIn, async (req, res) => {
         let Total=0
         for (let index = 0; index < productos.length; index++) {
             Total+=productos[index].Importe
+            productos[index].Importe=productos[index].Importe.toFixed(2)
+            productos[index].Cantidad=productos[index].Cantidad.toFixed(2)
             
         }
+        Total=Total.toFixed(2)
         res.render("layouts/punto_venta_v",{producto,productos,id,Total})
     }
         
@@ -596,6 +599,7 @@ router.post("/ferreteria/cerrar_venta", isLoggedIn, async (req, res) => {
     const {IdVenta, Cantidad, Total, Metodo} = req.body
     let user = req.user
    let Cambio=Cantidad-Total
+   Cambio=Cambio.toFixed(2)
    await pool.query("UPDATE tblventas SET VentaCerrada = 1, Total = ?, Efectivo = ?, IdVendedor = ?, Metodo = ? WHERE IdVenta = ?",[Total,Cantidad,user.Nombre,Metodo,IdVenta])
    res.render("layouts/post_venta",{Total,Cambio,IdVenta, layout:"mainpdf"})
   
