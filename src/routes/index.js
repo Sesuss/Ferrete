@@ -632,6 +632,23 @@ router.get("/verpdf:id",  pdfc.pdf)
 
 //---------------------------------------------REPORTES---------------------------------------------------------------------
 
+router.post("/ferreteria/reporte_cortes", isLoggedIn, isAdmin, async (req, res) => {
+    let {desde,hasta}=req.body
+    desde=desde+" 00:00:00"
+    hasta=hasta+" 23:59:59"
+    let ventas = await pool.query("SELECT * FROM tblcortecaja WHERE FechaCorte < ? AND FechaCorte > ? AND IdCorte > 1",[hasta,desde])
+    res.render("layouts/reporte_cortes",{ventas})
+    
+})
+router.post("/ferreteria/reporte_retiros", isLoggedIn, isAdmin, async (req, res) => {
+    let {desde,hasta}=req.body
+    desde=desde+" 00:00:00"
+    hasta=hasta+" 23:59:59"
+    let ventas = await pool.query("SELECT * FROM tblretiros WHERE FechaRetiro < ? AND FechaRetiro > ?",[hasta,desde])
+    res.render("layouts/reporte_retiros",{ventas})
+    
+})
+
 router.get("/ferreteria/reporte_minimo", isLoggedIn, isAdmin, async (req, res) => {
     let productos = await pool.query("SELECT * FROM tblproductos,tblproveedores WHERE Existencias < StockMinimo AND tblproveedores.IdProveedor = tblproductos.IdProveedor")
     res.render("layouts/reporte_minimo",{productos})
@@ -839,7 +856,126 @@ for (let index = 0; index < productos.length; index++) {
    res.redirect("/ferreteria/reportes")
 })
 
+router.post("/ferreteria/retiro_dinero", isLoggedIn, isAdmin, async (req, res) => {  
+   let {Retiro,Descripcion} = req.body 
+   let user=req.user
+   await pool.query("INSERT INTO tblretiros SET Usuario = ?, Retiro = ?, Descripcion = ?",[user.Nombre,Retiro,Descripcion])
+   res.redirect("/ferreteria/reportes")
+})
 
+router.post("/ferreteria/cerrar_corte_caja", isLoggedIn, isAdmin, async (req, res) => {  
+   let {SiguienteCaja,TotalEfectivo,TotalTarjeta,DineroCaja,TotalRetiros,TotalNeto,IdVenta,IdRetiroMax} = req.body 
+   let Usuario=req.user.Nombre
+   let caja ={SiguienteCaja,TotalEfectivo,TotalTarjeta,DineroCaja,TotalRetiros,TotalNeto,IdVenta,IdRetiroMax,Usuario}
+   await pool.query("INSERT INTO tblcortecaja SET ? ",[caja])
+   res.redirect("/ferreteria/reportes")
+})
+
+router.get("/ferreteria/corte_de_caja", isLoggedIn, isAdmin, async (req, res) => {  
+  let corte = await pool.query("SELECT * FROM tblcortecaja order by `IdCorte` desc LIMIT 1;")
+  let total=0
+  let total2=0
+  let total3=0
+  let total4=0
+  let total5=0
+
+  function suma(ventas){
+    let tol=0
+    for (let index = 0; index < ventas.length; index++) {
+        tol=tol+ventas[index].Total
+        
+    }
+    return tol
+    }
+  function sumaR(ventas){
+    let tol=0
+    for (let index = 0; index < ventas.length; index++) {
+        tol=tol+ventas[index].Retiro
+        
+    }
+    return tol
+    }
+   let ventas = await pool.query("SELECT * FROM tblventas WHERE IdVenta > ? AND Metodo = 0 AND VentaCerrada = 1",[corte[0].IdVenta])
+   let ventasT = await pool.query("SELECT * FROM tblventas WHERE IdVenta > ? AND Metodo = 1 AND VentaCerrada = 1",[corte[0].IdVenta])
+   total=suma(ventas)    
+   total2=suma(ventasT) 
+   if (ventas[ventas.length-1]==undefined) {
+       ventas=0
+    } else {
+        ventas=ventas[ventas.length-1].IdVenta
+    }
+   if (ventasT[ventasT.length-1]==undefined) {
+       ventasT=0
+   } else {
+       ventasT=ventasT[ventasT.length-1].IdVenta
+   }
+    if(ventas>ventasT){
+        total5=ventas
+    } else{
+        total5=ventasT
+    }
+   let retiros = await pool.query("SELECT * FROM tblretiros WHERE IdRetiro > ? ",[corte[0].IdRetiroMax])
+   total3=sumaR(retiros)  
+   if (retiros[retiros.length-1]==undefined) {
+       retiros=corte[0].IdRetiroMax
+}else{
+       retiros=retiros[retiros.length-1].IdRetiro
+
+   }
+   total4=total+corte[0].SiguienteCaja-total3
+   total4=total4.toFixed(2)
+     res.render("layouts/cierre_caja",{total,total2,total3,total4,total5,corte,retiros})
+})
+
+
+router.post("/ferreteria/reporte_ventas", isLoggedIn, isAdmin, async (req, res) => {
+    let {desde,hasta}=req.body
+    let des=desde
+    let has=hasta
+    desde=desde+" 00:00:00"
+    hasta=hasta+" 23:59:59"
+    let total=0
+    let total2=0
+    let total3=0
+    let total4=0
+    let total5=0
+    let to=0
+    let to2=0
+    let to3=0
+    let to4=0
+    let to5=0
+    function suma(ventas){
+        let tol=0
+        for (let index = 0; index < ventas.length; index++) {
+            tol=tol+ventas[index].Total
+            
+        }
+        return tol
+    }
+    let ventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ? AND IdVendedor = 'Ventas' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    total=suma(ventas)    
+    to=suma(Tventas)    
+    let ventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas2' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas2' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    total2=suma(ventas2)    
+    to2=suma(Tventas2)    
+    let ventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas3' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let Tventas3 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Ventas3' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    total3=suma(ventas3)    
+    to3=suma(Tventas3)    
+    let Gerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Gerencia' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let TGerencia = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Gerencia' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    total4=suma(Gerencia)    
+    to4=suma(TGerencia)    
+    let Gerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Gerencia2' AND Metodo = 0 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    let TGerencia2 = await pool.query("SELECT * FROM tblventas WHERE FechaVenta < ? AND FechaVenta > ?  AND IdVendedor = 'Gerencia2' AND Metodo = 1 AND VentaCerrada = 1 ORDER BY FechaVenta DESC ",[hasta,desde])
+    total5=suma(Gerencia2)  
+    to5=suma(TGerencia2) 
+    
+    res.render("layouts/reporte_ventas",{ventas,ventas2,ventas3,Gerencia,Gerencia2,total,total2,total3,total4,total5,des,has,Tventas,Tventas2,Tventas3,TGerencia,TGerencia2,to,to2,to3,to4,to5})
+    
+})
 
 
 //---------------------------------------------PROVEEDORES---------------------------------------------------------------------
