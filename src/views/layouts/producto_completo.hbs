@@ -238,6 +238,9 @@
 </div>
 </div>
 <script>
+  {{#if extra}}
+  alert("El producto que querías agregar coincide con este producto")
+  {{/if}}
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('div.forn  input').forEach(node => node.addEventListener('keypress', e => {
       if (e.keyCode == 13) {

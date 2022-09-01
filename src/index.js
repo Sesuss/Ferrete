@@ -24,7 +24,7 @@ const database = {
   
   }
 
-app.set ("port", process.env.PORT || 3832)
+app.set ("port", process.env.PORT || 2022)
 app.set("views",path.join(__dirname,"views"))
 app.engine(".hbs",exphbs({
     defaultLayout:"main",

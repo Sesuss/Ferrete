@@ -3,7 +3,8 @@ const router = express.Router()
 const pool = require("../database")
 const pdfc =require("../routes/pdf")
 var moment = require('moment');
-const {isLoggedIn, isAdmin} = require("../lib/auth")
+const {isLoggedIn, isAdmin} = require("../lib/auth");
+const { LastMonthInstance } = require("twilio/lib/rest/api/v2010/account/usage/record/lastMonth");
 
 
 
@@ -439,6 +440,27 @@ router.get("/ferreteria/ver_producto:id/", isLoggedIn, async (req, res) => {
        res.render("layouts/producto_completo", { ant,des,producto,id,proveedor })
    }
 })
+router.get("/ferreteria/ver__producto:id/", isLoggedIn, async (req, res) => {
+    const { id } = req.params
+   let producto = await pool.query("SELECT * FROM tblproductos,tblproveedores WHERE tblproductos.IdProducto = ? AND tblproveedores.IdProveedor = tblproductos.IdProveedor",[id])
+   let proveedor = await pool.query("SELECT * FROM tblproveedores")
+   let limit = await pool.query("SELECT IdProducto FROM `tblproductos` order by `IdProducto` desc LIMIT 1;")
+   let extra=1
+   let ant=producto[0].IdProducto-1
+   let des=producto[0].IdProducto+1
+   if(ant==0){
+       ant=1
+   }
+   if(des == limit[0].IdProducto+1){
+       des=limit[0].IdProducto
+   }
+   if (producto[0].Espejo == 1) {
+       let aa=1
+       res.render("layouts/producto_completo", { ant,des,producto,id,proveedor,extra,aa })
+   } else{
+       res.render("layouts/producto_completo", { ant,des,producto,id,proveedor,extra })
+   }
+})
 
 
 router.get("/ferreteria/agregar_granel:id/", isLoggedIn, async (req, res) => {
@@ -450,10 +472,49 @@ router.get("/ferreteria/agregar_granel:id/", isLoggedIn, async (req, res) => {
 })
 
 router.post("/agregar_producto", isLoggedIn, async (req, res) => {
-    const {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion} = req.body
-    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion}
-    await pool.query("INSERT INTO tblproductos SET ? ",[newproducto])
-    res.redirect("/ferreteria/agregar_producto")
+    let {IdProducto,IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion} = req.body
+    if (PrecioCompra=="") {
+        PrecioCompra=0
+    }
+    let aaa=1
+    let producto = await pool.query("SELECT * FROM tblproductos WHERE Descripcion = ?",[Descripcion])
+    if (producto[0] != undefined) {
+        res.redirect("/ferreteria/ver__producto"+producto[0].IdProducto)
+    } else{
+        if (CodeBar == "" || CodeBar == null ) { 
+            if (CodeTruper == "" || CodeTruper == null ) { 
+                const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion}
+                await pool.query("INSERT INTO tblproductos SET ? ",[newproducto])
+                res.redirect("/ferreteria/agregar_producto")
+            } else{
+                producto = await pool.query("SELECT * FROM tblproductos WHERE CodeTruper = ?",[CodeTruper])
+            if (producto[0] != undefined) {
+                res.redirect("/ferreteria/ver__producto"+producto[0].IdProducto)
+            }
+            }
+        } else{
+            producto = await pool.query("SELECT * FROM tblproductos WHERE CodeBar = ?",[CodeBar])
+            log(producto)
+            if (producto[0] != undefined) {
+                res.redirect("/ferreteria/ver__producto"+producto[0].IdProducto)
+            }else{
+                if (CodeTruper == "" || CodeTruper == null ) { 
+                    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion}
+                    await pool.query("INSERT INTO tblproductos SET ? ",[newproducto])
+                    res.redirect("/ferreteria/agregar_producto")
+                } else{
+                    producto = await pool.query("SELECT * FROM tblproductos WHERE CodeTruper = ?",[CodeTruper])
+                if (producto[0] != undefined) {
+                    res.redirect("/ferreteria/ver__producto"+producto[0].IdProducto)
+                } else{
+                    const newproducto = {IdProveedor,Categoria,Descripcion,PrecioVenta,PrecioCompra,CodeBar,CodeTruper,CodeProducto,Existencias,StockMinimo,Marca,Presentacion}
+                    await pool.query("INSERT INTO tblproductos SET ? ",[newproducto])
+                    res.redirect("/ferreteria/agregar_producto")
+                }
+                }
+            }
+        }
+    }
     
 })
 router.post("/editar_producto", isLoggedIn, async (req, res) => {
@@ -514,6 +575,9 @@ router.get("/ferreteria/punto", isLoggedIn, async (req, res) => {
         res.render("layouts/punto_venta",{producto})
     }
     
+})
+router.get("/checador", async (req, res) => {
+    res.render("layouts/abc")
 })
 
 router.get("/ferreteria/ventas_abiertas", isLoggedIn, async (req, res) => {
@@ -924,6 +988,8 @@ router.get("/ferreteria/corte_de_caja", isLoggedIn, isAdmin, async (req, res) =>
    }
    total4=total+corte[0].SiguienteCaja-total3
    total4=total4.toFixed(2)
+   total=total.toFixed(2)
+   total2=total2.toFixed(2)
      res.render("layouts/cierre_caja",{total,total2,total3,total4,total5,corte,retiros})
 })
 
