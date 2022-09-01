@@ -24,7 +24,7 @@ const database = {
   
   }
 
-app.set ("port", process.env.PORT || 2022)
+app.set ("port", process.env.PORT || 3832)
 app.set("views",path.join(__dirname,"views"))
 app.engine(".hbs",exphbs({
     defaultLayout:"main",
@@ -47,7 +47,7 @@ app.use(express.json())
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(favicon(path.join(__dirname, 'public', 'src.png')))
+app.use(favicon(path.join(__dirname, 'public', 'log.jpeg')))
 
 
 

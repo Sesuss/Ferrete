@@ -576,9 +576,6 @@ router.get("/ferreteria/punto", isLoggedIn, async (req, res) => {
     }
     
 })
-router.get("/checador", async (req, res) => {
-    res.render("layouts/abc")
-})
 
 router.get("/ferreteria/ventas_abiertas", isLoggedIn, async (req, res) => {
     let ventas = await pool.query("SELECT * FROM tblventas WHERE VentaCerrada = 0")
