@@ -47,7 +47,7 @@ app.use(express.json())
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(favicon(path.join(__dirname, 'public', 'log.jpeg')))
+app.use(favicon(path.join(__dirname, 'public', 'src.png')))
 
 
 

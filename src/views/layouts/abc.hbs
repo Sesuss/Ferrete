@@ -7,21 +7,21 @@
     
     
 <div>
-    <label for="Empleado">Numero de Empleado</label>
+    <label style="margin-left: 4px;" for="Empleado">Numero de Empleado</label>
     <input style="width: 98%;" min="1" max="99999" type="number" id="Empleado" class="form-control text-dark m-1">
     <center>
-    <button style="margin-left: 4px;" class="btn btn-primary" onclick="comprobar()">Comprobar</button>
+    <button style="margin-left: 4px;" class="btn btn-primary" onclick="comprobar()">Comprobar</button><br><br>
     <h4 style="margin-left: 4px;" id="Nombre"></h4>
     </center>
 </div>
 
 <br>
 <center id="Canvas" style="display: none;">
-<button style="margin-left: 4px;" class="btn btn-primary" id="start-camera">Iniciar Camera</button>
-<video id="video" width="320" height="240" autoplay></video>
-<button style="margin-left: 4px; display: none;" class="btn btn-primary" id="click-photo">Tomar Fotografia</button>
-<canvas id="canvas" width="320" height="240"></canvas>
-<button style="margin-left: 4px; display: none;" class="btn btn-danger" id="end-photo" onclick="fin()">Finalizar proceso</button>
+<button style="margin-left: 4px;" class="btn btn-primary" id="start-camera">Iniciar Camera</button><br><br>
+<video id="video" width="320" height="240" autoplay></video><br><br>
+<button style="margin-left: 4px; display: none;" class="btn btn-primary" id="click-photo">Tomar Fotografia</button><br><br>
+<canvas id="canvas" width="220" height="240"></canvas><br><br>
+<button style="margin-left: 4px; display: none;" class="btn btn-danger" id="end-photo" onclick="fin()">Finalizar proceso</button><br><br><br>
 </center>
 <script>
 let camera_button = document.querySelector("#start-camera");
@@ -33,6 +33,8 @@ let finbtn = document.querySelector("#end-photo");
 camera_button.addEventListener('click', async function() {
    	let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
 	video.srcObject = stream;
+    console.log(video.width)
+    console.log(video.height)
     click_button.style.display="block"
 });
 
